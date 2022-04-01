@@ -9,6 +9,8 @@ namespace RezhDumaASPCore_Backend.Model
     [Table("Categories")]
     public class Category : DbEntity
     {
+        [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
     }
 }
