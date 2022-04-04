@@ -15,6 +15,8 @@ namespace RezhDumaASPCore_Backend.Model
 
         public User Deputy { get; set; }
 
+        public DeputyApplication() { }
+
         public DeputyApplication(Application application, User deputy)
         {
             Application = application;

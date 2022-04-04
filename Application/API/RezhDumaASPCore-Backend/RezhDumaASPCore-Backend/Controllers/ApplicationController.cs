@@ -11,15 +11,10 @@ namespace RezhDumaASPCore_Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ApplicationController : ControllerBase
+    public class ApplicationController : AbstractController
     {
-        private readonly ILogger<ApplicationController> logger;
-        private readonly UserContext db;
-
-        public ApplicationController(ILogger<ApplicationController> logger, UserContext db)
+        public ApplicationController(ILogger<ApplicationController> logger, UserContext db) : base(logger,db)
         {
-            this.logger = logger;
-            this.db = db;
             //CreateData();
         }
 
@@ -30,13 +25,13 @@ namespace RezhDumaASPCore_Backend.Controllers
                 Firstname = "Алексей",
                 Role = Role.Applicant
             };
-            this.db.Users.Add(user);
+            db.Users.Add(user);
             var deputy = new User
             {
                 Firstname = "Депутат",
                 Role = Role.Deputy
             };
-            this.db.Users.Add(deputy);
+            db.Users.Add(deputy);
             var application = new Application
             {
                 Applicant = user,
@@ -44,7 +39,8 @@ namespace RezhDumaASPCore_Backend.Controllers
                 Description = "It's a test application",
                 Status = Status.Sent
             };
-            this.db.Applications.Add(application);
+            db.Applications.Add(application);
+            db.SaveChanges();
         }
 
         [HttpGet]
