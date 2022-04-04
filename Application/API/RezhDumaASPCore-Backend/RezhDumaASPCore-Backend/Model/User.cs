@@ -21,6 +21,9 @@ namespace RezhDumaASPCore_Backend.Model
         [Required]
         public Role Role { get; set; }
         
+        public Category Category { get; set; }
+        public District District { get; set; }
+
         public List<Application> Applications { get; set; }
     }
 }

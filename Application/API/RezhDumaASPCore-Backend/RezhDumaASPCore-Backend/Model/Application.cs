@@ -9,8 +9,10 @@ namespace RezhDumaASPCore_Backend.Model
     public class Application : Message
     {
         public List<DistrictApplication> DistrictApplications { get; set; }
+        [NotMapped]
         public List<District> Districts { get; set; }
         public List<CategoryApplication> CategoryApplications { get; set; }
+        [NotMapped]
         public List<Category> Categories { get; set; }
 
         [ForeignKey("Applicant")]

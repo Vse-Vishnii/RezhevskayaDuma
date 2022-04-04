@@ -12,5 +12,10 @@ namespace RezhDumaASPCore_Backend.Model
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+
+        [ForeignKey("Deputy")]
+        [Required]
+        public string DeputyId { get; set; }
+        public User Deputy { get; set; }
     }
 }
