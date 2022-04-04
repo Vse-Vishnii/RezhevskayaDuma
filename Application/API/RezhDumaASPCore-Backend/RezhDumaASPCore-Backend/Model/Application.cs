@@ -18,7 +18,9 @@ namespace RezhDumaASPCore_Backend.Model
         public string ApplicantId { get; set; }
         public User Applicant { get; set; }
         public DeputyApplication DeputyApplication { get; set; }
-        
+        [NotMapped]
+        public User Deputy { get; set; }
+
         public Answer Answer { get; set; }
 
         [Required]

@@ -17,5 +17,11 @@ namespace RezhDumaASPCore_Backend.Model
         [Required]
         public string DistrictId { get; set; }
         public District District { get; set; }
+
+        public DistrictApplication(Application application, District district)
+        {
+            Application = application;
+            District = district;
+        }
     }
 }

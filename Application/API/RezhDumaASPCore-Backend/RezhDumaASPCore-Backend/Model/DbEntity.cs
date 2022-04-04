@@ -6,7 +6,7 @@ using System.Text;
 
 namespace RezhDumaASPCore_Backend.Model
 {
-    public class DbEntity
+    public abstract class DbEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

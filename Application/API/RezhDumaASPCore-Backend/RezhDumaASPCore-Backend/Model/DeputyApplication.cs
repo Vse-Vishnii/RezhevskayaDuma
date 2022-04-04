@@ -12,6 +12,13 @@ namespace RezhDumaASPCore_Backend.Model
 
         [ForeignKey("Deputy")]
         public string DeputyId { get; set; }
+
         public User Deputy { get; set; }
+
+        public DeputyApplication(Application application, User deputy)
+        {
+            Application = application;
+            Deputy = deputy;
+        }
     }
 }

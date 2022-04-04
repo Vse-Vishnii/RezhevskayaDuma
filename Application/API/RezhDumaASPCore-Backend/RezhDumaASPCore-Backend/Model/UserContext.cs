@@ -12,7 +12,8 @@ namespace RezhDumaASPCore_Backend.Model
         public DbSet<Application> Applications { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<District> Districts { get; set; }
-        public DbSet<CategoryApplication> Categories { get; set; }
+        public DbSet<CategoryApplication> CategoryApplications { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<DistrictApplication> DistrictApplications { get; set; }
         public DbSet<DeputyApplication> DeputyApplications { get; set; }
         public UserContext()

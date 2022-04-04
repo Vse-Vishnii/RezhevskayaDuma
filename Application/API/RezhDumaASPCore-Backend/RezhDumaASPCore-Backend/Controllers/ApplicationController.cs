@@ -20,6 +20,31 @@ namespace RezhDumaASPCore_Backend.Controllers
         {
             this.logger = logger;
             this.db = db;
+            //CreateData();
+        }
+
+        private void CreateData()
+        {
+            var user = new User
+            {
+                Firstname = "Алексей",
+                Role = Role.Applicant
+            };
+            this.db.Users.Add(user);
+            var deputy = new User
+            {
+                Firstname = "Депутат",
+                Role = Role.Deputy
+            };
+            this.db.Users.Add(deputy);
+            var application = new Application
+            {
+                Applicant = user,
+                Name = "Test",
+                Description = "It's a test application",
+                Status = Status.Sent
+            };
+            this.db.Applications.Add(application);
         }
 
         [HttpGet]
@@ -39,6 +64,13 @@ namespace RezhDumaASPCore_Backend.Controllers
         {
             if (application == null)
                 return BadRequest();
+            AddDistrict(application);
+            AddCategory(application);
+            var deputy = application.Deputy;
+            if (deputy != null)
+            {
+                db.DeputyApplications.Add(new DeputyApplication(application, deputy));
+            }
             db.Applications.Add(application);
             await db.SaveChangesAsync();
             return Ok(application);
@@ -70,8 +102,31 @@ namespace RezhDumaASPCore_Backend.Controllers
                 return NotFound();
             }
             db.Applications.Remove(application);
-            await db.SaveChangesAsync();
             return Ok(application);
+        }
+
+        private async void AddDistrict(Application application)
+        {
+            var districts = application.Districts;
+            if (districts != null)
+                foreach (var d in districts)
+                {
+                    var da = new DistrictApplication(application, d);
+                    db.DistrictApplications.Add(da);
+                    await db.SaveChangesAsync();
+                }
+        }
+
+        private async void AddCategory(Application application)
+        {
+            var categories = application.Categories;
+            if (categories != null)
+                foreach (var c in categories)
+                {
+                    var ca = new CategoryApplication(application, c);
+                    db.CategoryApplications.Add(ca);
+                    await db.SaveChangesAsync();
+                }
         }
     }
 }
