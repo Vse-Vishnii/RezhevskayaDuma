@@ -36,18 +36,14 @@ namespace RezhDumaASPCore_Backend.Controllers
             return Ok(entity);
         }
 
-        [HttpPut]
-        public virtual async Task<ActionResult<T>> Put(T application)
+        [HttpPut("{id}")]
+        public virtual async Task<ActionResult<T>> Put(string id, T newEntity)
         {
+            var application = db.Applications.FirstOrDefault(app => app.Id.Equals(id));
             if (application == null)
             {
                 return BadRequest();
             }
-            if (!db.Applications.Any(x => x.Id == application.Id))
-            {
-                return NotFound();
-            }
-
             db.Update(application);
             await db.SaveChangesAsync();
             return Ok(application);
@@ -62,6 +58,7 @@ namespace RezhDumaASPCore_Backend.Controllers
                 return NotFound();
             }
             db.Remove(application);
+            await db.SaveChangesAsync();
             return Ok(application);
         }
     }
