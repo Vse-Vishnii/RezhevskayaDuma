@@ -14,16 +14,17 @@ namespace RezhDumaASPCore_Backend.Model
         public DbSet<District> Districts { get; set; }
         public DbSet<CategoryApplication> Categories { get; set; }
         public DbSet<DistrictApplication> DistrictApplications { get; set; }
+        public DbSet<DeputyApplication> DeputyApplications { get; set; }
         public UserContext()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
 
             Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=C:\\Documents\\Programming\\RezhevskayaDuma\\RezhevskayaDuma\\Application\\API\\RezhDumaASPCore-Backend\\RezhDumaASPCore-Backend\\DB\\rezhdb.db");
+            optionsBuilder.UseSqlite("Filename=DB\\rezhdb.db");
         }
     }
 }
