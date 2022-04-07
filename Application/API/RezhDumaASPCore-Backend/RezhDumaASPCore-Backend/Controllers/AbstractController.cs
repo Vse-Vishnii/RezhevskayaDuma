@@ -13,6 +13,7 @@ namespace RezhDumaASPCore_Backend.Controllers
     {
         protected readonly ILogger<ApplicationController> logger;
         protected readonly UserContext db;
+        protected DbSet<T> entities;
 
         public AbstractController(ILogger<ApplicationController> logger, UserContext db)
         {
@@ -21,10 +22,16 @@ namespace RezhDumaASPCore_Backend.Controllers
         }
 
         [HttpGet]
-        public abstract Task<ActionResult<IEnumerable<T>>> Get();
+        public async virtual Task<ActionResult<IEnumerable<T>>> Get()
+        {
+            return await entities.ToListAsync();
+        }
 
         [HttpGet("{id}")]
-        public abstract Task<ActionResult<T>> Get(string id);
+        public async virtual Task<ActionResult<T>> Get(string id)
+        {
+            return await entities.FirstOrDefaultAsync(dbEntity => dbEntity.Id.Equals(id));
+        }
 
         [HttpPost]
         public virtual async Task<ActionResult<T>> Post(T entity)
@@ -39,7 +46,13 @@ namespace RezhDumaASPCore_Backend.Controllers
         [HttpPut("{id}")]
         public virtual async Task<ActionResult<T>> Put(string id, T newEntity)
         {
-            var application = db.Applications.FirstOrDefault(app => app.Id.Equals(id));
+            var application = entities.FirstOrDefault(app => app.Id.Equals(id));
+            newEntity.GetType().GetProperties()
+                .Where(p=>p.GetValue(newEntity)!=null)
+                .ToList()
+                .ForEach(p=>application.GetType()
+                    .GetProperty(p.Name)
+                    .SetValue(application,p.GetValue(newEntity)));
             if (application == null)
             {
                 return BadRequest();
@@ -48,11 +61,11 @@ namespace RezhDumaASPCore_Backend.Controllers
             await db.SaveChangesAsync();
             return Ok(application);
         }
-
+        
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult<T>> Delete(string id)
         {
-            var application = db.Applications.FirstOrDefault(x => x.Id == id);
+            var application = entities.FirstOrDefault(x => x.Id == id);
             if (application == null)
             {
                 return NotFound();

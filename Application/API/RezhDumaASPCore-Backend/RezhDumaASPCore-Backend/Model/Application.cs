@@ -9,8 +9,8 @@ namespace RezhDumaASPCore_Backend.Model
     public class Application : Message
     {
         public List<DistrictApplication> DistrictApplications { get; set; }
-        [NotMapped]
         public List<District> Districts { get; set; }
+
         public List<CategoryApplication> CategoryApplications { get; set; }
         [NotMapped]
         public List<Category> Categories { get; set; }
@@ -19,6 +19,7 @@ namespace RezhDumaASPCore_Backend.Model
         [Required]
         public string ApplicantId { get; set; }
         public User Applicant { get; set; }
+
         public DeputyApplication DeputyApplication { get; set; }
         [NotMapped]
         public User Deputy { get; set; }

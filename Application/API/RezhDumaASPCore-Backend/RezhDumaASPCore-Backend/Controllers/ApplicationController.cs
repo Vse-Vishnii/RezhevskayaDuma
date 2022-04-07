@@ -15,44 +15,25 @@ namespace RezhDumaASPCore_Backend.Controllers
     {
         public ApplicationController(ILogger<ApplicationController> logger, UserContext db) : base(logger,db)
         {
-            //CreateData();
+            entities = db.Applications;
+            //Default.CreateData(db);
+            //починить вывод заявлений
+            //поработать с Find
+            //протестировать добавление
+            //https://docs.microsoft.com/en-us/ef/core/change-tracking/identity-resolution
         }
 
-        private void CreateData()
+        public override Task<ActionResult<IEnumerable<Application>>> Get()
         {
-            var user = new User
-            {
-                Firstname = "Алексей",
-                Role = Role.Applicant
-            };
-            db.Add(user);
-            var deputy = new User
-            {
-                Firstname = "Депутат",
-                Role = Role.Deputy
-            };
-            db.Add(deputy);
-            var application = new Application
-            {
-                Applicant = user,
-                Name = "Test",
-                Description = "It's a test application",
-                Status = Status.Sent
-            };
-            db.Add(application);
-            db.SaveChanges();
+            entities.ForEachAsync(app => app = SetForeignKeys(app));
+            return base.Get();
         }
 
-        [HttpGet]
-        public override async Task<ActionResult<IEnumerable<Application>>> Get()
+        public override Task<ActionResult<Application>> Get(string id)
         {
-            return await db.Applications.ToListAsync();
-        }
-
-        [HttpGet("{id}")]
-        public override async Task<ActionResult<Application>> Get(string id)
-        {
-            return await db.Applications.FirstOrDefaultAsync(a => a.Id.Equals(id));
+            var app = entities.Find(id);
+            app = SetForeignKeys(app);
+            return base.Get(id);
         }
 
         [HttpPost]
@@ -60,40 +41,39 @@ namespace RezhDumaASPCore_Backend.Controllers
         {
             if (application == null)
                 return BadRequest();
-            AddDistrict(application);
-            AddCategory(application);
-            var deputy = application.Deputy;
-            if (deputy != null)
-            {
-                db.Add(new DeputyApplication(application, deputy));
-            }
-            db.Add(application);
+            SetDeputyApplication(application);
+            db.ChangeTracker.TrackGraph(application, node =>
+                node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
             await db.SaveChangesAsync();
             return Ok(application);
         }
 
-        private async void AddDistrict(Application application)
+        private Application SetForeignKeys(Application app)
         {
-            var districts = application.Districts;
-            if (districts != null)
-                foreach (var d in districts)
-                {
-                    var da = new DistrictApplication(application, d);
-                    db.Add(da);
-                    await db.SaveChangesAsync();
-                }
+            app.Categories = new List<Category>(db.CategoryApplications
+                .Where(ca => ca.ApplicationId.Equals(app.Id))
+                .Select(ca => ca.Category));
+            app.Districts = new List<District>(db.DistrictApplications
+                .Where(da => da.ApplicationId.Equals(app.Id))
+                .Select(da => da.District));
+            app.Deputy = db.DeputyApplications.Where(da => da.ApplicationId.Equals(app.Id))
+                .Select(da => da.Deputy)
+                .FirstOrDefault();
+            return app;
         }
 
-        private async void AddCategory(Application application)
+        private void SetDeputyApplication(Application application)
         {
-            var categories = application.Categories;
-            if (categories != null)
-                foreach (var c in categories)
-                {
-                    var ca = new CategoryApplication(application, c);
-                    db.Add(ca);
-                    await db.SaveChangesAsync();
-                }
+            if (application.Categories != null && application.Categories.Count == 1)
+                application.Deputy = db.Users.Find(application.Categories[0].DeputyId);
+            if (application.Districts != null && application.Districts.Count == 1)
+                application.Deputy = db.Users.Find(application.Districts[0].DeputyId);
+            var deputy = application.Deputy;
+            if (deputy != null)
+            {
+                db.ChangeTracker.TrackGraph(new DeputyApplication(application, deputy), node =>
+                    node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
+            }
         }
     }
 }

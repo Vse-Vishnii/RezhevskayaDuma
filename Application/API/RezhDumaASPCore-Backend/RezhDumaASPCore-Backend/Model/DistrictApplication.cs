@@ -19,11 +19,5 @@ namespace RezhDumaASPCore_Backend.Model
         public District District { get; set; }
 
         public DistrictApplication() { }
-
-        public DistrictApplication(Application application, District district)
-        {
-            Application = application;
-            District = district;
-        }
     }
 }

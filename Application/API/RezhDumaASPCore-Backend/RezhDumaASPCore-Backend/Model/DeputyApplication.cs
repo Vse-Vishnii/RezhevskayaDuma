@@ -20,7 +20,7 @@ namespace RezhDumaASPCore_Backend.Model
         public DeputyApplication(Application application, User deputy)
         {
             Application = application;
-            Deputy = deputy;
+            DeputyId = deputy.Id;
         }
     }
 }

@@ -20,11 +20,5 @@ namespace RezhDumaASPCore_Backend.Model
         public Category Category { get; set; }
 
         public CategoryApplication(){}
-
-        public CategoryApplication(Application application, Category category)
-        {
-            Application = application;
-            Category = category;
-        }
     }
 }

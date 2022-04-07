@@ -23,6 +23,7 @@ namespace RezhDumaASPCore_Backend.Model
         
         public Category Category { get; set; }
         public District District { get; set; }
+        public List<DeputyApplication> DeputyApplications { get; set; }
 
         public List<Application> Applications { get; set; }
     }
