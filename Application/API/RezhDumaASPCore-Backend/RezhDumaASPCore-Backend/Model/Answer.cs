@@ -9,6 +9,7 @@ namespace RezhDumaASPCore_Backend.Model
     public class Answer : Message
     {
         [ForeignKey("Application")]
+        [Required]
         public string ApplicationId { get; set; }
         public Application Application { get; set; }
     }

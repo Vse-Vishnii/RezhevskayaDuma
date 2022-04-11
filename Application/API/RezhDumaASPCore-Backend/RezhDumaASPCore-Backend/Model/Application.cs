@@ -8,18 +8,23 @@ namespace RezhDumaASPCore_Backend.Model
 {
     public class Application : Message
     {
-        public List<DistrictApplication> Districts { get; set; }
-        public List<CategoryApplication> Categories { get; set; }
+        public List<DistrictApplication> DistrictApplications { get; set; }
+        public List<District> Districts { get; set; }
 
-        [ForeignKey("Deputy")]
-        public string DeputyId { get; set; }
-        [ForeignKey("Applicant")]
-        public string ApplicantId { get; set; }
-
-        
-        public User Deputy { get; set; }
+        public List<CategoryApplication> CategoryApplications { get; set; }
         [NotMapped]
+        public List<Category> Categories { get; set; }
+
+        [ForeignKey("Applicant")]
+        [Required]
+        public string ApplicantId { get; set; }
         public User Applicant { get; set; }
+
+        public DeputyApplication DeputyApplication { get; set; }
+        [NotMapped]
+        public User Deputy { get; set; }
+
+        public Answer Answer { get; set; }
 
         [Required]
         public Status Status { get; set; }        

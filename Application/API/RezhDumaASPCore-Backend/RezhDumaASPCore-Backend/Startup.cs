@@ -20,9 +20,6 @@ namespace RezhDumaASPCore_Backend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            using (var db = new UserContext())
-            {
-            }
         }
 
         public IConfiguration Configuration { get; }
@@ -30,8 +27,13 @@ namespace RezhDumaASPCore_Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkSqlite().AddDbContext<UserContext>();
-            services.AddControllers();
+            //services.AddEntityFrameworkSqlite().AddDbContext<UserContext>();
+            services.AddDbContext<UserContext>(
+                c => c.UseSqlite("Filename=DB\\rezhdb.db;Foreign Keys=False"),
+                ServiceLifetime.Scoped);
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

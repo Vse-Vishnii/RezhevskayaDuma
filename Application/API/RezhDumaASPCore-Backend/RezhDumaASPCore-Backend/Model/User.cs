@@ -16,14 +16,15 @@ namespace RezhDumaASPCore_Backend.Model
         public string Patronymic { get; set; }
         [MaxLength(255)]
         public string Email { get; set; }
-        [MaxLength(255)]
+        [MaxLength(20)]
         public string Phone { get; set; }
         [Required]
         public Role Role { get; set; }
+        
+        public Category Category { get; set; }
+        public District District { get; set; }
+        public List<DeputyApplication> DeputyApplications { get; set; }
 
-        [NotMapped]
         public List<Application> Applications { get; set; }
-        [NotMapped]
-        public List<Answer> Answers { get; set; }
     }
 }

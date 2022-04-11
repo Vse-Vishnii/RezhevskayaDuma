@@ -9,6 +9,16 @@ namespace RezhDumaASPCore_Backend.Model
     [Table("Categories")]
     public class Category : DbEntity
     {
+        [Required]
+        [MaxLength(150)]
         public string Name { get; set; }
+
+        [ForeignKey("Deputy")]
+        [Required]
+        public string DeputyId { get; set; }
+        public User Deputy { get; set; }
+
+        public List<CategoryApplication> CategoryApplications { get; set; }
+        public List<Application> Applications { get; set; }
     }
 }
