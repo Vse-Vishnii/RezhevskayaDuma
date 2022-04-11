@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
+using RezhDumaASPCore_Backend.Repositories;
 
 namespace RezhDumaASPCore_Backend
 {
@@ -34,6 +35,9 @@ namespace RezhDumaASPCore_Backend
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            services.AddScoped<ApplicationRepository>();
+            services.AddScoped<UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
