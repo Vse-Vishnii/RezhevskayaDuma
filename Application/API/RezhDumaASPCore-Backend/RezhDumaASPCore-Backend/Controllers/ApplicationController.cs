@@ -16,11 +16,6 @@ namespace RezhDumaASPCore_Backend.Controllers
         public ApplicationController(ILogger<ApplicationController> logger, UserContext db) : base(logger,db)
         {
             entities = db.Applications;
-            //Default.CreateData(db);
-            //починить вывод заявлений
-            //поработать с Find
-            //протестировать добавление
-            //https://docs.microsoft.com/en-us/ef/core/change-tracking/identity-resolution
         }
 
         public override Task<ActionResult<IEnumerable<Application>>> Get()
@@ -42,8 +37,7 @@ namespace RezhDumaASPCore_Backend.Controllers
             if (application == null)
                 return BadRequest();
             SetDeputyApplication(application);
-            db.ChangeTracker.TrackGraph(application, node =>
-                node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
+            AddEntity(application);
             await db.SaveChangesAsync();
             return Ok(application);
         }

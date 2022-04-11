@@ -46,13 +46,12 @@ namespace RezhDumaASPCore_Backend.Controllers
         [HttpPut("{id}")]
         public virtual async Task<ActionResult<T>> Put(string id, T newEntity)
         {
-            var application = entities.FirstOrDefault(app => app.Id.Equals(id));
-            newEntity.GetType().GetProperties()
-                .Where(p=>p.GetValue(newEntity)!=null)
+            var application = entities.Find(id);
+            newEntity.GetType()
+                .GetProperties()
+                .Where(p => p.GetValue(newEntity) != null)
                 .ToList()
-                .ForEach(p=>application.GetType()
-                    .GetProperty(p.Name)
-                    .SetValue(application,p.GetValue(newEntity)));
+                .ForEach(p => application.GetType().GetProperty(p.Name).SetValue(application, p.GetValue(newEntity)));
             if (application == null)
             {
                 return BadRequest();
@@ -65,7 +64,7 @@ namespace RezhDumaASPCore_Backend.Controllers
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult<T>> Delete(string id)
         {
-            var application = entities.FirstOrDefault(x => x.Id == id);
+            var application = entities.Find(id);
             if (application == null)
             {
                 return NotFound();
@@ -73,6 +72,12 @@ namespace RezhDumaASPCore_Backend.Controllers
             db.Remove(application);
             await db.SaveChangesAsync();
             return Ok(application);
+        }
+
+        protected void AddEntity(T entity)
+        {
+            db.ChangeTracker.TrackGraph(entity, node =>
+                node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
         }
     }
 }
