@@ -17,5 +17,11 @@ namespace RezhDumaASPCore_Backend.Controllers
         public ApplicationController(ILogger<ApplicationController> logger, ApplicationRepository repository) : base(logger, repository)
         {
         }
+
+        [HttpGet("deputy/{id}")]
+        public async Task<ActionResult<IEnumerable<Application>>> Get(string id)
+        {
+            return await repository.GetByDeputy(id);
+        }
     }
 }

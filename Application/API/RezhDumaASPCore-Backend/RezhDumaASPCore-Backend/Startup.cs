@@ -38,6 +38,9 @@ namespace RezhDumaASPCore_Backend
 
             services.AddScoped<ApplicationRepository>();
             services.AddScoped<UserRepository>();
+            services.AddScoped<CategoryRepository>();
+            services.AddScoped<AnswerRepository>();
+            services.AddScoped<DistrictRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
