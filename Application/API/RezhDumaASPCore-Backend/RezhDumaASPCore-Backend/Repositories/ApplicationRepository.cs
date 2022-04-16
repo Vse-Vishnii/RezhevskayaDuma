@@ -12,6 +12,16 @@ namespace RezhDumaASPCore_Backend.Repositories
         {
         }
 
+        public async Task<List<Application>> GetByDeputy(string id)
+        {
+            var apps = db.Set<DeputyApplication>()
+                .Where(app => app.DeputyId.Equals(id))
+                .Select(app => app.Application)
+                .ToList();
+            apps.ForEach(app => app = SetForeignKeys(app));
+            return apps;
+        }
+
         public async override Task<List<Application>> GetAll()
         {
             db.Set<Application>().ForEachAsync(app => app = SetForeignKeys(app));
