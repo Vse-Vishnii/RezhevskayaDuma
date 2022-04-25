@@ -14,10 +14,22 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public async Task<List<Application>> GetByDeputy(string id)
         {
-            var apps = db.Set<DeputyApplication>()
-                .Where(app => app.DeputyId.Equals(id))
-                .Select(app => app.Application)
-                .ToList();
+            var apps = GetByDeputy(id, db.Set<DeputyApplication>());
+            apps.ForEach(app => app = SetForeignKeys(app));
+            return apps;
+        }
+
+        public async Task<List<Application>> GetByStatus(Status status)
+        {
+            var apps = GetByStatus(status, db.Set<Application>());
+            apps.ForEach(app => app = SetForeignKeys(app));
+            return apps;
+        }
+
+        public async Task<List<Application>> GetByDeputyStatus(string id, Status status)
+        {
+            var apps = GetByDeputy(id, db.Set<DeputyApplication>());
+            apps = GetByStatus(status, apps);
             apps.ForEach(app => app = SetForeignKeys(app));
             return apps;
         }
@@ -69,5 +81,11 @@ namespace RezhDumaASPCore_Backend.Repositories
                     node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
             }
         }
+
+        private List<Application> GetByDeputy(string id, IEnumerable<DeputyApplication> list) =>
+            list.Where(app => app.DeputyId.Equals(id)).Select(app => app.Application).ToList();
+
+        private List<Application> GetByStatus(Status status, IEnumerable<Application> list) =>
+            list.Where(app => app.Status == status).ToList();
     }
 }

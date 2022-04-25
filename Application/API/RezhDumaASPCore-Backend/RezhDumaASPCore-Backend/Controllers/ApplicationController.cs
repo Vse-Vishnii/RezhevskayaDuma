@@ -23,5 +23,17 @@ namespace RezhDumaASPCore_Backend.Controllers
         {
             return await repository.GetByDeputy(id);
         }
+
+        [HttpGet("{status}")]
+        public async Task<ActionResult<IEnumerable<Application>>> Get(Status status)
+        {
+            return await repository.GetByStatus(status);
+        }
+
+        [HttpGet("deputy/{id}/{status}")]
+        public async Task<ActionResult<IEnumerable<Application>>> Get(string id, Status status)
+        {
+            return await repository.GetByDeputyStatus(id, status);
+        }
     }
 }
