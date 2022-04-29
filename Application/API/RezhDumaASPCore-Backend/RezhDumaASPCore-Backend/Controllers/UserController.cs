@@ -14,7 +14,7 @@ namespace RezhDumaASPCore_Backend.Controllers
     [Route("[controller]")]
     public class UserController : AbstractController<User, UserRepository>
     {
-        public UserController(ILogger<ApplicationController> logger, UserRepository repository) : base(logger, repository)
+        public UserController(UserRepository repository) : base(repository)
         {
         }
     }

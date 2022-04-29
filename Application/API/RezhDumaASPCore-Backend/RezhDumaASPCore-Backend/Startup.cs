@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
 using RezhDumaASPCore_Backend.Repositories;
+using RezhDumaASPCore_Backend.Services;
 
 namespace RezhDumaASPCore_Backend
 {
@@ -41,7 +42,20 @@ namespace RezhDumaASPCore_Backend
             services.AddScoped<CategoryRepository>();
             services.AddScoped<AnswerRepository>();
             services.AddScoped<DistrictRepository>();
+
             services.AddSwaggerGen();
+            services.AddSignalR();
+
+
+            services.AddTransient<IEmailService, EmailService>();
+            services.Configure<EmailSenderOptions>(options =>
+            {
+                options.HostAddress = Configuration["EmailConfiguration:SmtpServer"];
+                options.HostPort = Convert.ToInt32(Configuration["EmailConfiguration:SmtpPort"]);
+                options.HostUsername = Configuration["EmailConfiguration:SmtpUsername"];
+                options.HostPassword = Configuration["EmailConfiguration:SmtpPassword"];
+                options.SenderName = Configuration["EmailConfiguration:SenderName"];
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

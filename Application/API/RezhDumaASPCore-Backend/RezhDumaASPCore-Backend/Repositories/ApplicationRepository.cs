@@ -77,8 +77,7 @@ namespace RezhDumaASPCore_Backend.Repositories
             var deputy = application.Deputy;
             if (deputy != null)
             {
-                db.ChangeTracker.TrackGraph(new DeputyApplication(application, deputy), node =>
-                    node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
+                AddEntity(new DeputyApplication(application, deputy));
             }
         }
 

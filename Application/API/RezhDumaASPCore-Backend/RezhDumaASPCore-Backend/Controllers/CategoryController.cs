@@ -9,7 +9,7 @@ namespace RezhDumaASPCore_Backend.Controllers
     [Route("[controller]")]
     public class CategoryController : AbstractController<Category,CategoryRepository>
     {
-        public CategoryController(ILogger<ApplicationController> logger, CategoryRepository repository) : base(logger, repository)
+        public CategoryController(CategoryRepository repository) : base(repository)
         {
         }
     }

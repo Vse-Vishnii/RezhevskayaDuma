@@ -9,7 +9,7 @@ namespace RezhDumaASPCore_Backend.Controllers
     [Route("[controller]")]
     public class DistrictController : AbstractController<District,DistrictRepository>
     {
-        public DistrictController(ILogger<ApplicationController> logger, DistrictRepository repository) : base(logger, repository)
+        public DistrictController(DistrictRepository repository) : base(repository)
         {
         }
     }

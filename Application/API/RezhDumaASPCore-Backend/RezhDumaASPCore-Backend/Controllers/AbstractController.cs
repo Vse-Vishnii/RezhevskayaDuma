@@ -13,12 +13,10 @@ namespace RezhDumaASPCore_Backend.Controllers
     where TEntity:DbEntity
     where TRepository:IRepository<TEntity>
     {
-        protected readonly ILogger<ApplicationController> logger;
         protected readonly TRepository repository;
 
-        public AbstractController(ILogger<ApplicationController> logger, TRepository repository)
+        public AbstractController(TRepository repository)
         {
-            this.logger = logger;
             this.repository = repository;
         }
 

@@ -14,7 +14,7 @@ namespace RezhDumaASPCore_Backend.Controllers
     [Route("[controller]")]
     public class ApplicationController : AbstractController<Application, ApplicationRepository>
     {
-        public ApplicationController(ILogger<ApplicationController> logger, ApplicationRepository repository) : base(logger, repository)
+        public ApplicationController(ApplicationRepository repository) : base(repository)
         {
         }
 
@@ -24,7 +24,7 @@ namespace RezhDumaASPCore_Backend.Controllers
             return await repository.GetByDeputy(id);
         }
 
-        [HttpGet("{status}")]
+        [HttpGet("status={status}")]
         public async Task<ActionResult<IEnumerable<Application>>> Get(Status status)
         {
             return await repository.GetByStatus(status);

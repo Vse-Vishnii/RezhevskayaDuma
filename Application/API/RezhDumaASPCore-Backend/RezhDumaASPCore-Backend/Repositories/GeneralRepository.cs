@@ -58,7 +58,7 @@ namespace RezhDumaASPCore_Backend.Repositories
             return entity;
         }
 
-        protected void AddEntity(TEntity entity)
+        protected void AddEntity(DbEntity entity)
         {
             db.ChangeTracker.TrackGraph(entity, node =>
                 node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);

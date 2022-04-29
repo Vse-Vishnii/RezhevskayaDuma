@@ -9,7 +9,7 @@ namespace RezhDumaASPCore_Backend.Controllers
     [Route("[controller]")]
     public class AnswerController : AbstractController<Answer,AnswerRepository>
     {
-        public AnswerController(ILogger<ApplicationController> logger, AnswerRepository repository) : base(logger, repository)
+        public AnswerController(AnswerRepository repository) : base(repository)
         {
         }
     }
