@@ -5,79 +5,63 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RezhDumaASPCore_Backend.Model;
+using RezhDumaASPCore_Backend.Repositories;
 
 namespace RezhDumaASPCore_Backend.Controllers
 {
-    public abstract class AbstractController<T> : Controller
-    where T:DbEntity
+    public abstract class AbstractController<TEntity,TRepository> : Controller
+    where TEntity:DbEntity
+    where TRepository:IRepository<TEntity>
     {
-        protected readonly ILogger<ApplicationController> logger;
-        protected readonly UserContext db;
-        protected DbSet<T> entities;
+        protected readonly TRepository repository;
 
-        public AbstractController(ILogger<ApplicationController> logger, UserContext db)
+        public AbstractController(TRepository repository)
         {
-            this.logger = logger;
-            this.db = db;
+            this.repository = repository;
         }
 
         [HttpGet]
-        public async virtual Task<ActionResult<IEnumerable<T>>> Get()
+        public async virtual Task<ActionResult<IEnumerable<TEntity>>> Get()
         {
-            return await entities.ToListAsync();
+            return await repository.GetAll();
         }
 
         [HttpGet("{id}")]
-        public async virtual Task<ActionResult<T>> Get(string id)
+        public async virtual Task<ActionResult<TEntity>> Get(string id)
         {
-            return await entities.FirstOrDefaultAsync(dbEntity => dbEntity.Id.Equals(id));
+            return await repository.Get(id);
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<T>> Post(T entity)
+        public virtual async Task<ActionResult<TEntity>> Post(TEntity entity)
         {
             if (entity == null)
                 return BadRequest();
-            db.Add(entity);
-            await db.SaveChangesAsync();
+            await repository.Add(entity);
             return Ok(entity);
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<T>> Put(string id, T newEntity)
+        public virtual async Task<ActionResult<TEntity>> Put(string id, TEntity newEntity)
         {
-            var application = entities.Find(id);
-            newEntity.GetType()
-                .GetProperties()
-                .Where(p => p.GetValue(newEntity) != null)
-                .ToList()
-                .ForEach(p => application.GetType().GetProperty(p.Name).SetValue(application, p.GetValue(newEntity)));
-            if (application == null)
+            if (id!=newEntity.Id)
             {
                 return BadRequest();
             }
-            db.Update(application);
-            await db.SaveChangesAsync();
-            return Ok(application);
+
+            await repository.Update(newEntity);
+            return Ok(newEntity);
         }
         
         [HttpDelete("{id}")]
-        public virtual async Task<ActionResult<T>> Delete(string id)
+        public virtual async Task<ActionResult<TEntity>> Delete(string id)
         {
-            var application = entities.Find(id);
-            if (application == null)
+            var entity = repository.Delete(id);
+            if (entity == null)
             {
                 return NotFound();
             }
-            db.Remove(application);
-            await db.SaveChangesAsync();
-            return Ok(application);
-        }
-
-        protected void AddEntity(T entity)
-        {
-            db.ChangeTracker.TrackGraph(entity, node =>
-                node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
+            return Ok(entity);
         }
     }
 }

@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RezhDumaASPCore_Backend.Model;
+using RezhDumaASPCore_Backend.Repositories;
 
 namespace RezhDumaASPCore_Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : AbstractController<User>
+    public class UserController : AbstractController<User, UserRepository>
     {
-        public UserController(ILogger<ApplicationController> logger, UserContext db) : base(logger, db)
+        public UserController(UserRepository repository) : base(repository)
         {
-            entities = db.Users;
         }
     }
 }

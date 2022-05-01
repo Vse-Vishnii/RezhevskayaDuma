@@ -6,68 +6,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
+using RezhDumaASPCore_Backend.Repositories;
 
 namespace RezhDumaASPCore_Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ApplicationController : AbstractController<Application>
+    public class ApplicationController : AbstractController<Application, ApplicationRepository>
     {
-        public ApplicationController(ILogger<ApplicationController> logger, UserContext db) : base(logger,db)
+        public ApplicationController(ApplicationRepository repository) : base(repository)
         {
-            entities = db.Applications;
         }
 
-        public override Task<ActionResult<IEnumerable<Application>>> Get()
+        [HttpGet("deputy/{id}")]
+        public async Task<ActionResult<IEnumerable<Application>>> Get(string id)
         {
-            entities.ForEachAsync(app => app = SetForeignKeys(app));
-            return base.Get();
+            return await repository.GetByDeputy(id);
         }
 
-        public override Task<ActionResult<Application>> Get(string id)
+        [HttpGet("status={status}")]
+        public async Task<ActionResult<IEnumerable<Application>>> Get(Status status)
         {
-            var app = entities.Find(id);
-            app = SetForeignKeys(app);
-            return base.Get(id);
+            return await repository.GetByStatus(status);
         }
 
-        [HttpPost]
-        public override async Task<ActionResult<Application>> Post(Application application)
+        [HttpGet("deputy/{id}/{status}")]
+        public async Task<ActionResult<IEnumerable<Application>>> Get(string id, Status status)
         {
-            if (application == null)
-                return BadRequest();
-            SetDeputyApplication(application);
-            AddEntity(application);
-            await db.SaveChangesAsync();
-            return Ok(application);
-        }
-
-        private Application SetForeignKeys(Application app)
-        {
-            app.Categories = new List<Category>(db.CategoryApplications
-                .Where(ca => ca.ApplicationId.Equals(app.Id))
-                .Select(ca => ca.Category));
-            app.Districts = new List<District>(db.DistrictApplications
-                .Where(da => da.ApplicationId.Equals(app.Id))
-                .Select(da => da.District));
-            app.Deputy = db.DeputyApplications.Where(da => da.ApplicationId.Equals(app.Id))
-                .Select(da => da.Deputy)
-                .FirstOrDefault();
-            return app;
-        }
-
-        private void SetDeputyApplication(Application application)
-        {
-            if (application.Categories != null && application.Categories.Count == 1)
-                application.Deputy = db.Users.Find(application.Categories[0].DeputyId);
-            if (application.Districts != null && application.Districts.Count == 1)
-                application.Deputy = db.Users.Find(application.Districts[0].DeputyId);
-            var deputy = application.Deputy;
-            if (deputy != null)
-            {
-                db.ChangeTracker.TrackGraph(new DeputyApplication(application, deputy), node =>
-                    node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
-            }
+            return await repository.GetByDeputyStatus(id, status);
         }
     }
 }
