@@ -8,6 +8,7 @@ namespace RezhDumaASPCore_Backend.Model
     {
         Sent,
         InProcess,
-        Done
+        Done,
+        Refused
     }
 }

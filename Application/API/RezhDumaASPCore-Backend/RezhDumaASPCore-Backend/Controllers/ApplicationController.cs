@@ -43,8 +43,19 @@ namespace RezhDumaASPCore_Backend.Controllers
         public async override Task<ActionResult<Application>> Post(Application entity)
         {
             await repository.Add(entity);
-            messageService.Send(entity.Deputy, entity.Applicant, entity);
+            messageService.Send(entity.Applicant, entity.Deputy,  entity);
             return Ok(entity);
+        }
+
+        [HttpPut("{id}/{accepted}")]
+        public async Task<ActionResult<Application>> AcceptApplication(string id, bool accepted, Answer answer = null)
+        {
+            var app = await repository.Get(id);
+            app.Status = accepted ? Status.InProcess : Status.Refused;
+            await repository.Update(app);
+            if (!accepted)
+                messageService.Send(app.Deputy, app.Applicant, answer);
+            return Ok(app);
         }
     }
 }

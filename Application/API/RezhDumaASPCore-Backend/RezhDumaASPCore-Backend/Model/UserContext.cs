@@ -25,7 +25,7 @@ namespace RezhDumaASPCore_Backend.Model
             Database.EnsureCreated();
         }
 
-        public TEntity PullEntity<TEntity>(TEntity entity, string id)
+        public TEntity PullEntity<TEntity>(string id)
         where TEntity : DbEntity
         {
             return Set<TEntity>().Find(id);

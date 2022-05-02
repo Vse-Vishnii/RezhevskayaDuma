@@ -44,7 +44,7 @@ namespace RezhDumaASPCore_Backend.Repositories
         public async override Task<Application> Add(Application entity)
         {
             SetDeputyApplication(entity);
-            db.PullEntity(entity.Applicant, entity.ApplicantId);
+            db.PullEntity<User>(entity.ApplicantId);
             AddEntity(entity);
             await db.SaveChangesAsync();
             return entity;
@@ -69,9 +69,9 @@ namespace RezhDumaASPCore_Backend.Repositories
         private void SetDeputyApplication(Application application)
         {
             if (application.Categories != null && application.Categories.Count == 1)
-                db.PullEntity(application.Deputy, application.Categories[0].DeputyId);
+                db.PullEntity<User>(application.Categories[0].DeputyId);
             if (application.Districts != null && application.Districts.Count == 1)
-                db.PullEntity(application.Deputy, application.Districts[0].DeputyId);
+                db.PullEntity<User>(application.Districts[0].DeputyId);
             var deputy = application.Deputy;
             if (deputy != null)
             {

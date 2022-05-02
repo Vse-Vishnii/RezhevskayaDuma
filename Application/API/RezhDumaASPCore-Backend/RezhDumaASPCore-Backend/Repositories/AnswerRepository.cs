@@ -12,11 +12,11 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public async override Task<Answer> Add(Answer entity)
         {
-            var app = db.PullEntity(entity.Application, entity.ApplicationId);
-            db.PullEntity(app.Applicant, app.ApplicantId);
+            var app = db.PullEntity<Application>(entity.ApplicationId);
+            db.PullEntity<User>(app.ApplicantId);
             var deputyApplication = db.Set<DeputyApplication>()
                 .FirstOrDefault(da => da.ApplicationId.Equals(app.Id));
-            db.PullEntity(app.Deputy, deputyApplication.DeputyId);
+            db.PullEntity<User>(deputyApplication.DeputyId);
             return await base.Add(entity);
         }
     }
