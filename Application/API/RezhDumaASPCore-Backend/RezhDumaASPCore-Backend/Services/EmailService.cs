@@ -7,15 +7,11 @@ namespace RezhDumaASPCore_Backend.Services
 {
     public interface IEmailService
     {
-        Task SendEmailAsync(string email, string subject, string message);
+        Task SendEmailAsync(string email, string subject, string message, string sender);
     }
 
     public class EmailService : IEmailService
     {
-        private string name = "Администрация сайта";
-        private string address = "Lesha37b@yandex.ru";
-        private string password = "yeneibimykywveyx";
-
         private readonly EmailSenderOptions options;
 
         public EmailService(IOptions<EmailSenderOptions> options)
@@ -23,11 +19,11 @@ namespace RezhDumaASPCore_Backend.Services
             this.options = options.Value;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string message)
+        public async Task SendEmailAsync(string email, string subject, string message, string sender)
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress(options.SenderName, options.HostUsername));
+            emailMessage.From.Add(new MailboxAddress(sender, options.HostUsername));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)

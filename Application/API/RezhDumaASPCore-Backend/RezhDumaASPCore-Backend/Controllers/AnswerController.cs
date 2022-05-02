@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RezhDumaASPCore_Backend.Model;
 using RezhDumaASPCore_Backend.Repositories;
+using RezhDumaASPCore_Backend.Services;
 
 namespace RezhDumaASPCore_Backend.Controllers
 {
@@ -9,8 +11,17 @@ namespace RezhDumaASPCore_Backend.Controllers
     [Route("[controller]")]
     public class AnswerController : AbstractController<Answer,AnswerRepository>
     {
-        public AnswerController(AnswerRepository repository) : base(repository)
+        private readonly IMessageService messageService;
+        public AnswerController(AnswerRepository repository, IMessageService messageService) : base(repository)
         {
+            this.messageService = messageService;
+        }
+
+        public override async Task<ActionResult<Answer>> Post(Answer entity)
+        {
+            await repository.Add(entity);
+            messageService.Send(entity.Application.Deputy, entity.Application.Applicant, entity);
+            return Ok(entity);
         }
     }
 }

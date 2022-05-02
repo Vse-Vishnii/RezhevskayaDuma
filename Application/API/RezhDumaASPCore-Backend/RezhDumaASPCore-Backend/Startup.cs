@@ -46,7 +46,7 @@ namespace RezhDumaASPCore_Backend
             services.AddSwaggerGen();
             services.AddSignalR();
 
-
+            services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IEmailService, EmailService>();
             services.Configure<EmailSenderOptions>(options =>
             {

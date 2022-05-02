@@ -35,8 +35,6 @@ namespace RezhDumaASPCore_Backend.Controllers
         [HttpPost]
         public virtual async Task<ActionResult<TEntity>> Post(TEntity entity)
         {
-            if (entity == null)
-                return BadRequest();
             await repository.Add(entity);
             return Ok(entity);
         }

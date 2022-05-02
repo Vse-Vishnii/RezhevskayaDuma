@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
 using RezhDumaASPCore_Backend.Repositories;
+using RezhDumaASPCore_Backend.Services;
 
 namespace RezhDumaASPCore_Backend.Controllers
 {
@@ -14,8 +15,11 @@ namespace RezhDumaASPCore_Backend.Controllers
     [Route("[controller]")]
     public class ApplicationController : AbstractController<Application, ApplicationRepository>
     {
-        public ApplicationController(ApplicationRepository repository) : base(repository)
+        private readonly IMessageService messageService;
+
+        public ApplicationController(ApplicationRepository repository, IMessageService messageService) : base(repository)
         {
+            this.messageService = messageService;
         }
 
         [HttpGet("deputy/{id}")]
@@ -34,6 +38,13 @@ namespace RezhDumaASPCore_Backend.Controllers
         public async Task<ActionResult<IEnumerable<Application>>> Get(string id, Status status)
         {
             return await repository.GetByDeputyStatus(id, status);
+        }
+
+        public async override Task<ActionResult<Application>> Post(Application entity)
+        {
+            await repository.Add(entity);
+            messageService.Send(entity.Deputy, entity.Applicant, entity);
+            return Ok(entity);
         }
     }
 }

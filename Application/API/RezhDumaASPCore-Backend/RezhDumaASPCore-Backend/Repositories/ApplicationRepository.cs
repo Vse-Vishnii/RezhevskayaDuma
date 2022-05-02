@@ -14,24 +14,19 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public async Task<List<Application>> GetByDeputy(string id)
         {
-            var apps = GetByDeputy(id, db.Set<DeputyApplication>());
-            apps.ForEach(app => app = SetForeignKeys(app));
-            return apps;
+            return GetApplications(GetByDeputy(id, db.Set<DeputyApplication>()));
         }
 
         public async Task<List<Application>> GetByStatus(Status status)
         {
-            var apps = GetByStatus(status, db.Set<Application>());
-            apps.ForEach(app => app = SetForeignKeys(app));
-            return apps;
+            return GetApplications(GetByStatus(status, db.Set<Application>()));
         }
 
         public async Task<List<Application>> GetByDeputyStatus(string id, Status status)
         {
             var apps = GetByDeputy(id, db.Set<DeputyApplication>());
             apps = GetByStatus(status, apps);
-            apps.ForEach(app => app = SetForeignKeys(app));
-            return apps;
+            return GetApplications(apps);
         }
 
         public async override Task<List<Application>> GetAll()
@@ -49,19 +44,22 @@ namespace RezhDumaASPCore_Backend.Repositories
         public async override Task<Application> Add(Application entity)
         {
             SetDeputyApplication(entity);
+            db.PullEntity(entity.Applicant, entity.ApplicantId);
             AddEntity(entity);
             await db.SaveChangesAsync();
             return entity;
         }
 
+        private List<Application> GetApplications(List<Application> apps)
+        {
+            apps.ForEach(app => app = SetForeignKeys(app));
+            return apps;
+        }
+
         private Application SetForeignKeys(Application app)
         {
-            app.Categories = new List<Category>(db.CategoryApplications
-                .Where(ca => ca.ApplicationId.Equals(app.Id))
-                .Select(ca => ca.Category));
-            app.Districts = new List<District>(db.DistrictApplications
-                .Where(da => da.ApplicationId.Equals(app.Id))
-                .Select(da => da.District));
+            db.PullCollection<Category,CategoryApplication>(app).ToList();
+            db.PullCollection<District, DistrictApplication>(app).ToList(); 
             app.Deputy = db.DeputyApplications.Where(da => da.ApplicationId.Equals(app.Id))
                 .Select(da => da.Deputy)
                 .FirstOrDefault();
@@ -71,9 +69,9 @@ namespace RezhDumaASPCore_Backend.Repositories
         private void SetDeputyApplication(Application application)
         {
             if (application.Categories != null && application.Categories.Count == 1)
-                application.Deputy = db.Users.Find(application.Categories[0].DeputyId);
+                db.PullEntity(application.Deputy, application.Categories[0].DeputyId);
             if (application.Districts != null && application.Districts.Count == 1)
-                application.Deputy = db.Users.Find(application.Districts[0].DeputyId);
+                db.PullEntity(application.Deputy, application.Districts[0].DeputyId);
             var deputy = application.Deputy;
             if (deputy != null)
             {

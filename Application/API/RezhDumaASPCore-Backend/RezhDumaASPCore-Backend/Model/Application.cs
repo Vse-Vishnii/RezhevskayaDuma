@@ -24,6 +24,8 @@ namespace RezhDumaASPCore_Backend.Model
         [NotMapped]
         public User Deputy { get; set; }
 
+        [ForeignKey("Answer")]
+        public string AnswerId { get; set; }
         public Answer Answer { get; set; }
 
         [Required]
