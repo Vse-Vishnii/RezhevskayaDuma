@@ -1,6 +1,6 @@
 ﻿using MailKit.Security;
 
-namespace RezhDumaASPCore_Backend.Services
+namespace RezhDumaASPCore_Backend.Options
 {
     public class EmailSenderOptions
     {

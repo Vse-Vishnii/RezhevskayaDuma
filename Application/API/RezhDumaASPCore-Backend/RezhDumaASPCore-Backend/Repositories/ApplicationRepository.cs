@@ -37,7 +37,7 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public async override Task<Application> Get(string id)
         {
-            var app = SetForeignKeys(db.Set<Application>().Find(id));
+            SetForeignKeys(db.Set<Application>().Find(id));
             return await base.Get(id);
         }
 

@@ -2,6 +2,7 @@
 using MailKit.Net.Smtp;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using RezhDumaASPCore_Backend.Options;
 
 namespace RezhDumaASPCore_Backend.Services
 {
