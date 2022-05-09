@@ -1,0 +1,441 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  color: #000;
+  font-size: 28px;
+  line-height: 34px;
+}
+
+.button {
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 28px;
+  line-height: 34px;
+  padding: 24px 34px;
+  display: block;
+  width: fit-content;
+  user-select: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+  &:hover {
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.button_next_back {
+  color: #000;
+  font-weight: 600;
+}
+
+.blue {
+  background-color: #dde8ff;
+  &:hover {
+    background-color: #c1d5ff;
+  }
+}
+
+.yellow {
+  background-color: #ffe78e;
+  &:hover {
+    background-color: rgb(250, 216, 91);
+  }
+}
+
+.container {
+  margin: 155px 6.5%;
+}
+
+input, textarea {
+  border: 3px solid #6B7FAB;
+  border-radius: 25px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: inherit;
+  line-height: inherit;
+  margin-top: 20px;
+  width: 100%;
+  padding: 25px 35px;
+  &:focus {
+    outline: none;
+    border-color: #062b7b; 
+  }
+}
+
+// Header
+
+header {
+  width: 100%;
+  height: 159px;
+  background-color: #dde8ff;
+  display: flex;
+  align-items: center;
+  .header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    &_logo_block {
+      margin-left: 6%;
+      margin-right: 42px;
+    }
+    &_logo {
+      display: block;
+    }
+    &_title {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 34px;
+      color: #000;
+      margin: 0;
+      margin-right: 25px;
+    }
+  }
+}
+
+// Main Page, Gratitude
+
+.main_page,
+.gratitude_page {
+  display: flex;
+  gap: 5%;
+  div {
+    box-sizing: border-box;
+  }
+  .info {
+    width: 55%;
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 59px;
+      margin: 0;
+      margin-right: 20px;
+      margin-bottom: 40px;
+      padding: 0;
+    }
+    &_title {
+      font-size: 28px;
+      line-height: 34px;
+      font-weight: 500;
+      margin: 0;
+      &.info_title_two {
+        margin-top: 60px;
+        margin-bottom: 30px;
+      }
+    }
+    .ask_question {
+      color: #000;
+      margin-bottom: 22px;
+      margin-top: 50px;
+      font-weight: 600;
+    }
+    .view_applications {
+      background-color: #0070b8;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+  .div_img {
+    width: 45%;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 747px;
+    }
+  }
+}
+
+// Steps
+
+//first-third steps
+
+.step_choose {
+  display: flex;
+  gap: 15%;
+  .choose_category {
+    width: 60%;
+    p {
+      margin: 0;
+    }
+    .title {
+      font-weight: 600;
+    }
+    .choose_cat {
+      font-weight: 800;
+      margin-top: 7px;
+      margin-bottom: 50px;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      margin-bottom: 30px;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      li {
+        margin: 0;
+        &.button_option {
+          font-size: 24px;
+        }
+        &.button_option_active {
+          border: 2px solid #000000;
+        }
+      }
+    }
+    .buttons_next_back {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+  }
+  .hint_block {
+    width: 30%;
+    .hint {
+      background: #c4c4c4;
+      padding-top: 50%;
+      padding-bottom: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+// Fourth step - form
+
+.form {
+  form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+  }
+  p {
+    margin: 0;
+    font-weight: 600;
+  }
+  &_left {
+    width: 40%;
+  }
+  &_right {
+    width: 57%;
+    input, textarea {
+      width: 100%;
+    }
+    textarea {
+      height: calc(100% - 164px);
+    }
+  }
+  button {
+    margin-top: 40px;
+    border: none;
+  }
+  .input_error {
+    border-color: #e83030;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+  }
+}
+
+// list of aplications
+
+.container_list_applications {
+  margin: 80px 5.5%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  column-gap: 3%;
+  row-gap: 25px;
+  p {
+    margin: 0;
+  }
+  button {
+    font-weight: 600;
+    border: none;
+    margin-top: 25px;
+    font-size: 24px;
+    line-height: 29px;
+  }
+  aside {
+    margin-top: 54px;
+    padding: 35px;
+    border: 2px solid #000000;
+    border-radius: 25px;
+    flex-basis: 300px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    .filter {
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    .filter_deputy {
+      margin-top: 30px;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+        font-weight: 500;
+        line-height: 135%;
+        font-size: 22px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        &::before {
+          content: '';
+          display: inline-block;
+          margin-right: 14px;
+          width: 20px;
+          height: 20px;
+          position: relative;
+          border: 2px solid #C4C4C4;
+          box-sizing: border-box;
+          border-radius: 5px;
+          overflow: hidden;
+          cursor: pointer;
+          flex-shrink: 0;
+        }
+        &.active::before {
+          background-color: #969696;
+          border-color: #969696;
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23dde8ff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+        }
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  main {
+    width: 100%;
+    .list_applications {
+      margin-top: 50px;
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 2%;
+      row-gap: 25px;
+      .application {
+        padding: 35px 22px;
+        border: 2px solid #000000;
+        box-sizing: border-box;
+        border-radius: 25px;
+        width: 32%;
+        line-height: 27px;
+        font-size: 22px;
+        font-weight: 500;
+        display: flex;
+        flex-direction: column;
+        p {
+          margin: 0;
+        }
+        &_top {
+          display: flex;
+          justify-content: space-between;
+          font-weight: 600;
+          .status {
+            color: #E9B800;
+            &.status_process {
+              color: #D48000;
+            }
+            &.status_answered {
+              color: #217F00;
+            }
+          }
+
+        }
+        .title {
+          font-weight: 600;
+          margin: 25px 0;
+        }
+        .message {
+          line-height: 135%;
+          flex-grow: 1;
+        }
+      }
+    }
+  }
+  .text_search_application {
+    font-weight: 600;
+  }
+}
+
+// popup
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &_inner {
+    position: relative;
+    background-color: #fff;
+    max-width: 640px;
+    padding: 60px;
+    transition: .5s;
+    border-radius: 25px;
+    box-sizing: border-box;
+    cursor: auto;
+    p {
+      margin: 0;
+    }
+    .id {
+      font-size: 22px;
+      line-height: 27px;
+      font-weight: 600;
+    }
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 35px;
+      margin-top: 15px;
+      margin-bottom: 22px;
+    }
+    .message, .answer {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 135%;
+      margin-bottom: 7px;
+    }
+    .who_submitted, .who_answered {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 135%;
+    }
+    .who_submitted {
+      margin-bottom: 30px;
+    }
+  }
+  .close_popup {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 40px;
+    height: 40px;
+    background-color: #6B7FAB;
+    text-align: center;
+    font-size: 16px;
+    line-height: 40px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+    &:hover {
+      background-color: #5a6f9c
+    }
+  }
+}
