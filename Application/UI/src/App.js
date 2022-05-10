@@ -9,6 +9,7 @@ import ThirdStep from "./components/SubmissionsApplications/ThirdStep/ThirdStep"
 import Gratitude from "./components/SubmissionsApplications/Gratitude/Gratitude";
 import FourthStep from './components/SubmissionsApplications/FourthStep/FourthStep';
 import ListApplications from './components/ListApplications/ListApplications';
+import axios from "axios";
 
 function App() {
   const [activeCategory, setActiveCategory] = React.useState("");

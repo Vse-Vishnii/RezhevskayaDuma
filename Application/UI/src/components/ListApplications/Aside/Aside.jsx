@@ -1,9 +1,16 @@
 import React from 'react';
 import { ListApplicationsInfo } from '../ListApplicationsInfo';
+import axios from 'axios';
 
 const Aside = ({ handlerFilterButton }) => {
-  const [status, getStatus] = React.useState(null);
-  const [deputy, getDeputy] = React.useState(null);
+  const [activeStatus, setActiveStatus] = React.useState(null);
+  const [activeDeputy, setActiveDeputy] = React.useState(null);
+
+  const [deputies, setDeputies] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get('http://localhost:5000/user').then(({ data }) => setDeputies(data));
+  }, []);
 
   return (
     <aside>
@@ -11,25 +18,29 @@ const Aside = ({ handlerFilterButton }) => {
       <ul>
         {ListApplicationsInfo.status.map((item) => (
           <li
-            className={status == item ? 'active' : ''}
+            className={activeStatus == item ? 'active' : ''}
             key={item}
-            onClick={() => getStatus(item == status ? null : item)}>
+            onClick={() => setActiveStatus(item == activeStatus ? null : item)}>
             {item}
           </li>
         ))}
       </ul>
       <p className="filter filter_deputy">Депутат</p>
       <ul>
-        {ListApplicationsInfo.deputies.map((item) => (
+        {deputies.map((deputy) => (
           <li
-            className={deputy == item ? 'active' : ''}
-            key={item}
-            onClick={() => getDeputy(item == deputy ? null : item)}>
-            {item}
+            className={activeDeputy == deputy ? 'active' : ''}
+            key={deputy.id}
+            onClick={() => setActiveDeputy(deputy == activeDeputy ? null : deputy)}>
+            {`${deputy.surname} 
+              ${deputy.firstname && deputy.firstname[0]}. 
+              ${deputy.patronymic && deputy.patronymic[0]}.`}
           </li>
         ))}
       </ul>
-      <button className="button blue" onClick={() => handlerFilterButton(deputy, status)}>
+      <button
+        className="button blue"
+        onClick={() => handlerFilterButton(activeDeputy, activeStatus)}>
         Применить
       </button>
     </aside>

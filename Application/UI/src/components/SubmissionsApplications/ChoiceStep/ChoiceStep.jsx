@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ChoiceStep = ({ activeItem, setActiveItem, ulList, choiceText, numberStep }) => {
+const ChoiceStep = ({ activeItem, setActiveItem, items, choiceText, numberStep }) => {
   const getItemClass = (item) => {
     let itemClass = 'button button_option blue';
     if (item === activeItem) itemClass += ' button_option_active';
@@ -31,14 +31,14 @@ const ChoiceStep = ({ activeItem, setActiveItem, ulList, choiceText, numberStep 
             <p className="title">Совсем скоро ты сможешь задать вопрос, но сначала</p>
             <p className="choose_cat">Выбери {choiceText}:</p>
             <ul className="list">
-              {ulList.map((item, index) => (
+              {items.map((item, index) => (
                 <li
-                  key={`${item}_${index}`}
+                  key={item.id}
                   className={getItemClass(item)}
                   onClick={() => {
                     setActiveItem(item);
                   }}>
-                  {item}
+                  {item.name}
                 </li>
               ))}
             </ul>
