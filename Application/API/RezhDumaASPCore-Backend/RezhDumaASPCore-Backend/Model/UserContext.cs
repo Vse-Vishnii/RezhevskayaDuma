@@ -21,9 +21,9 @@ namespace RezhDumaASPCore_Backend.Model
 
         public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
-            Default.CreateData(this);
+            //Default.CreateData(this);
         }
 
         public TEntity PullEntity<TEntity>(string id)

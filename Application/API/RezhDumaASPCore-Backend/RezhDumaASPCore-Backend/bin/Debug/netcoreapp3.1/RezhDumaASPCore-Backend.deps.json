@@ -32,6 +32,7 @@
       "RezhDumaASPCore-Backend/1.0.0": {
         "dependencies": {
           "MailKit": "3.2.0",
+          "Microsoft.AspNet.WebApi.Core": "5.2.8",
           "Microsoft.AspNetCore.Hosting": "2.2.7",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.23",
           "Microsoft.AspNetCore.Server.Kestrel": "2.2.0",
@@ -326,6 +327,35 @@
         },
         "compile": {
           "lib/netstandard2.1/MailKit.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.8": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json.Bson": "1.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {
+            "assemblyVersion": "5.2.8.0",
+            "fileVersion": "5.2.34876.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Core/5.2.8": {
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.8"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Http.dll": {
+            "assemblyVersion": "5.2.8.0",
+            "fileVersion": "5.2.34876.0"
+          }
+        },
+        "compile": {
+          "lib/net45/System.Web.Http.dll": {}
         }
       },
       "Microsoft.AspNetCore.Connections.Abstractions/2.2.0": {
@@ -2707,6 +2737,20 @@
       "sha512": "sha512-5MTpTqmjqT7HPvYbP3HozRZMth5vSaT0ReN0iM3rAM4CgLI/R1qqtLDDNWGnFFIlcNzeJkZQRJJMkv8cgzWBbA==",
       "path": "mailkit/3.2.0",
       "hashPath": "mailkit.3.2.0.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebApi.Client/5.2.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dkGLm30CxLieMlUO+oQpJw77rDs0IIx/w3lIHsp+8X94HXCsUfLYuFmlZPsQDItC0O2l1ZlWeKLkZX7ZiNRekw==",
+      "path": "microsoft.aspnet.webapi.client/5.2.8",
+      "hashPath": "microsoft.aspnet.webapi.client.5.2.8.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebApi.Core/5.2.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AQ2Mmo2IEALj16Flk9L53Wl0WZ0QgeC5GPNe7G13e1E+GdbjIdewYeU7Y7EtGe921srIneGIsrlehMVFib4xiw==",
+      "path": "microsoft.aspnet.webapi.core/5.2.8",
+      "hashPath": "microsoft.aspnet.webapi.core.5.2.8.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Connections.Abstractions/2.2.0": {
       "type": "package",

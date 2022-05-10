@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,17 @@ namespace RezhDumaASPCore_Backend.Repositories
             return entity;
         }
 
+        public async Task<Application> Add(Application entity, string[] categoryIds, string[] districtIds, string deputyId)
+        {
+            if (categoryIds != null)
+                entity.Categories = await db.Set<Category>().Where(cat => categoryIds.Contains(cat.Id)).ToListAsync();
+            if (districtIds != null)
+                entity.Districts = await db.Set<District>().Where(dis => districtIds.Contains(dis.Id)).ToListAsync();
+            if (categoryIds != null)
+                entity.Deputy = await db.Set<User>().FindAsync(deputyId);
+            return await Add(entity);
+        }
+
         private List<Application> GetApplications(List<Application> apps)
         {
             apps.ForEach(app => app = SetForeignKeys(app));
@@ -75,9 +87,9 @@ namespace RezhDumaASPCore_Backend.Repositories
         private void SetDeputyApplication(Application application)
         {
             if (application.Categories != null && application.Categories.Count == 1)
-                db.PullEntity<User>(application.Categories[0].DeputyId);
+                application.Deputy = db.PullEntity<User>(application.Categories[0].DeputyId);
             if (application.Districts != null && application.Districts.Count == 1)
-                db.PullEntity<User>(application.Districts[0].DeputyId);
+                application.Deputy = db.PullEntity<User>(application.Districts[0].DeputyId);
             var deputy = application.Deputy;
             if (deputy != null)
             {
@@ -90,7 +102,5 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         private List<Application> GetByStatus(Status status, IEnumerable<Application> list) =>
             list.Where(app => app.Status == status).ToList();
-
-        
     }
 }
