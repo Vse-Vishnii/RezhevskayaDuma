@@ -17,5 +17,29 @@ namespace RezhDumaASPCore_Backend.Controllers
         public UserController(UserRepository repository) : base(repository)
         {
         }
+
+        [HttpGet("role={role}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetByRole(Role role)
+        {
+            return await repository.GetByRole(role);
+        }
+
+        [HttpGet("deputies/category={category}/district={district}")]
+        public async Task<ActionResult<IEnumerable<User>>> Get(string category, string district)
+        {
+            return await repository.GetDeputyByCategoryAndDistrict(category, district);
+        }
+
+        [HttpGet("deputies/category={category}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetByCategory(string category)
+        {
+            return await repository.GetDeputyByCategory(category);
+        }
+
+        [HttpGet("deputies/district={district}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetByDistrict(string district)
+        {
+            return await repository.GetDeputyByDistrict(district);
+        }
     }
 }

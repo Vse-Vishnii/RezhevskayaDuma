@@ -40,6 +40,12 @@ namespace RezhDumaASPCore_Backend.Controllers
             return await repository.GetByDeputyStatus(id, status);
         }
 
+        [HttpGet("name={name}")]
+        public async Task<ActionResult<IEnumerable<Application>>> GetByName(string name)
+        {
+            return await repository.GetByName(name);
+        }
+
         public async override Task<ActionResult<Application>> Post(Application entity)
         {
             await repository.Add(entity);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Data.Sqlite;
+using RezhDumaASPCore_Backend.Controllers;
 
 namespace RezhDumaASPCore_Backend.Model
 {
@@ -20,9 +21,9 @@ namespace RezhDumaASPCore_Backend.Model
 
         public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
-
+            Database.EnsureDeleted();
             Database.EnsureCreated();
+            Default.CreateData(this);
         }
 
         public TEntity PullEntity<TEntity>(string id)

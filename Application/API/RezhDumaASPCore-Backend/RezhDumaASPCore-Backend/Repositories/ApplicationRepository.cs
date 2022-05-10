@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
 
@@ -39,6 +40,11 @@ namespace RezhDumaASPCore_Backend.Repositories
         {
             SetForeignKeys(db.Set<Application>().Find(id));
             return await base.Get(id);
+        }
+
+        public async Task<ActionResult<IEnumerable<Application>>> GetByName(string name)
+        {
+            return await db.Set<Application>().Where(app => app.Name.Contains(name)).ToListAsync();
         }
 
         public async override Task<Application> Add(Application entity)
@@ -84,5 +90,7 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         private List<Application> GetByStatus(Status status, IEnumerable<Application> list) =>
             list.Where(app => app.Status == status).ToList();
+
+        
     }
 }
