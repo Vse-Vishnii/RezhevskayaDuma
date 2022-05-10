@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RezhDumaASPCore_Backend.Helpers;
 using RezhDumaASPCore_Backend.Model;
 using RezhDumaASPCore_Backend.Repositories;
 using RezhDumaASPCore_Backend.Services;
@@ -62,6 +63,7 @@ namespace RezhDumaASPCore_Backend.Controllers
             return Ok(entity);
         }
 
+        [Authorize]
         [HttpPut("{id}/{accepted}")]
         public async Task<ActionResult<Application>> AcceptApplication(string id, bool accepted, Answer answer = null)
         {
@@ -69,7 +71,7 @@ namespace RezhDumaASPCore_Backend.Controllers
             app.Status = accepted ? Status.InProcess : Status.Refused;
             await repository.Update(app);
             if (!accepted)
-                messageService.Send(app.Deputy, app.Applicant, answer);
+                messageService.Send(app.Deputy, app.Applicant, null);
             return Ok(app);
         }
     }

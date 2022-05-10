@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using RezhDumaASPCore_Backend.Helpers;
 using RezhDumaASPCore_Backend.Model;
 using RezhDumaASPCore_Backend.Options;
 using RezhDumaASPCore_Backend.Repositories;
@@ -44,8 +46,37 @@ namespace RezhDumaASPCore_Backend
             services.AddScoped<AnswerRepository>();
             services.AddScoped<DistrictRepository>();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",new OpenApiInfo{Title = "dotnetClaimAuthorization", Version = "v1"});
+                c.AddSecurityDefinition("Bearer",new OpenApiSecurityScheme
+                {
+                    In=ParameterLocation.Header,
+                    Description = "Insert token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
+            });
             services.AddSignalR();
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddScoped<IUserService, UserService>();
 
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IEmailService, EmailService>();
@@ -72,6 +103,10 @@ namespace RezhDumaASPCore_Backend
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<JwtMiddleware>();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
 
