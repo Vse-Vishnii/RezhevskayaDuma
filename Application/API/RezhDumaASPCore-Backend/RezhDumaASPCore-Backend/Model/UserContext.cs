@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Data.Sqlite;
+using RezhDumaASPCore_Backend.Controllers;
 
 namespace RezhDumaASPCore_Backend.Model
 {
@@ -21,8 +22,23 @@ namespace RezhDumaASPCore_Backend.Model
         public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
             //Database.EnsureDeleted();
-
             Database.EnsureCreated();
+            //Default.CreateData(this);
+        }
+
+        public TEntity PullEntity<TEntity>(string id)
+        where TEntity : DbEntity
+        {
+            return Set<TEntity>().Find(id);
+        }
+
+        public IQueryable<TEntity> PullCollection<TEntity, TConnection>(Application app)
+            where TEntity : DbEntity
+            where TConnection : ApplicationConnection<TEntity>
+        {
+            return Set<TConnection>()
+                .Where(ca => ca.ApplicationId.Equals(app.Id))
+                .Select(ca => ca.ConnectedEntity);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -70,9 +86,9 @@ namespace RezhDumaASPCore_Backend.Model
                 .HasMany(a => a.Districts)
                 .WithMany(d => d.Applications)
                 .UsingEntity<DistrictApplication>(
-                    c => c.HasOne(c => c.District)
+                    c => c.HasOne(c => c.ConnectedEntity)
                         .WithMany(c => c.DistrictApplications)
-                        .HasForeignKey(c => c.DistrictId).OnDelete(DeleteBehavior.Cascade),
+                        .HasForeignKey(c => c.ConnectedEntityId).OnDelete(DeleteBehavior.Cascade),
                     c => c.HasOne(c => c.Application)
                         .WithMany(c => c.DistrictApplications)
                         .HasForeignKey(c => c.ApplicationId).OnDelete(DeleteBehavior.Cascade));
@@ -85,9 +101,9 @@ namespace RezhDumaASPCore_Backend.Model
                 .WithMany(c => c.Applications)
                 .UsingEntity<CategoryApplication>(
                     c => c
-                        .HasOne(c => c.Category)
+                        .HasOne(c => c.ConnectedEntity)
                         .WithMany(c => c.CategoryApplications)
-                        .HasForeignKey(c => c.CategoryId).OnDelete(DeleteBehavior.Cascade),
+                        .HasForeignKey(c => c.ConnectedEntityId).OnDelete(DeleteBehavior.Cascade),
                     c => c
                         .HasOne(c => c.Application)
                         .WithMany(c => c.CategoryApplications)

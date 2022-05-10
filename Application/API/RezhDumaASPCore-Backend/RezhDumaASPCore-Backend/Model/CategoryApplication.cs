@@ -7,18 +7,7 @@ using System.Text;
 namespace RezhDumaASPCore_Backend.Model
 {
     [Table("CategoryApplications")]
-    public class CategoryApplication : DbEntity
+    public class CategoryApplication : ApplicationConnection<Category>
     {
-        [ForeignKey("Application")]
-        [Required]
-        public string ApplicationId { get; set; }
-        public Application Application { get; set; }
-
-        [ForeignKey("Category")]
-        [Required]
-        public string CategoryId { get; set; }
-        public Category Category { get; set; }
-
-        public CategoryApplication(){}
     }
 }

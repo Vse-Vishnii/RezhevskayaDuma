@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
+using RezhDumaASPCore_Backend.Options;
 using RezhDumaASPCore_Backend.Repositories;
 using RezhDumaASPCore_Backend.Services;
 
@@ -46,7 +47,7 @@ namespace RezhDumaASPCore_Backend
             services.AddSwaggerGen();
             services.AddSignalR();
 
-
+            services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IEmailService, EmailService>();
             services.Configure<EmailSenderOptions>(options =>
             {
