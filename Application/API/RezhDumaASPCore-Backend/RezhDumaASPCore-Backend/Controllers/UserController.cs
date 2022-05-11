@@ -18,28 +18,18 @@ namespace RezhDumaASPCore_Backend.Controllers
         {
         }
 
-        [HttpGet("role={role}")]
-        public async Task<ActionResult<IEnumerable<User>>> GetByRole(Role role)
+        [HttpGet("deputies")]
+        public async Task<ActionResult<IEnumerable<User>>> GetByRole()
         {
-            return await repository.GetByRole(role);
+            return await repository.GetByRole(Role.Deputy);
         }
 
-        [HttpGet("deputies/category={category}/district={district}")]
-        public async Task<ActionResult<IEnumerable<User>>> Get(string category, string district)
+        [HttpGet("deputies/filters/")]
+        public async Task<ActionResult<IEnumerable<User>>> Get(string category = null, string district = null)
         {
+            if (category == null && district == null)
+                return BadRequest();
             return await repository.GetDeputyByCategoryAndDistrict(category, district);
-        }
-
-        [HttpGet("deputies/category={category}")]
-        public async Task<ActionResult<IEnumerable<User>>> GetByCategory(string category)
-        {
-            return await repository.GetDeputyByCategory(category);
-        }
-
-        [HttpGet("deputies/district={district}")]
-        public async Task<ActionResult<IEnumerable<User>>> GetByDistrict(string district)
-        {
-            return await repository.GetDeputyByDistrict(district);
         }
     }
 }
