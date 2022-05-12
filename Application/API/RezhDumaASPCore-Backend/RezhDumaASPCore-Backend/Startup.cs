@@ -36,9 +36,10 @@ namespace RezhDumaASPCore_Backend
             services.AddDbContext<UserContext>(
                 c => c.UseSqlite("Filename=DB\\rezhdb.db;Foreign Keys=False"),
                 ServiceLifetime.Scoped);
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            services.AddControllers(options => options.AllowEmptyInputInBodyModelBinding = true)
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
 
             services.AddScoped<ApplicationRepository>();
             services.AddScoped<UserRepository>();

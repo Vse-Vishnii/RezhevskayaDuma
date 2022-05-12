@@ -63,9 +63,9 @@ namespace RezhDumaASPCore_Backend.Controllers
             return Ok(entity);
         }
 
-        [Authorize]
+        [Authorize(new [] {Role.Special})]
         [HttpPut("{id}/{accepted}")]
-        public async Task<ActionResult<Application>> AcceptApplication(string id, bool accepted, Answer answer = null)
+        public async Task<ActionResult<Application>> AcceptApplication(string id, bool accepted, [FromBody] Answer answer = null)
         {
             var app = await repository.Get(id);
             app.Status = accepted ? Status.InProcess : Status.Refused;

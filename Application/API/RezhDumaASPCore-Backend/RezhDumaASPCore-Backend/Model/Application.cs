@@ -16,7 +16,6 @@ namespace RezhDumaASPCore_Backend.Model
         public List<Category> Categories { get; set; }
 
         [ForeignKey("Applicant")]
-        [Required]
         public string ApplicantId { get; set; }
         public User Applicant { get; set; }
 
