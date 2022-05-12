@@ -19,7 +19,8 @@ namespace RezhDumaASPCore_Backend.Repositories
                 db.PullEntity<Category>(categoryId);
             if (districtId != null)
                 db.PullEntity<District>(districtId);
-            return await db.Set<User>().Where(u => u.Role == Role.Deputy).Where(d => d.Category.Id.Equals(categoryId) && d.District.Id.Equals(districtId)).ToListAsync();
+            return await db.Set<User>().Where(u => u.Role == Role.Deputy)
+                .Where(d => (categoryId == null || d.Category.Id.Equals(categoryId)) && (districtId == null || d.District.Id.Equals(districtId))).ToListAsync();
         }
 
         public async Task<ActionResult<IEnumerable<User>>> GetDeputyByCategory(string categoryId)
