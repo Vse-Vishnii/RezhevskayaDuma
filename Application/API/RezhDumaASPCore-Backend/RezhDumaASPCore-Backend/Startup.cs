@@ -75,7 +75,12 @@ namespace RezhDumaASPCore_Backend
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(builder=> builder.AllowAnyOrigin());
+            app.UseCors(cors => cors
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials()
+            );
 
             app.UseHttpsRedirection();
 
