@@ -13,18 +13,13 @@ namespace RezhDumaASPCore_Backend.Repositories
         {
         }
 
-        public async Task<List<User>> GetByRole(Role role)
-        {
-            return db.Set<User>().Where(u => u.Role == role).ToList();
-        }
-
         public async Task<List<User>> GetDeputyByCategoryAndDistrict(string categoryId, string districtId)
         {
             if (categoryId != null)
                 db.PullEntity<Category>(categoryId);
             if (districtId != null)
                 db.PullEntity<District>(districtId);
-            return await db.Set<User>().Where(d => d.Category.Id.Equals(categoryId) && d.District.Id.Equals(districtId)).ToListAsync();
+            return await db.Set<User>().Where(u => u.Role == Role.Deputy).Where(d => d.Category.Id.Equals(categoryId) && d.District.Id.Equals(districtId)).ToListAsync();
         }
 
         public async Task<ActionResult<IEnumerable<User>>> GetDeputyByCategory(string categoryId)
