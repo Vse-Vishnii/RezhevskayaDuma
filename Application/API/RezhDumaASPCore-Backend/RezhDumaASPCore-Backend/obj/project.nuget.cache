@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "NTxzbVoV2orM6jLhMwgn8/IyqyjoW5cpB0Cn/DhPmGOitGrIHUFx3JWns3kVs3i5tzjor0HKflo3D4rmkh2qMw==",
+  "dgSpecHash": "HPpfv8BeGaQMvIVUk5uJGvk0I4WrWPMoHPZe+rgHGoV5j5mtiq3uvgNRFwRlgxfStbmyCQDmByACfTcFFTJ3Nw==",
   "success": true,
   "projectFilePath": "C:\\Documents\\Programming\\RezhevskayaDuma\\RezhevskayaDuma\\Application\\API\\RezhDumaASPCore-Backend\\RezhDumaASPCore-Backend\\RezhDumaASPCore-Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lesha\\.nuget\\packages\\mailkit\\3.2.0\\mailkit.3.2.0.nupkg.sha512",
+    "C:\\Users\\Lesha\\.nuget\\packages\\microsoft.aspnet.cors\\5.2.8\\microsoft.aspnet.cors.5.2.8.nupkg.sha512",
     "C:\\Users\\Lesha\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.8\\microsoft.aspnet.webapi.client.5.2.8.nupkg.sha512",
     "C:\\Users\\Lesha\\.nuget\\packages\\microsoft.aspnet.webapi.core\\5.2.8\\microsoft.aspnet.webapi.core.5.2.8.nupkg.sha512",
+    "C:\\Users\\Lesha\\.nuget\\packages\\microsoft.aspnet.webapi.cors\\5.2.8\\microsoft.aspnet.webapi.cors.5.2.8.nupkg.sha512",
     "C:\\Users\\Lesha\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\2.2.0\\microsoft.aspnetcore.connections.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Lesha\\.nuget\\packages\\microsoft.aspnetcore.hosting\\2.2.7\\microsoft.aspnetcore.hosting.2.2.7.nupkg.sha512",
     "C:\\Users\\Lesha\\.nuget\\packages\\microsoft.aspnetcore.hosting.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",
@@ -89,11 +91,37 @@
   ],
   "logs": [
     {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Documents\\Programming\\RezhevskayaDuma\\RezhevskayaDuma\\Application\\API\\RezhDumaASPCore-Backend\\RezhDumaASPCore-Backend\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Cors 5.2.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Cors",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
       "message": "Package 'Microsoft.AspNet.WebApi.Core 5.2.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.WebApi.Core",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.WebApi.Cors 5.2.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.WebApi.Cors",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"
       ]

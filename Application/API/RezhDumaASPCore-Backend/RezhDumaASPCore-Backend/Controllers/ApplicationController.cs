@@ -23,28 +23,22 @@ namespace RezhDumaASPCore_Backend.Controllers
             this.messageService = messageService;
         }
 
-        [HttpGet("deputy/{id}")]
-        public async Task<ActionResult<IEnumerable<Application>>> Get(string id)
-        {
-            return await repository.GetByDeputy(id);
-        }
-
         [HttpGet("status={status}")]
         public async Task<ActionResult<IEnumerable<Application>>> Get(Status status)
         {
             return await repository.GetByStatus(status);
         }
 
-        [HttpGet("deputy/{id}/status={status}")]
-        public async Task<ActionResult<IEnumerable<Application>>> Get(string id, Status status)
+        [HttpGet("deputy/{id}")]
+        public async Task<ActionResult<IEnumerable<Application>>> Get(string id, Status? status = null)
         {
             return await repository.GetByDeputyStatus(id, status);
         }
 
-        [HttpGet("name={name}")]
-        public async Task<ActionResult<IEnumerable<Application>>> GetByName(string name)
+        [HttpGet("filters")]
+        public async Task<ActionResult<IEnumerable<Application>>> Get(string name = null, string id = null)
         {
-            return await repository.GetByName(name);
+            return await repository.Get(id, name);
         }
 
         public async override Task<ActionResult<Application>> Post(Application entity)

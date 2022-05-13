@@ -14,20 +14,16 @@ namespace RezhDumaASPCore_Backend.Repositories
         {
         }
 
-        public async Task<List<Application>> GetByDeputy(string id)
-        {
-            return GetApplications(GetByDeputy(id, db.Set<DeputyApplication>()));
-        }
-
         public async Task<List<Application>> GetByStatus(Status status)
         {
             return GetApplications(GetByStatus(status, db.Set<Application>()));
         }
 
-        public async Task<List<Application>> GetByDeputyStatus(string id, Status status)
+        public async Task<List<Application>> GetByDeputyStatus(string id, Status? status)
         {
             var apps = GetByDeputy(id, db.Set<DeputyApplication>());
-            apps = GetByStatus(status, apps);
+            if(status != null)
+                apps = GetByStatus(status, apps);
             return GetApplications(apps);
         }
 
@@ -43,9 +39,9 @@ namespace RezhDumaASPCore_Backend.Repositories
             return await base.Get(id);
         }
 
-        public async Task<ActionResult<IEnumerable<Application>>> GetByName(string name)
+        public async Task<ActionResult<IEnumerable<Application>>> Get(string id, string name)
         {
-            return await db.Set<Application>().Where(app => app.Name.Contains(name)).ToListAsync();
+            return await db.Set<Application>().Where(app => app.Name.Contains(name) || app.Id.Contains(id)).ToListAsync();
         }
 
         public async override Task<Application> Add(Application entity)
@@ -100,10 +96,16 @@ namespace RezhDumaASPCore_Backend.Repositories
             }
         }
 
-        private List<Application> GetByDeputy(string id, IEnumerable<DeputyApplication> list) =>
-            list.Where(app => app.DeputyId.Equals(id)).Select(app => app.Application).ToList();
+        private List<Application> GetByDeputy(string id, IEnumerable<DeputyApplication> list)
+        {
+            var deputyApplications = list.Where(app => app.DeputyId.Equals(id)).ToList();
+            deputyApplications.ForEach(da => db.PullEntity<Application>(da.ApplicationId));
+            return deputyApplications.Select(app => app.Application).ToList();
+        }
 
-        private List<Application> GetByStatus(Status status, IEnumerable<Application> list) =>
-            list.Where(app => app.Status == status).ToList();
+        private List<Application> GetByStatus(Status? status, IEnumerable<Application> list)
+        {
+            return list.Where(app => app.Status == status).ToList();
+        }
     }
 }

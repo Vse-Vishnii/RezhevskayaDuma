@@ -89,6 +89,8 @@ namespace RezhDumaASPCore_Backend
                 options.HostPassword = Configuration["EmailConfiguration:SmtpPassword"];
                 options.SenderName = Configuration["EmailConfiguration:SenderName"];
             });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,12 +110,19 @@ namespace RezhDumaASPCore_Backend
             app.UseMiddleware<JwtMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors(cors => cors
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials()
+            );
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

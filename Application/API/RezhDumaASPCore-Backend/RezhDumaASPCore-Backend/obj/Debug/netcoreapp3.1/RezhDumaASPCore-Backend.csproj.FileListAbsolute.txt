@@ -72,7 +72,5 @@ C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDum
 C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\System.Web.Http.dll
-C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
-C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
-C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\System.Web.Cors.dll
+C:\Documents\Programming\RezhevskayaDuma\RezhevskayaDuma\Application\API\RezhDumaASPCore-Backend\RezhDumaASPCore-Backend\bin\Debug\netcoreapp3.1\System.Web.Http.Cors.dll
