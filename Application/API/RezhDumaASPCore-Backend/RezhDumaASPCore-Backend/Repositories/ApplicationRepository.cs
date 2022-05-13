@@ -47,7 +47,10 @@ namespace RezhDumaASPCore_Backend.Repositories
         public async override Task<Application> Add(Application entity)
         {
             SetDeputyApplication(entity);
-            db.PullEntity<User>(entity.ApplicantId);
+            if(entity.ApplicantId != null)
+                db.PullEntity<User>(entity.ApplicantId);
+            else
+                AddEntity(entity.Applicant);
             AddEntity(entity);
             await db.SaveChangesAsync();
             return entity;

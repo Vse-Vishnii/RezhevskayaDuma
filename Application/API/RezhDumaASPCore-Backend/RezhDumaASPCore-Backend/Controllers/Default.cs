@@ -41,7 +41,8 @@ namespace RezhDumaASPCore_Backend.Controllers
             var entity = new User
             {
                 Firstname = "Депутат 2",
-                Role = Role.Deputy
+                Role = Role.Deputy,
+                Password = "123"
             };
             db.Add(entity);
             d1 = new District
@@ -58,7 +59,8 @@ namespace RezhDumaASPCore_Backend.Controllers
             deputy = new User
             {
                 Surname = "Шарова",
-                Role = Role.Deputy
+                Role = Role.Deputy,
+                Password = "123"
             };
             db.Add(deputy);
             category = new Category
@@ -81,7 +83,8 @@ namespace RezhDumaASPCore_Backend.Controllers
             var user = new User
             {
                 Firstname = "Алексей",
-                Role = Role.Applicant
+                Role = Role.Applicant,
+                Password = "123"
             };
             db.Add(user);
             db.SaveChanges();
