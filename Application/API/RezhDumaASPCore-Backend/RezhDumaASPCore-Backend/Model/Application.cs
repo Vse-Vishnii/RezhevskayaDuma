@@ -26,8 +26,6 @@ namespace RezhDumaASPCore_Backend.Model
         [ForeignKey("Answer")]
         public string AnswerId { get; set; }
         public Answer Answer { get; set; }
-
-        [Required]
-        public Status Status { get; set; }        
+        public Status Status { get; set; } = Status.Sent;
     }
 }

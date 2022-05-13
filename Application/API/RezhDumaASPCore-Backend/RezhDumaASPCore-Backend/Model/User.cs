@@ -19,8 +19,8 @@ namespace RezhDumaASPCore_Backend.Model
         public string Email { get; set; }
         [MaxLength(20)]
         public string Phone { get; set; }
-        [Required]
-        public Role Role { get; set; }
+
+        public Role Role { get; set; } = Role.Applicant;
 
         [JsonIgnore]
         public string Password { get; set; }
