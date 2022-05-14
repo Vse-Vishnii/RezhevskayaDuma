@@ -47,7 +47,10 @@ namespace RezhDumaASPCore_Backend.Repositories
         public async override Task<Application> Add(Application entity)
         {
             SetDeputyApplication(entity);
-            db.PullEntity<User>(entity.ApplicantId);
+            if(entity.ApplicantId != null)
+                db.PullEntity<User>(entity.ApplicantId);
+            else
+                AddEntity(entity.Applicant);
             AddEntity(entity);
             await db.SaveChangesAsync();
             return entity;
@@ -93,10 +96,16 @@ namespace RezhDumaASPCore_Backend.Repositories
             }
         }
 
-        private List<Application> GetByDeputy(string id, IEnumerable<DeputyApplication> list) =>
-            list.Where(app => app.DeputyId.Equals(id)).Select(app => app.Application).ToList();
+        private List<Application> GetByDeputy(string id, IEnumerable<DeputyApplication> list)
+        {
+            var deputyApplications = list.Where(app => app.DeputyId.Equals(id)).ToList();
+            deputyApplications.ForEach(da => db.PullEntity<Application>(da.ApplicationId));
+            return deputyApplications.Select(app => app.Application).ToList();
+        }
 
-        private List<Application> GetByStatus(Status? status, IEnumerable<Application> list) =>
-            list.Where(app => app.Status == status).ToList();
+        private List<Application> GetByStatus(Status? status, IEnumerable<Application> list)
+        {
+            return list.Where(app => app.Status == status).ToList();
+        }
     }
 }

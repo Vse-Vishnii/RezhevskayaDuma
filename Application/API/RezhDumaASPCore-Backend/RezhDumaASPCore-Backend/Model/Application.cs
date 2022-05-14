@@ -16,7 +16,6 @@ namespace RezhDumaASPCore_Backend.Model
         public List<Category> Categories { get; set; }
 
         [ForeignKey("Applicant")]
-        [Required]
         public string ApplicantId { get; set; }
         public User Applicant { get; set; }
 
@@ -27,8 +26,6 @@ namespace RezhDumaASPCore_Backend.Model
         [ForeignKey("Answer")]
         public string AnswerId { get; set; }
         public Answer Answer { get; set; }
-
-        [Required]
-        public Status Status { get; set; }        
+        public Status Status { get; set; } = Status.Sent;
     }
 }

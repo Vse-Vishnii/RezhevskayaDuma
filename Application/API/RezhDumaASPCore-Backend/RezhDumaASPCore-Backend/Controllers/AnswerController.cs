@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using RezhDumaASPCore_Backend.Model;
 using RezhDumaASPCore_Backend.Repositories;
 using RezhDumaASPCore_Backend.Services;
+using RezhDumaASPCore_Backend.Helpers;
 
 namespace RezhDumaASPCore_Backend.Controllers
 {
@@ -17,6 +18,7 @@ namespace RezhDumaASPCore_Backend.Controllers
             this.messageService = messageService;
         }
 
+        [Authorize(new[]{Role.Deputy})]
         public override async Task<ActionResult<Answer>> Post(Answer entity)
         {
             await repository.Add(entity);

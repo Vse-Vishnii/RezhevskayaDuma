@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace RezhDumaASPCore_Backend.Model
 {
@@ -18,8 +19,11 @@ namespace RezhDumaASPCore_Backend.Model
         public string Email { get; set; }
         [MaxLength(20)]
         public string Phone { get; set; }
-        [Required]
-        public Role Role { get; set; }
+
+        public Role Role { get; set; } = Role.Applicant;
+
+        [JsonIgnore]
+        public string Password { get; set; }
         
         public Category Category { get; set; }
         public District District { get; set; }
