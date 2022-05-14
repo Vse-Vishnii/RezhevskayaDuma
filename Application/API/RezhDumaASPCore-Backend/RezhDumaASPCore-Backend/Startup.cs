@@ -34,7 +34,7 @@ namespace RezhDumaASPCore_Backend
         {
             //services.AddEntityFrameworkSqlite().AddDbContext<UserContext>();
             services.AddDbContext<UserContext>(
-                c => c.UseSqlite("Filename=DB\\rezhdb.db;Foreign Keys=False"),
+                c => c.UseSqlite(Configuration.GetConnectionString("cs")),
                 ServiceLifetime.Scoped);
             services.AddControllers(options => options.AllowEmptyInputInBodyModelBinding = true)
                 .AddNewtonsoftJson(options =>
