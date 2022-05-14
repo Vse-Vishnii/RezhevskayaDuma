@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HPpfv8BeGaQMvIVUk5uJGvk0I4WrWPMoHPZe+rgHGoV5j5mtiq3uvgNRFwRlgxfStbmyCQDmByACfTcFFTJ3Nw==",
+  "dgSpecHash": "eVydQ97paBcejQyt8NEqUXvjFJAuSUrGKdGjvoKQf/noMWUlX2Ss28pcNNCCxCONnvmyNMI1Eyevxnhi+bBIZA==",
   "success": true,
   "projectFilePath": "C:\\Documents\\Programming\\RezhevskayaDuma\\RezhevskayaDuma\\Application\\API\\RezhDumaASPCore-Backend\\RezhDumaASPCore-Backend\\RezhDumaASPCore-Backend.csproj",
   "expectedPackageFiles": [
@@ -90,12 +90,6 @@
     "C:\\Users\\Lesha\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.1\\system.threading.tasks.extensions.4.5.1.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Documents\\Programming\\RezhevskayaDuma\\RezhevskayaDuma\\Application\\API\\RezhDumaASPCore-Backend\\RezhDumaASPCore-Backend\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
     {
       "code": "NU1701",
       "level": "Warning",
