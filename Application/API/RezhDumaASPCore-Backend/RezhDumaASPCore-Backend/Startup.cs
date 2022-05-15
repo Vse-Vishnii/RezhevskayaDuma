@@ -33,9 +33,9 @@ namespace RezhDumaASPCore_Backend
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddEntityFrameworkSqlite().AddDbContext<UserContext>();
-            services.AddDbContext<UserContext>(
-                c => c.UseSqlite(Configuration.GetConnectionString("cs")),
-                ServiceLifetime.Scoped);
+            services.AddDbContext<UserContext>(c =>
+                    c.UseSqlite(Configuration.GetConnectionString(PathFinder.GetConnectionPath())),
+                    ServiceLifetime.Scoped);
             services.AddControllers(options => options.AllowEmptyInputInBodyModelBinding = true)
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
