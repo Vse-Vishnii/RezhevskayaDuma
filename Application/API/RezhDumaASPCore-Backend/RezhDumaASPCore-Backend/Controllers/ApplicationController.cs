@@ -41,13 +41,6 @@ namespace RezhDumaASPCore_Backend.Controllers
             return await repository.Get(id, name);
         }
 
-        //public async override Task<ActionResult<Application>> Post(Application entity)
-        //{
-        //    await repository.Add(entity);
-        //    //messageService.Send(entity.Applicant, entity.Deputy,  entity);
-        //    return Ok(entity);
-        //}
-
         [HttpPost("parameters")]
         public async Task<ActionResult<Application>> Post(Application entity, [FromQuery] string[] categoryIds = null,
             [FromQuery] string[] districtIds = null, string deputyId = null)
