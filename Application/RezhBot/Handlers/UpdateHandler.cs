@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -17,6 +14,20 @@ namespace RezhBot.Handlers
         {
             var chatId = update.Message.Chat.Id;
             var messageText = update.Message.Text;
+
+            //ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(new[]
+            //{
+            //    new KeyboardButton[] { "Help me", "Call me ☎️" },
+            //})
+            //{
+            //    ResizeKeyboard = true
+            //};
+
+            //Message sentMessage = await client.SendTextMessageAsync(
+            //    chatId: chatId,
+            //    text: "Choose a response",
+            //    replyMarkup: replyKeyboardMarkup,
+            //    cancellationToken: cancellationToken);
         }
     }
 }
