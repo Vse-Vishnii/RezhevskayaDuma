@@ -153,9 +153,15 @@ header {
 
 .step_choose {
   display: flex;
-  gap: 15%;
+  gap: 5%;
+  .div_img {
+    width: 45%;
+    img {
+      width: 100%;
+    }
+  }
   .choose_category {
-    width: 60%;
+    width: 55%;
     p {
       margin: 0;
     }
@@ -338,10 +344,15 @@ header {
         }
         &_top {
           display: flex;
-          justify-content: space-between;
+          gap: 10%;
           font-weight: 600;
+          .id {
+            width: 55%;
+          }
           .status {
+            width: 35%;
             color: #E9B800;
+            text-align: right;
             &.status_process {
               color: #D48000;
             }

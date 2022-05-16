@@ -1,15 +1,14 @@
 import React from 'react';
 import { ListApplicationsInfo } from '../ListApplicationsInfo';
-import axios from 'axios';
+import api from '../../../api/api';
 
-const Aside = ({ handlerFilterButton }) => {
-  const [activeStatus, setActiveStatus] = React.useState(null);
+const Aside = ({ handleFilterButton }) => {
+  const [activeStatus, setActiveStatus] = React.useState({});
   const [activeDeputy, setActiveDeputy] = React.useState(null);
-
   const [deputies, setDeputies] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get('http://localhost:5000/user').then(({ data }) => setDeputies(data));
+    api.get('/User/deputies/filters').then(({ data }) => setDeputies(data));
   }, []);
 
   return (
@@ -19,7 +18,7 @@ const Aside = ({ handlerFilterButton }) => {
         {ListApplicationsInfo.status.map((item) => (
           <li
             className={activeStatus == item ? 'active' : ''}
-            key={item}
+            key={item.name}
             onClick={() => setActiveStatus(item == activeStatus ? null : item)}>
             {item}
           </li>
@@ -29,9 +28,11 @@ const Aside = ({ handlerFilterButton }) => {
       <ul>
         {deputies.map((deputy) => (
           <li
-            className={activeDeputy == deputy ? 'active' : ''}
+            className={activeDeputy && activeDeputy.id == deputy.id ? 'active' : ''}
             key={deputy.id}
-            onClick={() => setActiveDeputy(deputy == activeDeputy ? null : deputy)}>
+            onClick={() =>
+              setActiveDeputy(activeDeputy && activeDeputy.id == deputy.id ? null : deputy)
+            }>
             {`${deputy.surname} 
               ${deputy.firstname && deputy.firstname[0]}. 
               ${deputy.patronymic && deputy.patronymic[0]}.`}
@@ -40,7 +41,7 @@ const Aside = ({ handlerFilterButton }) => {
       </ul>
       <button
         className="button blue"
-        onClick={() => handlerFilterButton(activeDeputy, activeStatus)}>
+        onClick={() => handleFilterButton(activeDeputy, activeStatus)}>
         Применить
       </button>
     </aside>

@@ -1,14 +1,12 @@
-import React from "react";
-import ChoiceStep from "./../ChoiceStep/ChoiceStep";
-import axios from "axios";
+import React from 'react';
+import ChoiceStep from './../ChoiceStep/ChoiceStep';
+import api from '../../../api/api';
 
 const ThirdStep = ({ activeItem, setActiveItem }) => {
   const [deputies, setDeputies] = React.useState([]);
 
   React.useEffect(() => {
-    axios
-      .get("http://localhost:5000/User/deputies")
-      .then(({ data }) => setDeputies(data));
+    api.get('/User/deputies/filters').then(({ data }) => setDeputies(data));
   }, []);
 
   return (

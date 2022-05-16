@@ -1,30 +1,64 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import api from '../../../api/api';
 
 const FourthStep = ({ activeCategory, activeAreas, activeDeputy }) => {
-  const [data, setData] = React.useState({});
   const navigate = useNavigate();
-
-  const setValues = (values) => {
-    setData((prevData) => ({
-      ...prevData,
-      ...values,
-    }));
-  };
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
-  const onSubmit = (data) => {
-    setValues(data);
-    console.log(activeCategory, activeAreas, activeDeputy, data);
-    navigate("/gratitude");
+  const onSubmit = async (data) => {
+    const user = await postUser(data);
+    postApplication(user.id, data.name, data.description);
+    navigate('/gratitude');
+  };
+
+  const postUser = async (data) => {
+    const user = {
+      firstname: data.firstname,
+      surname: data.surname,
+      patronymic: data.patronymic,
+      email: data.email,
+      role: 0,
+    };
+    try {
+      var response = await api.post('/User', user);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return response.data;
+  };
+
+  const postApplication = async (applicantId, name, description) => {
+    const application = {
+      name,
+      description,
+      applicantId,
+    };
+
+    try {
+      const response = await api({
+        method: 'POST',
+        url: '/Application/parameters',
+        params: {
+          caterogyIds: [activeCategory.id],
+          districtIds: activeAreas.map((area) => area.id),
+          deputyId: activeDeputy.id,
+        },
+        data: application,
+      });
+      console.log(response.data.id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -36,69 +70,55 @@ const FourthStep = ({ activeCategory, activeAreas, activeDeputy }) => {
               <p>Ваши данные</p>
               <input
                 type="text"
-                name="lastName"
-                placeholder={
-                  errors.lastName ? errors.lastName.message : "Фамилия"
-                }
-                {...register("lastName", {
-                  required: "Вы не ввели фамилию",
+                name="surname"
+                placeholder={errors.surname ? errors.surname.message : 'Фамилия'}
+                {...register('surname', {
+                  required: 'Вы не ввели фамилию',
                 })}
-                className={errors.lastName ? "input_error" : ""}
+                className={errors.surname ? 'input_error' : ''}
               />
               <input
                 type="text"
-                name="firstName"
-                placeholder={
-                  errors.firstName ? errors.firstName.message : "Имя"
-                }
-                {...register("firstName", { required: "Вы не ввели имя" })}
-                className={errors.firstName ? "input_error" : ""}
+                name="firstname"
+                placeholder={errors.firstname ? errors.firstname.message : 'Имя'}
+                {...register('firstname', { required: 'Вы не ввели имя' })}
+                className={errors.firstname ? 'input_error' : ''}
               />
               <input
                 type="text"
                 name="patronymic"
-                placeholder={
-                  errors.patronymic ? errors.patronymic.message : "Отчество"
-                }
-                {...register("patronymic", {
-                  required: "Вы не ввели отчество",
+                placeholder={errors.patronymic ? errors.patronymic.message : 'Отчество'}
+                {...register('patronymic', {
+                  required: 'Вы не ввели отчество',
                 })}
-                className={errors.patronymic ? "input_error" : ""}
+                className={errors.patronymic ? 'input_error' : ''}
               />
               <input
                 type="email"
                 name="email"
-                placeholder={
-                  errors.email ? errors.email.message : "Электронная почта"
-                }
-                {...register("email", { required: "Вы не ввели почту" })}
-                className={errors.email ? "input_error" : ""}
+                placeholder={errors.email ? errors.email.message : 'Электронная почта'}
+                {...register('email', { required: 'Вы не ввели почту' })}
+                className={errors.email ? 'input_error' : ''}
               />
             </div>
             <div className="form_right">
               <p>Тема вопроса</p>
               <input
                 type="text"
-                name="questionTitle"
-                placeholder={
-                  errors.questionTitle
-                    ? errors.questionTitle.message
-                    : "Тема вопроса"
-                }
-                {...register("questionTitle", { required: "Вы не ввели тему" })}
-                className={errors.questionTitle ? "input_error" : ""}
+                name="name"
+                placeholder={errors.name ? errors.name.message : 'Тема вопроса'}
+                {...register('name', { required: 'Вы не ввели тему' })}
+                className={errors.name ? 'input_error' : ''}
               />
               <textarea
-                name="questionText"
+                name="description"
                 placeholder={
-                  errors.questionText
-                    ? errors.questionText.message
-                    : "Поделитесь, что вас беспокоит?"
+                  errors.description ? errors.description.message : 'Поделитесь, что вас беспокоит?'
                 }
-                {...register("questionText", {
-                  required: "Вы не ввели вопрос",
+                {...register('description', {
+                  required: 'Вы не ввели вопрос',
                 })}
-                className={errors.questionText ? "input_error" : ""}
+                className={errors.description ? 'input_error' : ''}
               />
             </div>
             <button className="button yellow">Отправить запрос</button>

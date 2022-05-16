@@ -192,11 +192,19 @@ header .header_title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 15%;
+  gap: 5%;
+}
+
+.step_choose .div_img {
+  width: 45%;
+}
+
+.step_choose .div_img img {
+  width: 100%;
 }
 
 .step_choose .choose_category {
-  width: 60%;
+  width: 55%;
 }
 
 .step_choose .choose_category p {
@@ -454,14 +462,18 @@ header .header_title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  gap: 10%;
   font-weight: 600;
 }
 
+.container_list_applications main .list_applications .application_top .id {
+  width: 55%;
+}
+
 .container_list_applications main .list_applications .application_top .status {
+  width: 35%;
   color: #E9B800;
+  text-align: right;
 }
 
 .container_list_applications main .list_applications .application_top .status.status_process {
