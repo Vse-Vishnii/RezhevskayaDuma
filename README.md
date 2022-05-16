@@ -1,67 +1,70 @@
-# RezhevskayaDuma
-Проект “ВЛАСТЬ - ЭТО Я”.
+# Getting Started with Create React App
 
-## Актуальность проекта
-Упростить получение информации по вопросам местного самоуправления, сделать более доступными обращения жителей к депутатам.
-Упор на жителей: максимальная простота, доступность для жителей
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Цель
-Создать IT-решение для взаимодействия жителей и депутатов города Реж.
+## Available Scripts
 
-## Словарь данных (глоссарий)
-Заявка (обращение) -  это заявление с указанием на потребность в чём-либо, требование на получение чего-либо. 
-Заявка имеет обобщенную категорию по проблеме. Например, ЖКХ, дороги и т.п. Чтобы пользователь выбирал категорию заявки.
-Заявка имеет статус, например, новая, в работе у депутата, решена.
+In the project directory, you can run:
 
-## Пользователи системы
-### Жители города всех возврастов
-Требования к функционалу:
-Подача заявки: в администрацию РГО, в профильные организации, в компании, которые подключены к системе
-Выбор категории заявки. Если нет подходящей категории, выбирает категорию “другое”.
-Выбор района (вопрос касательно какого района города)
-Выбирает похожий вопрос из предложенных (ранее заданных, частично совпадающих по тексту). Если вопрос другой, отправить заявку все равно.
-выбор кому отправляется заявка (специалисту/депутату/отделу/иное). То есть заявка может быть подана без указания получателя.
-Может посмотреть статус заявки
-Получить ответ по заявке
-Проголосовать в опросе.
+### `npm start`
 
-### Обработчики заявок (специальные сотрудники)
-Требования к функционалу:
-Обработка заявок. Что могут сделать обработчики заявок: отклонить, направить заявку депутату/отделу (если не была направлена автоматически в нужное место)
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### Депутаты
-Видит заявки в нашей системе.
-Обработка заявок. Что могут сделать депутаты: написать ответ автору заявки (автоматическое сообщение из нашей системы на контакт автора), вернуть заявку обработчику.
-Просмотр статистики по заявкам. 
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Требования к функционалу:
-аналитика (статистика) по темам (для будущего правильного формирования бюджета, исходя из проблем населения). Статистика показывает, какие категории вопросов часто выбираемые), к кому чаще адресуются, кто сколько вопросов решил.
-голосования (например, на какой из парков выделить бюджет. Т.е. надо подсчитывать общую сумму голосов). Еще вопрос .
-Список часто задаваемые вопросов и ответы 
-Поиск информации с сайта РГО, который будет выдавать бот по ключевым словам.
-Новостная лента
-История Думы
-Фирменный стиль - герб Реж
-*без интеграции с текущим сайтом думы
+### `npm test`
 
-## Предложения по реализации, только приоритетный функционал, в порядке убывания:
-Голосование с идентификацией по номеру телефона.
-Сайт делаем в первую очередь. Бот во вторую очередь, он дублирует функционал, но не является приоритетным.
-Подачу заявки и всё о заявках планируем делать в первую очередь с упором на качество. Остальное, если останется время.
-Сайт
-Подача заявки.
-Голосование.
-Если обращение направляется к депутату напрямую, оно дублируется ему на почту/мессенджер (можно через сторонние интеграции сделать переадресацию дополнительную для дублирования заявки)
-Список часто задаваемые вопросов
-Бот в мессенджере.
-Подача заявки.
-Голосование.
-Список часто задаваемые вопросов
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Стек технологий.
-Frontend: React
-Backend: C#, .NET Core
+### `npm run build`
 
-## Какие данные вам нужны от заказчика для реализации. 
-Пока что только ответы на вопросы в этом документе, все вопросы в комментариях к тексту.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
