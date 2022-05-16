@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "jInv74ypdmYbLmkBiPnQqi1pQqOJpb4mWCEDcNx2WlLbh9IYWzyWIR2C4P2ofe/BRA3lOdIGUR3aqF18K4x+gw==",
+  "success": true,
+  "projectFilePath": "C:\\Documents\\Programming\\RezhevskayaDuma\\RezhevskayaDuma\\Application\\RezhBot\\RezhBot.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Lesha\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\Lesha\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
+    "C:\\Users\\Lesha\\.nuget\\packages\\telegram.bot\\17.0.0\\telegram.bot.17.0.0.nupkg.sha512",
+    "C:\\Users\\Lesha\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
