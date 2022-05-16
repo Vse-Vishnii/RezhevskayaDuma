@@ -11,11 +11,13 @@ const ListApplications = () => {
 
   const [applications, setApplications] = React.useState([]);
 
-  React.useEffect(() => {
+  const uploadApplications = () => {
     api.get('/Application').then(({ data }) => {
       setApplications(data);
     });
-  }, []);
+  };
+
+  React.useEffect(() => uploadApplications(), []);
 
   const handleReadAnswer = (application) => {
     if (application.status != 'Дан ответ') return;
@@ -23,13 +25,35 @@ const ListApplications = () => {
     setCurrentApplicationPopup(application);
   };
 
-  const handleFilterButton = (deputy, status) => {
-    let applications = ListApplicationsInfo.applications.filter((application) => {
-      return (
-        (application.deputy == deputy || deputy == null) &&
-        (application.status == status || status == null)
-      );
-    });
+  const handleFilterButton = (deputyId, status) => {
+    if (deputyId && !isNaN(status)) {
+      try {
+        api.get(`/Application/deputy/${deputyId}?status=${status}`).then(({ data }) => {
+          setApplications(data);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (deputyId) {
+      try {
+        api.get(`/Application/deputy/${deputyId}`).then(({ data }) => {
+          setApplications(data);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (!isNaN(status)) {
+      try {
+        api.get(`/Application/status=${status}`).then(({ data }) => {
+          setApplications(data);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      uploadApplications();
+    }
+    console.log('q');
   };
 
   const handleTextSearch = (textSearch) => {
@@ -46,9 +70,7 @@ const ListApplications = () => {
         console.log(error);
       }
     } else {
-      api.get('/Application').then(({ data }) => {
-        setApplications(data);
-      });
+      uploadApplications();
     }
   };
 

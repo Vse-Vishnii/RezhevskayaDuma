@@ -1,13 +1,27 @@
 import React from 'react';
 
 export const GetNameStatus = (status) => {
-  if (status == 1) return 'Назначен депутат';
-  else if (status == 2) return 'Дан ответ';
-  else return 'В процессе';
+  if (!isNaN(status)) {
+    switch (status) {
+      case 0:
+        return 'В процессе';
+      case 1:
+        return 'Назначен депутат';
+      case 2:
+        return 'Дан ответ';
+    }
+  }
 };
 
 export const GetValueStatus = (status) => {
-  if (status.toLowerCase() == 'назначен депутат') return 1;
-  else if (status.toLowerCase() == 'дан ответ') return 2;
-  else return 0;
+  if (status) {
+    switch (status.toLowerCase()) {
+      case 'в процессе':
+        return 0;
+      case 'назначен депутат':
+        return 1;
+      case 'дан ответ':
+        return 2;
+    }
+  }
 };

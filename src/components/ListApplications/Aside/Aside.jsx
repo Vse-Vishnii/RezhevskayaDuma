@@ -1,15 +1,24 @@
 import React from 'react';
 import { ListApplicationsInfo } from '../ListApplicationsInfo';
 import api from '../../../api/api';
+import { GetValueStatus } from '../ConvertStatus';
 
 const Aside = ({ handleFilterButton }) => {
-  const [activeStatus, setActiveStatus] = React.useState({});
+  const [activeStatus, setActiveStatus] = React.useState(null);
   const [activeDeputy, setActiveDeputy] = React.useState(null);
   const [deputies, setDeputies] = React.useState([]);
 
   React.useEffect(() => {
     api.get('/User/deputies/filters').then(({ data }) => setDeputies(data));
   }, []);
+
+  const handleClickFilter = () => {
+    if (activeDeputy || activeStatus) {
+      handleFilterButton(activeDeputy && activeDeputy.id, GetValueStatus(activeStatus));
+    } else {
+      handleFilterButton();
+    }
+  };
 
   return (
     <aside>
@@ -39,9 +48,7 @@ const Aside = ({ handleFilterButton }) => {
           </li>
         ))}
       </ul>
-      <button
-        className="button blue"
-        onClick={() => handleFilterButton(activeDeputy, activeStatus)}>
+      <button className="button blue" onClick={handleClickFilter}>
         Применить
       </button>
     </aside>
