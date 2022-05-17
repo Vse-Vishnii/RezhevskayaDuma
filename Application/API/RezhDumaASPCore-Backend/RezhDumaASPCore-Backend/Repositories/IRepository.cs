@@ -8,7 +8,7 @@ namespace RezhDumaASPCore_Backend.Repositories
         Task<List<T>> GetAll();
         Task<T> Get(string id);
         Task<T> Add(T entity);
-        Task<T> Update(T newEntity);
+        Task<T> Update(string id, T newEntity);
         Task<T> Delete(string id);
     }
 }

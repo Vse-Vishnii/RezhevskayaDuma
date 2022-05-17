@@ -44,12 +44,7 @@ namespace RezhDumaASPCore_Backend.Controllers
         [HttpPut("{id}")]
         public virtual async Task<ActionResult<TEntity>> Put(string id, TEntity newEntity)
         {
-            if (id!=newEntity.Id)
-            {
-                return BadRequest();
-            }
-
-            await repository.Update(newEntity);
+            await repository.Update(id, newEntity);
             return Ok(newEntity);
         }
         

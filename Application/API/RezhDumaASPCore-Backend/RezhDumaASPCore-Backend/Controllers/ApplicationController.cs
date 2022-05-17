@@ -56,7 +56,7 @@ namespace RezhDumaASPCore_Backend.Controllers
         {
             var app = await repository.Get(id);
             app.Status = accepted ? Status.InProcess : Status.Refused;
-            await repository.Update(app);
+            await repository.Update(id, app);
             if (!accepted)
                 messageService.Send(app.Deputy, app.Applicant, null);
             return Ok(app);

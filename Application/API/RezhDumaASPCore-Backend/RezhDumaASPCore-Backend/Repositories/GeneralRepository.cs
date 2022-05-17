@@ -33,9 +33,9 @@ namespace RezhDumaASPCore_Backend.Repositories
             return entity;
         }
 
-        public async virtual Task<TEntity> Update(TEntity newEntity)
+        public async virtual Task<TEntity> Update(string id, TEntity newEntity)
         {
-            var entity = db.Set<TEntity>().Find(newEntity.Id);
+            var entity = db.Set<TEntity>().Find(id);
             newEntity.GetType()
                 .GetProperties()
                 .Where(p => p.GetValue(newEntity) != null)
