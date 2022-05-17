@@ -15,24 +15,28 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public async Task<List<User>> GetDeputyByCategoryAndDistrict(string categoryId, string districtId)
         {
-            if (categoryId != null)
-                db.PullEntity<Category>(categoryId);
-            if (districtId != null)
-                db.PullEntity<District>(districtId);
-            return await db.Set<User>().Where(u => u.Role == Role.Deputy)
-                .Where(d => (categoryId == null || d.Category.Id.Equals(categoryId)) && (districtId == null || d.District.Id.Equals(districtId))).ToListAsync();
+            if (categoryId != null) db.PullEntity<Category>(categoryId);
+            if (districtId != null) db.PullEntity<District>(districtId);
+            var deputies = await db.Set<User>()
+                .Where(u => u.Role == Role.Deputy)
+                .Where(d => (categoryId == null || d.Category.Id.Equals(categoryId)) &&
+                            (districtId == null || d.District.Id.Equals(districtId)))
+                .ToListAsync();
+            deputies.ForEach(d => PullCategoryAndDistrict(categoryId, districtId, d));
+            return deputies;
         }
 
-        public async Task<ActionResult<IEnumerable<User>>> GetDeputyByCategory(string categoryId)
+        public async override Task<User> Get(string id)
         {
-            db.PullEntity<Category>(categoryId);
-            return await db.Set<User>().Where(d => d.Category.Id.Equals(categoryId)).ToListAsync();
+            var user = await db.Set<User>().FindAsync(id);
+            PullCategoryAndDistrict(user.CategoryId, user.DistrictId, user);
+            return user;
         }
 
-        public async Task<ActionResult<IEnumerable<User>>> GetDeputyByDistrict(string districtId)
+        private void PullCategoryAndDistrict(string categoryId, string districtId, User user)
         {
-            db.PullEntity<District>(districtId);
-            return await db.Set<User>().Where(d => d.District.Id.Equals(districtId)).ToListAsync();
+            if (categoryId == null) db.PullEntity<Category>(user.CategoryId);
+            if (districtId == null) db.PullEntity<District>(user.DistrictId);
         }
     }
 }

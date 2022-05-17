@@ -28,7 +28,7 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public async virtual Task<TEntity> Add(TEntity entity)
         {
-            db.Add(entity);
+            AddEntity(entity);
             await db.SaveChangesAsync();
             return entity;
         }
