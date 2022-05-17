@@ -25,7 +25,12 @@ namespace RezhDumaASPCore_Backend.Model
         [JsonIgnore]
         public string Password { get; set; }
         
+        [ForeignKey("Category")]
+        public string CategoryId { get; set; }
         public Category Category { get; set; }
+
+        [ForeignKey("District")]
+        public string DistrictId { get; set; }
         public District District { get; set; }
         public List<DeputyApplication> DeputyApplications { get; set; }
 

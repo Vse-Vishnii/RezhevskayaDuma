@@ -56,6 +56,8 @@ namespace RezhDumaASPCore_Backend.Model
                 .HasOne(a => a.Applicant)
                 .WithMany(a => a.Applications)
                 .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<User>().HasOne(u => u.District).WithOne(d => d.Deputy);
+            //modelBuilder.Entity<User>().HasOne(u => u.Category).WithOne(c => c.Deputy);
             CreateCategoryApplication(modelBuilder);
             CreateDistrictApplication(modelBuilder);
             CreateDeputyApplication(modelBuilder);

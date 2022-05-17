@@ -41,7 +41,9 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public async Task<ActionResult<IEnumerable<Application>>> Get(string id, string name)
         {
-            return await db.Set<Application>().Where(app => app.Name.Contains(name) || app.Id.Contains(id)).ToListAsync();
+            return await db.Set<Application>()
+                .Where(app => app.Name.ToLower().Contains(name.ToLower()) || app.Id.Contains(id))
+                .ToListAsync();
         }
 
         public async override Task<Application> Add(Application entity)

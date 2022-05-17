@@ -14,7 +14,6 @@ namespace RezhDumaASPCore_Backend.Model
         public string Name { get; set; }
 
         [ForeignKey("Deputy")]
-        [Required]
         public string DeputyId { get; set; }
         public User Deputy { get; set; }
 
