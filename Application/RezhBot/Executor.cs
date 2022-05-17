@@ -13,13 +13,15 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace RezhBot
 {
-    public class BotCreator
+    public class Executor
     {
         private const string TOKEN = "5371151987:AAHIiUNXw2pgVWM9XFZ3Yny53eTVEdXBDi4";
         private TelegramBotClient client;
+        private IHandler handler;
 
-        public BotCreator()
+        public Executor(IHandler handler)
         {
+            this.handler = handler;
             client = new TelegramBotClient(TOKEN);
         }
 
@@ -39,12 +41,12 @@ namespace RezhBot
 
         private Task HandleErrorAsync(ITelegramBotClient client, Exception exception, CancellationToken cancellationToken)
         {
-            return new ErrorHandler().Handle(client, exception, cancellationToken);
+            return handler.HandleError(client, exception, cancellationToken);
         }
 
         private Task HandleUpdateAsync(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
         {
-            return new UpdateHandler().Handle(client, update, cancellationToken);
+            return handler.HandleUpdate(client, update, cancellationToken);
         }
     }
 }
