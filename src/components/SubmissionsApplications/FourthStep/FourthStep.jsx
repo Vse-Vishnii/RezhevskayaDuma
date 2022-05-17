@@ -15,12 +15,12 @@ const FourthStep = ({ activeCategory, activeAreas, activeDeputy }) => {
   });
 
   const onSubmit = async (data) => {
-    const user = await postUser(data);
-    postApplication(user.id, data.name, data.description);
+    const user = getUser(data);
+    postApplication(user, data.name, data.description);
     navigate('/gratitude');
   };
 
-  const postUser = async (data) => {
+  const getUser = (data) => {
     const user = {
       firstname: data.firstname,
       surname: data.surname,
@@ -28,20 +28,15 @@ const FourthStep = ({ activeCategory, activeAreas, activeDeputy }) => {
       email: data.email,
       role: 0,
     };
-    try {
-      var response = await api.post('/User', user);
-    } catch (error) {
-      console.log(error);
-    }
 
-    return response.data;
+    return user;
   };
 
-  const postApplication = async (applicantId, name, description) => {
+  const postApplication = async (user, name, description) => {
     const application = {
       name,
       description,
-      applicantId,
+      applicant: user,
     };
 
     try {
