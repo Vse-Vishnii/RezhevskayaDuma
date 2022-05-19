@@ -1,15 +1,15 @@
-import React from 'react';
-import { GetNameStatus } from './../ConvertStatus';
+import React from "react";
+import { GetNameStatus } from "../UsefulMethods";
 
 const Application = ({ application, handleReadAnswer }) => {
   const getClassStatus = () => {
-    let classStatus = 'status';
+    let classStatus = "status";
     switch (application.status) {
       case 0:
-        classStatus += ' status_process';
+        classStatus += " status_process";
         break;
       case 2:
-        classStatus += ' status_answered';
+        classStatus += " status_answered";
         break;
     }
     return classStatus;
@@ -23,12 +23,17 @@ const Application = ({ application, handleReadAnswer }) => {
   return (
     <div className="application">
       <div className="application_top">
-        <p className="id">{`ID-${application.id.split('-')[0].toUpperCase()}`}</p>
+        <p className="id">{`ID-${application.id
+          .split("-")[0]
+          .toUpperCase()}`}</p>
         <p className={getClassStatus()}>{GetNameStatus(application.status)}</p>
       </div>
       <div className="title">{application.name}</div>
       <div className="message">{getShortMessage()}</div>
-      <button className="button yellow" onClick={() => handleReadAnswer(application)}>
+      <button
+        className="button yellow"
+        onClick={() => handleReadAnswer(application)}
+      >
         Прочитать ответ
       </button>
     </div>

@@ -1,18 +1,19 @@
-import React from 'react';
-import Application from './Application/Application';
-import { ListApplicationsInfo } from './ListApplicationsInfo';
-import Popup from './Popup/Popup';
-import Aside from './Aside/Aside';
-import api from '../../api/api';
+import React from "react";
+import Application from "./Application/Application";
+import Popup from "./Popup/Popup";
+import Aside from "./Aside/Aside";
+import api from "../../api/api";
 
 const ListApplications = () => {
   const [isPopupVisible, setIsPopupVisible] = React.useState(false);
-  const [currentApplicationPopup, setCurrentApplicationPopup] = React.useState(null);
+  const [currentApplicationPopup, setCurrentApplicationPopup] = React.useState(
+    null
+  );
 
   const [applications, setApplications] = React.useState([]);
 
   const uploadApplications = () => {
-    api.get('/Application').then(({ data }) => {
+    api.get("/Application").then(({ data }) => {
       setApplications(data);
     });
   };
@@ -20,7 +21,7 @@ const ListApplications = () => {
   React.useEffect(() => uploadApplications(), []);
 
   const handleReadAnswer = (application) => {
-    if (application.status != 'Дан ответ') return;
+    if (application.status != 2) return;
     setIsPopupVisible(true);
     setCurrentApplicationPopup(application);
   };
@@ -28,9 +29,11 @@ const ListApplications = () => {
   const handleFilterButton = (deputyId, status) => {
     if (deputyId && !isNaN(status)) {
       try {
-        api.get(`/Application/deputy/${deputyId}?status=${status}`).then(({ data }) => {
-          setApplications(data);
-        });
+        api
+          .get(`/Application/deputy/${deputyId}?status=${status}`)
+          .then(({ data }) => {
+            setApplications(data);
+          });
       } catch (error) {
         console.log(error);
       }
@@ -53,14 +56,14 @@ const ListApplications = () => {
     } else {
       uploadApplications();
     }
-    console.log('q');
+    console.log("q");
   };
 
   const handleTextSearch = (textSearch) => {
     if (textSearch) {
       try {
         api({
-          url: '/Application/filters',
+          url: "/Application/filters",
           params: {
             name: textSearch,
             id: textSearch,
@@ -79,7 +82,9 @@ const ListApplications = () => {
       <div className="container_list_applications">
         <Aside handleFilterButton={handleFilterButton} />
         <main>
-          <p className="text_search_application">Найдите заявку в поисковой строке</p>
+          <p className="text_search_application">
+            Найдите заявку в поисковой строке
+          </p>
           <input
             type="text"
             placeholder="ID заявки или слово из заголовка"
@@ -99,7 +104,7 @@ const ListApplications = () => {
       {isPopupVisible && (
         <Popup
           setIsPopupVisible={setIsPopupVisible}
-          currentApplicationPopup={currentApplicationPopup}
+          application={currentApplicationPopup}
         />
       )}
     </div>

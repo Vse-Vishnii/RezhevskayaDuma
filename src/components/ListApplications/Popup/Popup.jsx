@@ -1,31 +1,45 @@
-import React from 'react';
+import React from "react";
+import api from "../../../api/api";
+import { getStringDeputy } from "./../UsefulMethods";
 
-const Popup = ({ currentApplicationPopup, setIsPopupVisible }) => {
+const Popup = ({ application, setIsPopupVisible }) => {
   const popupRef = React.useRef();
   const popupInnerRef = React.useRef();
+  const [answer, setAnswer] = React.useState(null);
 
   const handleOutsideClick = (e) => {
-    if (e.path.includes(popupRef.current) && !e.path.includes(popupInnerRef.current)) {
+    if (
+      e.path.includes(popupRef.current) &&
+      !e.path.includes(popupInnerRef.current)
+    ) {
       setIsPopupVisible(false);
     }
   };
 
   React.useEffect(() => {
-    document.body.addEventListener('click', handleOutsideClick);
+    document.body.addEventListener("click", handleOutsideClick);
+    api.get("/Answer").then(({ data }) => {
+      setAnswer(data.find((answer) => answer.applicationId == application.id));
+    });
   }, []);
 
   return (
     <div className="popup" ref={popupRef}>
       <div className="popup_inner" ref={popupInnerRef}>
-        <p className="id">{currentApplicationPopup.id}</p>
-        <p className="title">{currentApplicationPopup.title}</p>
-        <p className="message">{currentApplicationPopup.message}</p>
-        <p className="who_submitted">Житель района, {currentApplicationPopup.dateApplication}</p>
-        <p className="answer">{currentApplicationPopup.answer}</p>
-        <p className="who_answered">
-          {`${currentApplicationPopup.deputy} ${currentApplicationPopup.dateAnswer}`}
-        </p>
-        <button className="close_popup" onClick={() => setIsPopupVisible(false)}>
+        <p className="id">{`ID-${application.id
+          .split("-")[0]
+          .toUpperCase()}`}</p>
+        <p className="title">{application.name}</p>
+        <p className="message">{application.description}</p>
+        <p className="who_submitted">Житель района data</p>
+        <p className="answer">{answer && answer.description}</p>
+        <p className="who_answered">{`${getStringDeputy(
+          application.deputy
+        )} data`}</p>
+        <button
+          className="close_popup"
+          onClick={() => setIsPopupVisible(false)}
+        >
           X
         </button>
       </div>

@@ -1,20 +1,24 @@
-import React from 'react';
-import { ListApplicationsInfo } from '../ListApplicationsInfo';
-import api from '../../../api/api';
-import { GetValueStatus } from '../ConvertStatus';
+import React from "react";
+import api from "../../../api/api";
+import { GetValueStatus } from "../UsefulMethods";
+import { getStringDeputy } from "./../UsefulMethods";
 
 const Aside = ({ handleFilterButton }) => {
+  const statuses = ["В процессе", "Назначен депутат", "Дан ответ"];
   const [activeStatus, setActiveStatus] = React.useState(null);
   const [activeDeputy, setActiveDeputy] = React.useState(null);
   const [deputies, setDeputies] = React.useState([]);
 
   React.useEffect(() => {
-    api.get('/User/deputies/filters').then(({ data }) => setDeputies(data));
+    api.get("/User/deputies/filters").then(({ data }) => setDeputies(data));
   }, []);
 
   const handleClickFilter = () => {
     if (activeDeputy || activeStatus) {
-      handleFilterButton(activeDeputy && activeDeputy.id, GetValueStatus(activeStatus));
+      handleFilterButton(
+        activeDeputy && activeDeputy.id,
+        GetValueStatus(activeStatus)
+      );
     } else {
       handleFilterButton();
     }
@@ -24,11 +28,12 @@ const Aside = ({ handleFilterButton }) => {
     <aside>
       <p className="filter">Статус</p>
       <ul>
-        {ListApplicationsInfo.status.map((item) => (
+        {statuses.map((item) => (
           <li
-            className={activeStatus == item ? 'active' : ''}
+            className={activeStatus == item ? "active" : ""}
             key={item.name}
-            onClick={() => setActiveStatus(item == activeStatus ? null : item)}>
+            onClick={() => setActiveStatus(item == activeStatus ? null : item)}
+          >
             {item}
           </li>
         ))}
@@ -37,14 +42,17 @@ const Aside = ({ handleFilterButton }) => {
       <ul>
         {deputies.map((deputy) => (
           <li
-            className={activeDeputy && activeDeputy.id == deputy.id ? 'active' : ''}
+            className={
+              activeDeputy && activeDeputy.id == deputy.id ? "active" : ""
+            }
             key={deputy.id}
             onClick={() =>
-              setActiveDeputy(activeDeputy && activeDeputy.id == deputy.id ? null : deputy)
-            }>
-            {`${deputy.surname} 
-              ${deputy.firstname && deputy.firstname[0]}. 
-              ${deputy.patronymic && deputy.patronymic[0]}.`}
+              setActiveDeputy(
+                activeDeputy && activeDeputy.id == deputy.id ? null : deputy
+              )
+            }
+          >
+            {getStringDeputy(deputy)}
           </li>
         ))}
       </ul>
