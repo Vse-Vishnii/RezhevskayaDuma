@@ -18,6 +18,7 @@ namespace RezhBot
         {
             services.AddSingleton<IHandler, Handler>();
             services.AddSingleton<TelegramBot>();
+            services.AddSingleton<ApiService>()
         }
     }
 }

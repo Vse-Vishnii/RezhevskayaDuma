@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using RezhDumaASPCore_Backend.Model;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using Message = Telegram.Bot.Types.Message;
 
 
 namespace RezhBot.Handlers
@@ -19,10 +22,12 @@ namespace RezhBot.Handlers
     public class Handler : IHandler
     {
         private readonly TelegramBot bot;
+        private readonly ApiService api;
 
-        public Handler(TelegramBot bot)
+        public Handler(TelegramBot bot, ApiService api)
         {
             this.bot = bot;
+            this.api = api;
         }
 
         public Task HandleError(ITelegramBotClient client, Exception exception, CancellationToken cancellationToken)
@@ -61,7 +66,19 @@ namespace RezhBot.Handlers
 
         private async Task SendCategories(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
         {
-            
+            var categories = await api.GetAll<Category>();
+            var inlineButtons = new List<List<InlineKeyboardButton>>();
+            for (var i = 0; i < categories.Count; i += 2)
+            {
+                var row = new List<InlineKeyboardButton>();
+                row.Add(InlineKeyboardButton.WithCallbackData(categories[i].Name, categories[i].Name));
+                if (i < categories.Count - 1)
+                    row.Add(InlineKeyboardButton.WithCallbackData(categories[i + 1].Name, categories[i + 1].Name));
+                inlineButtons.Add(row);
+            }
+            var inlineKeyboard = new InlineKeyboardMarkup(inlineButtons);
+
+            SendMessage(client, update, "Выберете категорию", cancellationToken, inlineKeyboard);
         }
 
         private async Task SetActionByState(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
@@ -74,17 +91,21 @@ namespace RezhBot.Handlers
 
         private async Task SendStartMessage(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
         {
-            var chat = update.Message.Chat;
-            var chatId = update.Message.Chat.Id;
             ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(new[]
             {
                 new KeyboardButton[] {"Подать заявку", "Посмотреть заявки"},
             });
+            SendMessage(client, update, "Привет", cancellationToken, replyKeyboardMarkup);
+        }
 
+        private async void SendMessage(ITelegramBotClient client, Update update , string text, CancellationToken cancellationToken,
+            IReplyMarkup replyKeyboard = null)
+        {
+            var chatId = update.Message.Chat.Id;
             Message sentMessage = await client.SendTextMessageAsync(
                 chatId: chatId,
-                text: "Привет",
-                replyMarkup: replyKeyboardMarkup,
+                text: text,
+                replyMarkup: replyKeyboard,
                 cancellationToken: cancellationToken);
         }
 
