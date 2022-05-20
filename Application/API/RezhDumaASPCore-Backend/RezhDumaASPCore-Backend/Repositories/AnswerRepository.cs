@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
 
 namespace RezhDumaASPCore_Backend.Repositories
@@ -18,6 +19,11 @@ namespace RezhDumaASPCore_Backend.Repositories
                 .FirstOrDefault(da => da.ApplicationId.Equals(app.Id));
             db.PullEntity<User>(deputyApplication.DeputyId);
             return await base.Add(entity);
+        }
+
+        public async override Task<Answer> Get(string id)
+        {
+            return await db.Set<Answer>().FirstOrDefaultAsync(ans => ans.ApplicationId.Equals(id));
         }
     }
 }

@@ -42,7 +42,9 @@ namespace RezhDumaASPCore_Backend.Repositories
         public async Task<ActionResult<IEnumerable<Application>>> Get(string id, string name)
         {
             return await db.Set<Application>()
-                .Where(app => app.Name.ToLower().Contains(name.ToLower()) || app.Id.Contains(id))
+                .Where(app =>
+                    (name != null && app.Name.ToLower().Contains(name.ToLower())) ||
+                    (id != null && app.Id.Contains(id)))
                 .ToListAsync();
         }
 

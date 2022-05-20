@@ -25,5 +25,10 @@ namespace RezhDumaASPCore_Backend.Controllers
             //messageService.Send(entity.Application.Deputy, entity.Application.Applicant, entity);
             return Ok(entity);
         }
+
+        public async override Task<ActionResult<Answer>> Get(string id)
+        {
+            return await repository.Get(id);
+        }
     }
 }
