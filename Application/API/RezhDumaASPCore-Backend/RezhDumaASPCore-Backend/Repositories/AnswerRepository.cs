@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
@@ -18,6 +19,7 @@ namespace RezhDumaASPCore_Backend.Repositories
             var deputyApplication = db.Set<DeputyApplication>()
                 .FirstOrDefault(da => da.ApplicationId.Equals(app.Id));
             db.PullEntity<User>(deputyApplication.DeputyId);
+            entity.Created = DateTime.Now;
             return await base.Add(entity);
         }
 

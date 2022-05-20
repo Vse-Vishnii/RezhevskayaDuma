@@ -14,5 +14,7 @@ namespace RezhDumaASPCore_Backend.Model
         [Required]
         [MaxLength(500)]
         public string Description { get; set; }
+        
+        public DateTime Created { get; set; }
     }
 }

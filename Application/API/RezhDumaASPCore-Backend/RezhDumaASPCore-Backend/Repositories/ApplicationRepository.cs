@@ -55,6 +55,7 @@ namespace RezhDumaASPCore_Backend.Repositories
                 db.PullEntity<User>(entity.ApplicantId);
             else
                 AddEntity(entity.Applicant);
+            entity.Created = DateTime.Now;
             AddEntity(entity);
             await db.SaveChangesAsync();
             return entity;
