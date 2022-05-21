@@ -60,7 +60,7 @@ html {
   margin: 155px 6.5%;
 }
 
-input,
+input:not([type="checkbox"]),
 textarea {
   border: 3px solid #6b7fab;
   border-radius: 25px;
@@ -75,7 +75,7 @@ textarea {
   padding: 25px 35px;
 }
 
-input:focus,
+input:not([type="checkbox"]):focus,
 textarea:focus {
   outline: none;
   border-color: #062b7b;
@@ -332,6 +332,71 @@ header .header_title {
   text-decoration: none;
   color: inherit;
   font-weight: 600;
+}
+
+.form .agree_checkbox {
+  margin-top: 65px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.form .agree_checkbox input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.form .agree_checkbox input:checked + label::before {
+  background-color: #969696;
+  border-color: #969696;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23dde8ff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+.form .agree_checkbox input.input_error + label p {
+  color: #e83030;
+}
+
+.form .agree_checkbox input.input_error + label::before {
+  border-color: #e83030;
+}
+
+.form .agree_checkbox label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+}
+
+.form .agree_checkbox label::before {
+  content: "";
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  border: 3px solid #6B7FAB;
+  border-radius: 10px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow: hidden;
+  cursor: pointer;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-right: 18px;
+}
+
+.form .agree_checkbox p {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  color: #000;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  opacity: 0.4;
+  width: 100%;
 }
 
 .container_list_applications {
