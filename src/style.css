@@ -26,6 +26,8 @@ html {
   font-weight: 500;
   -webkit-transition: 0.2s;
   transition: 0.2s;
+  border: none;
+  outline: none;
 }
 
 .button:hover {
@@ -58,8 +60,9 @@ html {
   margin: 155px 6.5%;
 }
 
-input, textarea {
-  border: 3px solid #6B7FAB;
+input,
+textarea {
+  border: 3px solid #6b7fab;
   border-radius: 25px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -72,7 +75,8 @@ input, textarea {
   padding: 25px 35px;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
   border-color: #062b7b;
 }
@@ -143,8 +147,17 @@ header .header_title {
   line-height: 59px;
   margin: 0;
   margin-right: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   padding: 0;
+}
+
+.main_page .info_application_id,
+.gratitude_page .info_application_id {
+  margin: 0;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 49px;
+  margin-bottom: 30px;
 }
 
 .main_page .info_title,
@@ -297,7 +310,8 @@ header .header_title {
   width: 57%;
 }
 
-.form_right input, .form_right textarea {
+.form_right input,
+.form_right textarea {
   width: 100%;
 }
 
@@ -393,13 +407,13 @@ header .header_title {
 }
 
 .container_list_applications aside ul li::before {
-  content: '';
+  content: "";
   display: inline-block;
   margin-right: 14px;
   width: 20px;
   height: 20px;
   position: relative;
-  border: 2px solid #C4C4C4;
+  border: 2px solid #c4c4c4;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border-radius: 5px;
@@ -472,16 +486,16 @@ header .header_title {
 
 .container_list_applications main .list_applications .application_top .status {
   width: 35%;
-  color: #E9B800;
+  color: #e9b800;
   text-align: right;
 }
 
 .container_list_applications main .list_applications .application_top .status.status_process {
-  color: #D48000;
+  color: #d48000;
 }
 
 .container_list_applications main .list_applications .application_top .status.status_answered {
-  color: #217F00;
+  color: #217f00;
 }
 
 .container_list_applications main .list_applications .application .title {
@@ -524,8 +538,8 @@ header .header_title {
   background-color: #fff;
   max-width: 640px;
   padding: 60px;
-  -webkit-transition: .5s;
-  transition: .5s;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
   border-radius: 25px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -550,14 +564,16 @@ header .header_title {
   margin-bottom: 22px;
 }
 
-.popup_inner .message, .popup_inner .answer {
+.popup_inner .message,
+.popup_inner .answer {
   font-weight: 500;
   font-size: 24px;
   line-height: 135%;
   margin-bottom: 7px;
 }
 
-.popup_inner .who_submitted, .popup_inner .who_answered {
+.popup_inner .who_submitted,
+.popup_inner .who_answered {
   font-weight: 700;
   font-size: 24px;
   line-height: 135%;
@@ -573,7 +589,7 @@ header .header_title {
   top: -10px;
   width: 40px;
   height: 40px;
-  background-color: #6B7FAB;
+  background-color: #6b7fab;
   text-align: center;
   font-size: 16px;
   line-height: 40px;
@@ -581,8 +597,8 @@ header .header_title {
   border: none;
   color: white;
   cursor: pointer;
-  -webkit-transition: .3s;
-  transition: .3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .popup .close_popup:hover {

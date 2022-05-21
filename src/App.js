@@ -3,17 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import "./style.css";
 import Header from "./components/Header/Header";
 import MainPage from "./components/MainPage/MainPage";
-import FirstStep from "./components/SubmissionsApplications/FirstStep/FirstStep";
-import SecondStep from "./components/SubmissionsApplications/SecondStep/SecondStep";
-import ThirdStep from "./components/SubmissionsApplications/ThirdStep/ThirdStep";
-import Gratitude from "./components/SubmissionsApplications/Gratitude/Gratitude";
-import FourthStep from "./components/SubmissionsApplications/FourthStep/FourthStep";
 import ListApplications from "./components/ListApplications/ListApplications";
+import SubmissionApplication from "./components/SubmissionsApplications/SubmissionApplication";
+import Gratitude from "./components/SubmissionsApplications/Gratitude/Gratitude";
 
 function App() {
-  const [activeCategory, setActiveCategory] = React.useState("");
-  const [activeAreas, setActiveAreas] = React.useState([]);
-  const [activeDeputy, setActiveDeputy] = React.useState("");
+  const [applicationId, setApplicationId] = React.useState(null);
 
   return (
     <div className="wrapper">
@@ -21,43 +16,15 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route
-          path="/first_step"
+          path="submission_application"
           element={
-            <FirstStep
-              activeItem={activeCategory}
-              setActiveItem={setActiveCategory}
-            />
+            <SubmissionApplication setApplicationId={setApplicationId} />
           }
         />
         <Route
-          path="/second_step"
-          element={
-            <SecondStep
-              activeItems={activeAreas}
-              setActiveItems={setActiveAreas}
-            />
-          }
+          path="/gratitude"
+          element={<Gratitude applicationId={applicationId} />}
         />
-        <Route
-          path="/third_step"
-          element={
-            <ThirdStep
-              activeItem={activeDeputy}
-              setActiveItem={setActiveDeputy}
-            />
-          }
-        />
-        <Route
-          path="/fourth_step"
-          element={
-            <FourthStep
-              activeCategory={activeCategory}
-              activeAreas={activeAreas}
-              activeDeputy={activeDeputy}
-            />
-          }
-        />
-        <Route path="/gratitude" element={<Gratitude />} />
         <Route path="/list_applications" element={<ListApplications />} />
       </Routes>
     </div>

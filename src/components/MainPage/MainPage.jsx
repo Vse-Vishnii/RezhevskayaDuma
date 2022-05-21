@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   return (
@@ -13,10 +13,13 @@ const MainPage = () => {
               <br /> вопрос
             </h1>
             <p className="info_title">
-              Мы поможем найти ответы на все вопросы (здесь будет объяснение что это за сервис и
-              зачем вы зашли сюда)
+              Мы поможем найти ответы на все вопросы (здесь будет объяснение что
+              это за сервис и зачем вы зашли сюда)
             </p>
-            <Link to="/first_step" className="button ask_question yellow">
+            <Link
+              to="/submission_application"
+              className="button ask_question yellow"
+            >
               Хочу задать вопрос
             </Link>
             <Link to="/list_applications" className="button view_applications">

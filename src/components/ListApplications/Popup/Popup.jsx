@@ -1,6 +1,6 @@
 import React from "react";
 import api from "../../../api/api";
-import { getStringDeputy } from "./../UsefulMethods";
+import { getShortApplicationId, getStringDeputy } from "./../UsefulMethods";
 
 const Popup = ({ application, setIsPopupVisible }) => {
   const popupRef = React.useRef();
@@ -26,9 +26,7 @@ const Popup = ({ application, setIsPopupVisible }) => {
   return (
     <div className="popup" ref={popupRef}>
       <div className="popup_inner" ref={popupInnerRef}>
-        <p className="id">{`ID-${application.id
-          .split("-")[0]
-          .toUpperCase()}`}</p>
+        <p className="id">{`ID-${getShortApplicationId(application.id)}`}</p>
         <p className="title">{application.name}</p>
         <p className="message">{application.description}</p>
         <p className="who_submitted">Житель района data</p>

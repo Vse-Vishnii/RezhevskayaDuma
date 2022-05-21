@@ -31,3 +31,7 @@ export const getStringDeputy = (deputy) => {
   ${deputy.firstname && deputy.firstname[0]}. 
   ${deputy.patronymic && deputy.patronymic[0]}.`;
 };
+
+export const getShortApplicationId = (applicationId) => {
+  return applicationId ? applicationId.split("-")[0].toUpperCase() : "";
+};

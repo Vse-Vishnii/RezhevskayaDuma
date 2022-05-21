@@ -1,5 +1,5 @@
 import React from "react";
-import { GetNameStatus } from "../UsefulMethods";
+import { GetNameStatus, getShortApplicationId } from "../UsefulMethods";
 
 const Application = ({ application, handleReadAnswer }) => {
   const getClassStatus = () => {
@@ -23,9 +23,7 @@ const Application = ({ application, handleReadAnswer }) => {
   return (
     <div className="application">
       <div className="application_top">
-        <p className="id">{`ID-${application.id
-          .split("-")[0]
-          .toUpperCase()}`}</p>
+        <p className="id">{`ID-${getShortApplicationId(application.id)}`}</p>
         <p className={getClassStatus()}>{GetNameStatus(application.status)}</p>
       </div>
       <div className="title">{application.name}</div>
