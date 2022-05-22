@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RezhDumaASPCore_Backend.Model;
 
 namespace RezhDumaASPCore_Backend.Controllers
@@ -12,17 +13,23 @@ namespace RezhDumaASPCore_Backend.Controllers
         private static User deputy;
         private static User deputy2;
 
+        private static Application app1;
+        private static Application app2;
+        private static Application app3;
+        private static Application app4;
+
         public static void CreateData(UserContext db)
         {
             user = CreateUser(db);
             CreateFirstDeputy(db);
             CreateSecondDeputy(db);
             CreateApplication(db);
+            CreateAnswer(db);
         }
 
         private static void CreateApplication(UserContext db)
         {
-            var application = new Application
+            app1 = new Application
             {
                 Applicant = user,
                 Name = "Application 1",
@@ -30,11 +37,12 @@ namespace RezhDumaASPCore_Backend.Controllers
                 Status = Status.Sent,
                 Districts = new List<District> {d1, d2},
                 Categories = new List<Category>{category},
-                Deputy = deputy
+                Deputy = deputy,
+                Created = DateTime.Now
             };
-            db.Add(new DeputyApplication(application, deputy));
-            db.Add(application);
-            application = new Application
+            db.Add(new DeputyApplication(app1, deputy));
+            db.Add(app1);
+            app2 = new Application
             {
                 Applicant = user,
                 Name = "Application 4",
@@ -42,31 +50,55 @@ namespace RezhDumaASPCore_Backend.Controllers
                 Status = Status.Sent,
                 Districts = new List<District> { d1, d2 },
                 Categories = new List<Category> { category },
-                Deputy = deputy
+                Deputy = deputy,
+                Created = DateTime.Now
             };
-            db.Add(new DeputyApplication(application, deputy));
-            db.Add(application);
-            application = new Application
+            db.Add(new DeputyApplication(app2, deputy));
+            db.Add(app2);
+            app3 = new Application
             {
                 Applicant = user,
                 Name = "Application 2",
                 Description = "It's a test application with process status",
                 Status = Status.InProcess,
                 Categories = new List<Category> { category },
-                Deputy = deputy2
+                Deputy = deputy2,
+                Created = DateTime.Now
             };
-            db.Add(new DeputyApplication(application, deputy));
-            db.Add(application);
-            application = new Application
+            db.Add(new DeputyApplication(app3, deputy));
+            db.Add(app3);
+            app4 = new Application
             {
                 Applicant = user,
                 Name = "Application 3",
                 Description = "It's a test application with done status",
                 Status = Status.Done,
-                Deputy = deputy2
+                Deputy = deputy2,
+                Created = DateTime.Now
             };
-            db.Add(new DeputyApplication(application, deputy));
-            db.Add(application);
+            db.Add(new DeputyApplication(app4, deputy));
+            db.Add(app4);
+            db.SaveChanges();
+        }
+
+        private static void CreateAnswer(UserContext db)
+        {
+            var answer = new Answer()
+            {
+                ApplicationId = app4.Id,
+                Name = "Answer",
+                Description = "I test answers",
+                Created = DateTime.Now
+            };
+            db.Add(answer);
+            answer = new Answer()
+            {
+                ApplicationId = app3.Id,
+                Name = "Answer",
+                Description = "Check problem",
+                Created = DateTime.Now
+            };
+            db.Add(answer);
             db.SaveChanges();
         }
 
