@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -8,7 +8,7 @@ const Header = () => {
         <div className="header_logo_block">
           <Link to="/">
             <img
-              src="img/rej_logo.svg"
+              src="img/rej_logo.png"
               width="91"
               height="111"
               className="header_logo"
@@ -16,9 +16,7 @@ const Header = () => {
             />
           </Link>
         </div>
-        <p className="header_title">
-          Официальный сайт подачи заявок Режевского городского округа
-        </p>
+        <p className="header_title">Официальный сайт подачи заявок Режевского городского округа</p>
       </div>
     </header>
   );

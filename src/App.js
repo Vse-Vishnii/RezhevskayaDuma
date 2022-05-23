@@ -6,6 +6,7 @@ import MainPage from "./components/MainPage/MainPage";
 import ListApplications from "./components/ListApplications/ListApplications";
 import SubmissionApplication from "./components/SubmissionsApplications/SubmissionApplication";
 import Gratitude from "./components/SubmissionsApplications/Gratitude/Gratitude";
+import Login from './components/Login/Login';
 
 function App() {
   const [applicationId, setApplicationId] = React.useState(null);
@@ -15,6 +16,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/admin" element={<Login />} />
         <Route
           path="submission_application"
           element={
