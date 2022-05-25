@@ -378,7 +378,7 @@ header .header_title {
   display: inline-block;
   width: 35px;
   height: 35px;
-  border: 3px solid #6B7FAB;
+  border: 3px solid #6b7fab;
   border-radius: 10px;
   position: relative;
   -webkit-box-sizing: border-box;
@@ -547,11 +547,11 @@ header .header_title {
 }
 
 .container_list_applications main .list_applications .application_top .id {
-  width: 55%;
+  width: 54%;
 }
 
 .container_list_applications main .list_applications .application_top .status {
-  width: 35%;
+  width: 46%;
   color: #e9b800;
   text-align: right;
 }
@@ -707,7 +707,7 @@ header .header_title {
 }
 
 .container_login .login_form .login_input {
-  background: #F1F1F1;
+  background: #f1f1f1;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 7px;
   height: 48px;
@@ -719,15 +719,17 @@ header .header_title {
   margin: 0;
 }
 
-.container_login .login_form .login_email_text, .container_login .login_form .login_password_text {
+.container_login .login_form .login_email_text,
+.container_login .login_form .login_password_text {
   font-weight: 600;
   color: #000000;
   margin: 0 0 10px 0;
   display: block;
 }
 
-.container_login .login_form .login_email_text::after, .container_login .login_form .login_password_text::after {
-  content: ' *';
+.container_login .login_form .login_email_text::after,
+.container_login .login_form .login_password_text::after {
+  content: " *";
   color: red;
 }
 
@@ -746,7 +748,7 @@ header .header_title {
 }
 
 .container_login .login_form .remember_forget_container .forget_password a {
-  color: #005B95;
+  color: #005b95;
   text-decoration: none;
 }
 

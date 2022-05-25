@@ -51,8 +51,18 @@ const SubmissionApplication = ({ setApplicationId }) => {
   React.useEffect(() => {
     api.get("/category").then(({ data }) => setCategories(data));
     api.get("/district").then(({ data }) => setAreas(data));
-    api.get("/User/deputies/filters").then(({ data }) => setDeputies(data));
   }, []);
+
+  React.useEffect(() => {
+    api
+      .get("/User/deputies/filters/", {
+        params: {
+          category: activeCategory ? activeCategory.id : "",
+          district: activeAreas.length != 0 ? activeAreas[0].id : "",
+        },
+      })
+      .then(({ data }) => setDeputies(data));
+  }, [numberStep]);
 
   return (
     <>

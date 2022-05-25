@@ -55,17 +55,19 @@ const ViewApplication = ({
             </p>
             <p className="choose_cat">Выбери {getChoiceText[numberStep]}:</p>
             <ul className="list">
-              {items.map((item) => (
-                <li
-                  key={item.id}
-                  className={getItemClass(item)}
-                  onClick={() => {
-                    handleClickItem(item);
-                  }}
-                >
-                  {numberStep !== 3 ? item.name : getStringDeputy(item)}
-                </li>
-              ))}
+              {items && items.length != 0
+                ? items.map((item) => (
+                    <li
+                      key={item.id}
+                      className={getItemClass(item)}
+                      onClick={() => {
+                        handleClickItem(item);
+                      }}
+                    >
+                      {numberStep !== 3 ? item.name : getStringDeputy(item)}
+                    </li>
+                  ))
+                : "Идет загрузка... либо, ничего не было найдено😟"}
             </ul>
             <div className="buttons_next_back">
               {numberStep != 1 && (

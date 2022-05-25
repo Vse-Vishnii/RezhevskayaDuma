@@ -28,12 +28,16 @@ const Application = ({ application, handleReadAnswer }) => {
       </div>
       <div className="title">{application.name}</div>
       <div className="message">{getShortMessage()}</div>
-      <button
-        className="button yellow"
-        onClick={() => handleReadAnswer(application)}
-      >
-        Прочитать ответ
-      </button>
+      {application.status == 2 ? (
+        <button
+          className="button yellow"
+          onClick={() => handleReadAnswer(application)}
+        >
+          Прочитать ответ
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
