@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 namespace RezhDumaASPCore_Backend.Model
 {
@@ -24,7 +25,7 @@ namespace RezhDumaASPCore_Backend.Model
 
         [JsonIgnore]
         public string Password { get; set; }
-        
+
         [ForeignKey("Category")]
         public string CategoryId { get; set; }
         public Category Category { get; set; }

@@ -52,10 +52,6 @@ namespace RezhDumaASPCore_Backend.Controllers
         public virtual async Task<ActionResult<TEntity>> Delete(string id)
         {
             var entity = repository.Delete(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
             return Ok(entity);
         }
     }

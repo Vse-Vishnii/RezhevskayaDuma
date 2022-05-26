@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RezhDumaASPCore_Backend.Helpers;
 using RezhDumaASPCore_Backend.Model;
 using RezhDumaASPCore_Backend.Model.Authentication;
 using RezhDumaASPCore_Backend.Repositories;
@@ -37,6 +40,13 @@ namespace RezhDumaASPCore_Backend.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             return Ok(response);
+        }
+
+        [HttpGet("current")]
+        [Authorize]
+        public ActionResult<User> Get()
+        {
+            return Ok((User)HttpContext.Items["User"]);
         }
     }
 }
