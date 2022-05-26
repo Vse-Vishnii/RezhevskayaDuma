@@ -2,9 +2,11 @@ import React from "react";
 import api from "../../api/api";
 import ViewApplication from "./ViewApplication";
 import DataInput from "./DataInput/DataInput";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const SubmissionApplication = ({ setApplicationId }) => {
   const [numberStep, setNumberStep] = React.useState(1);
+  const [isLoadingPage, setIsLoadingPage] = React.useState(true);
 
   const [categories, setCategories] = React.useState([]);
   const [areas, setAreas] = React.useState([]);
@@ -49,7 +51,10 @@ const SubmissionApplication = ({ setApplicationId }) => {
   };
 
   React.useEffect(() => {
-    api.get("/category").then(({ data }) => setCategories(data));
+    api.get("/category").then(({ data }) => {
+      setCategories(data);
+      setIsLoadingPage(false);
+    });
     api.get("/district").then(({ data }) => setAreas(data));
   }, []);
 
@@ -66,7 +71,9 @@ const SubmissionApplication = ({ setApplicationId }) => {
 
   return (
     <>
-      {numberStep != 4 ? (
+      {isLoadingPage ? (
+        <LoadingSpinner />
+      ) : numberStep != 4 ? (
         <ViewApplication {...getPropertysApplication()} />
       ) : (
         <DataInput {...getPropertysApplication()} />

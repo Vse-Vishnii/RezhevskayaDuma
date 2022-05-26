@@ -1,17 +1,13 @@
 import React from "react";
-import api from "../../../api/api";
 import { GetValueStatus } from "../UsefulMethods";
 import { getStringDeputy } from "./../UsefulMethods";
+import { useSelector } from "react-redux";
 
 const Aside = ({ handleFilterButton }) => {
   const statuses = ["В процессе", "Назначен депутат", "Дан ответ"];
   const [activeStatus, setActiveStatus] = React.useState(null);
   const [activeDeputy, setActiveDeputy] = React.useState(null);
-  const [deputies, setDeputies] = React.useState([]);
-
-  React.useEffect(() => {
-    api.get("/User/deputies/filters").then(({ data }) => setDeputies(data));
-  }, []);
+  const deputies = useSelector((state) => state.deputies.deputies);
 
   const handleClickFilter = () => {
     if (activeDeputy || activeStatus) {

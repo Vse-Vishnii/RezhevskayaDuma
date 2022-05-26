@@ -1,27 +1,54 @@
 import React from "react";
 import Application from "./Application/Application";
-import Popup from "./Popup/Popup";
+import PopupApplication from "./Popup/PopupApplilcation/PopupApplication";
 import Aside from "./Aside/Aside";
 import api from "../../api/api";
+import LoadingSpinner from "./../Loading/LoadingSpinner";
+import { useDispatch, useSelector } from "react-redux";
+import { setApplications } from "../../store/applicationsSlice";
+import { setDeputies } from "../../store/deputiesSlice";
 
 const ListApplications = () => {
   const [isPopupVisible, setIsPopupVisible] = React.useState(false);
   const [currentApplicationPopup, setCurrentApplicationPopup] = React.useState(
     null
   );
+  const dispatch = useDispatch();
+  // const {
+  //   isLoadingApplications,
+  //   isLoadingDeputies,
+  //   applications,
+  // } = useSelector((state) => {
+  //   state.applications.isLoadingApplications,
+  //     state.deputies.isLoadingDeputies,
+  //     state.applications.applications;
+  // });
+  const isLoadingApplications = useSelector(
+    (state) => state.deputies.isLoadingApplications
+  );
+  const isLoadingDeputies = useSelector(
+    (state) => state.deputies.isLoadingDeputies
+  );
+  const applications = useSelector((state) => state.applications.applications);
 
-  const [applications, setApplications] = React.useState([]);
-
-  const uploadApplications = () => {
-    api.get("/Application").then(({ data }) => {
-      setApplications(data);
+  const uploadApplications = async () => {
+    await api.get("/Application").then(({ data }) => {
+      dispatch(setApplications(data));
     });
   };
 
-  React.useEffect(() => uploadApplications(), []);
+  const uploadDeputies = async () => {
+    await api.get("/User/deputies/filters").then(({ data }) => {
+      dispatch(setDeputies(data));
+    });
+  };
+
+  React.useEffect(() => {
+    uploadApplications();
+    uploadDeputies();
+  }, []);
 
   const handleReadAnswer = (application) => {
-    if (application.status != 2) return;
     setIsPopupVisible(true);
     setCurrentApplicationPopup(application);
   };
@@ -32,7 +59,7 @@ const ListApplications = () => {
         api
           .get(`/Application/deputy/${deputyId}?status=${status}`)
           .then(({ data }) => {
-            setApplications(data);
+            dispatch(setApplications(data));
           });
       } catch (error) {
         console.log(error);
@@ -40,7 +67,7 @@ const ListApplications = () => {
     } else if (deputyId) {
       try {
         api.get(`/Application/deputy/${deputyId}`).then(({ data }) => {
-          setApplications(data);
+          dispatch(setApplications(data));
         });
       } catch (error) {
         console.log(error);
@@ -48,7 +75,7 @@ const ListApplications = () => {
     } else if (!isNaN(status)) {
       try {
         api.get(`/Application/status=${status}`).then(({ data }) => {
-          setApplications(data);
+          dispatch(setApplications(data));
         });
       } catch (error) {
         console.log(error);
@@ -77,37 +104,45 @@ const ListApplications = () => {
     }
   };
 
+  console.log("pererender list applications");
+
   return (
-    <div className="wrapper">
-      <div className="container_list_applications">
-        <Aside handleFilterButton={handleFilterButton} />
-        <main>
-          <p className="text_search_application">
-            Найдите заявку в поисковой строке
-          </p>
-          <input
-            type="text"
-            placeholder="ID заявки или слово из заголовка"
-            onChange={(event) => handleTextSearch(event.target.value)}
-          />
-          <div className="list_applications">
-            {applications.map((application) => (
-              <Application
-                application={application}
-                handleReadAnswer={handleReadAnswer}
-                key={application.id}
+    <>
+      {isLoadingApplications || isLoadingDeputies ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="wrapper">
+          <div className="container_list_applications">
+            <Aside handleFilterButton={handleFilterButton} />
+            <main>
+              <p className="text_search_application">
+                Найдите заявку в поисковой строке
+              </p>
+              <input
+                type="text"
+                placeholder="ID заявки или слово из заголовка"
+                onChange={(event) => handleTextSearch(event.target.value)}
               />
-            ))}
+              <div className="list_applications">
+                {applications.map((application) => (
+                  <Application
+                    application={application}
+                    handleReadAnswer={handleReadAnswer}
+                    key={application.id}
+                  />
+                ))}
+              </div>
+            </main>
           </div>
-        </main>
-      </div>
-      {isPopupVisible && (
-        <Popup
-          setIsPopupVisible={setIsPopupVisible}
-          application={currentApplicationPopup}
-        />
+          {isPopupVisible && (
+            <PopupApplication
+              setIsPopupVisible={setIsPopupVisible}
+              application={currentApplicationPopup}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

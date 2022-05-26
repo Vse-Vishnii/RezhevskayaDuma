@@ -2,11 +2,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, clearUser } from "../../store/userSlice";
+import Popup from "./../ListApplications/Popup/Popup";
 
 const Login = () => {
-  const [user, setUser] = React.useState(null);
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const [isPopupVisible, setIsPopupVisible] = React.useState();
 
   const {
     register,
@@ -16,17 +20,8 @@ const Login = () => {
     mode: "onBlur",
   });
 
-  React.useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
-    }
-    console.log("2", loggedInUser);
-  }, []);
-
   const handleLogout = () => {
-    setUser(null);
+    dispatch(clearUser());
     localStorage.clear();
   };
 
@@ -39,12 +34,12 @@ const Login = () => {
         data: user,
       });
       if (response.status == 200) {
-        setUser(response.data);
+        dispatch(setUser(response.data));
         localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/list_applications");
       }
     } catch (error) {
-      console.log(error);
+      setIsPopupVisible(true);
     }
   };
 
@@ -109,6 +104,13 @@ const Login = () => {
               </div>
             </form>
           </div>
+          {isPopupVisible ? (
+            <Popup setIsPopupVisible={setIsPopupVisible}>
+              Неправильный логин или пароль
+            </Popup>
+          ) : (
+            ""
+          )}
         </>
       ) : (
         <div className="logout_div">
