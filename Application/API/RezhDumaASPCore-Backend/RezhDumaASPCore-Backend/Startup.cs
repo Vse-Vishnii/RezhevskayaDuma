@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -47,6 +48,7 @@ namespace RezhDumaASPCore_Backend
             services.AddScoped<CategoryRepository>();
             services.AddScoped<AnswerRepository>();
             services.AddScoped<DistrictRepository>();
+            services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 
             services.AddSwaggerGen(c =>
             {

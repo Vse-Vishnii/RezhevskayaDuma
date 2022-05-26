@@ -23,7 +23,6 @@ namespace RezhDumaASPCore_Backend.Model
 
         public Role Role { get; set; } = Role.Applicant;
 
-        [JsonIgnore]
         public string Password { get; set; }
 
         [ForeignKey("Category")]

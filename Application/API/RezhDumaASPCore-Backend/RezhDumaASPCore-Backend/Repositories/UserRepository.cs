@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RezhDumaASPCore_Backend.Model;
@@ -9,8 +11,11 @@ namespace RezhDumaASPCore_Backend.Repositories
 {
     public class UserRepository : GeneralRepository<User>
     {
-        public UserRepository(UserContext db) : base(db)
+        private readonly IPasswordHasher<User> passwordHasher;
+
+        public UserRepository(UserContext db, IPasswordHasher<User> passwordHasher) : base(db)
         {
+            this.passwordHasher = passwordHasher;
         }
 
         public async Task<List<User>> GetDeputyByCategoryAndDistrict(string categoryId, string districtId)
@@ -37,6 +42,14 @@ namespace RezhDumaASPCore_Backend.Repositories
         {
             if (categoryId == null) db.PullEntity<Category>(user.CategoryId);
             if (districtId == null) db.PullEntity<District>(user.DistrictId);
+        }
+
+        public override Task<User> Add(User entity)
+        {
+            if (db.Set<User>().FirstOrDefault(u => u.Email.Equals(entity.Email)) == null)
+                throw new Exception("Данная почта уже зарегистрирована");
+            entity.Password = passwordHasher.HashPassword(entity, entity.Password);
+            return base.Add(entity);
         }
     }
 }

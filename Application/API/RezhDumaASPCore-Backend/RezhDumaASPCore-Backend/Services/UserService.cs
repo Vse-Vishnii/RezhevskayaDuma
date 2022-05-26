@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RezhDumaASPCore_Backend.Model;
@@ -23,16 +24,18 @@ namespace RezhDumaASPCore_Backend.Services
     {
         private readonly AppSettings appSettings;
         private readonly IRepository<User> repository;
+        private readonly IPasswordHasher<User> passwordHasher;
 
-        public UserService(IOptions<AppSettings> appSettings, UserRepository userRepository)
+        public UserService(IOptions<AppSettings> appSettings, UserRepository userRepository, IPasswordHasher<User> passwordHasher)
         {
             this.appSettings = appSettings.Value;
             repository = userRepository;
+            this.passwordHasher = passwordHasher;
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = repository.GetAll().Result.SingleOrDefault(x => x.Email == model.Username && x.Password == model.Password);
+            var user = repository.GetAll().Result.SingleOrDefault(u => u.Email == model.Username && CheckPassword(model, u));
             if (user == null) return null;
             var token = GenerateJwtToken(user);
             return new AuthenticateResponse(user, token);
@@ -41,6 +44,12 @@ namespace RezhDumaASPCore_Backend.Services
         public User GetById(string id)
         {
             return repository.GetAll().Result.FirstOrDefault(x => x.Id == id);
+        }
+
+        private bool CheckPassword(AuthenticateRequest authenticateRequest, User user)
+        {
+            var verification = passwordHasher.VerifyHashedPassword(user, user.Password, authenticateRequest.Password);
+            return verification == PasswordVerificationResult.Success;
         }
 
         private string GenerateJwtToken(User user)
