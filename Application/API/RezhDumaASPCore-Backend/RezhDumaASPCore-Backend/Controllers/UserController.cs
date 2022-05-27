@@ -26,9 +26,9 @@ namespace RezhDumaASPCore_Backend.Controllers
         }
 
         [HttpGet("deputies/filters/")]
-        public async Task<ActionResult<IEnumerable<User>>> Get(string category = null, string district = null)
+        public async Task<ActionResult<IEnumerable<User>>> Get([FromQuery] string[] categories = null, [FromQuery] string[] districts = null)
         {
-            return await repository.GetDeputyByCategoryAndDistrict(category, district);
+            return await repository.GetDeputyByCategoryAndDistrict(categories, districts);
         }
 
         [HttpPost("authenticate")]
