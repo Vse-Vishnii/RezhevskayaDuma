@@ -19,12 +19,10 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public async Task<List<User>> GetDeputyByCategoryAndDistrict(string[] categories, string[] districts)
         {
-            if (categories != null) PullIds<Category>(categories);
-            if (districts != null) PullIds<District>(districts);
-            var deputies = await db.Set<User>()
-                .Where(u => u.Role == Role.Deputy)
-                .Where(d => CheckFilters(categories, districts, d))
-                .ToListAsync();
+            var queryable = await db.Set<User>()
+                .Where(u => u.Role == Role.Deputy).ToListAsync();
+            var deputies = queryable
+                .Where(d => CheckFilters(categories, districts, d)).ToList();
             deputies.ForEach(d => PullCategoryAndDistrict(d));
             return deputies;
         }
@@ -52,14 +50,15 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         private static bool CheckFilters(string[] categories, string[] districts, User user)
         {
-            return (categories == null || CheckSpecialFilter(categories, user)) &&
-                   (districts == null || CheckSpecialFilter(districts, user));
+            return CheckSpecialFilter(categories, user.CategoryId) || CheckSpecialFilter(districts, user.DistrictId);
         }
 
-        private static bool CheckSpecialFilter(string[] entities, User user)
+        private static bool CheckSpecialFilter(string[] entities, string id)
         {
+            if (entities.Length == 0) return true;
+            if (id == null) return false;
             foreach (var e in entities)
-                if (user.Category.Id.Equals(e))
+                if (id.Equals(e))
                     return true;
             return false;
         }
