@@ -36,7 +36,7 @@ namespace RezhDumaASPCore_Backend.Repositories
 
         public override Task<User> Add(User entity)
         {
-            if (db.Set<User>().FirstOrDefault(u => u.Email.Equals(entity.Email)) == null)
+            if (db.Set<User>().FirstOrDefault(u => u.Email.Equals(entity.Email)) != null)
                 throw new Exception("Данная почта уже зарегистрирована");
             entity.Password = passwordHasher.HashPassword(entity, entity.Password);
             return base.Add(entity);

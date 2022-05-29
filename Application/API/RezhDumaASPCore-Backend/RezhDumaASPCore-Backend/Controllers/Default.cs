@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using RezhDumaASPCore_Backend.Model;
 
 namespace RezhDumaASPCore_Backend.Controllers
@@ -17,6 +18,8 @@ namespace RezhDumaASPCore_Backend.Controllers
         private static Application app2;
         private static Application app3;
         private static Application app4;
+
+        private static PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
 
         public static void CreateData(UserContext db)
         {
@@ -108,7 +111,8 @@ namespace RezhDumaASPCore_Backend.Controllers
             {
                 Firstname = "Депутат 2",
                 Role = Role.Deputy,
-                Password = "123"
+                Password = passwordHasher.HashPassword(deputy2,"123"),
+                Email = "deputy@email.ru"
             };
             db.Add(deputy2);
             d1 = new District
@@ -126,7 +130,8 @@ namespace RezhDumaASPCore_Backend.Controllers
             {
                 Surname = "Шарова",
                 Role = Role.Deputy,
-                Password = "123"
+                Password = passwordHasher.HashPassword(deputy, "123"),
+                Email = "sharova@email.ru"
             };
             db.Add(deputy);
             category = new Category
@@ -150,8 +155,9 @@ namespace RezhDumaASPCore_Backend.Controllers
             {
                 Firstname = "Алексей",
                 Role = Role.Applicant,
-                Password = "123"
+                Email = "user@email.ru"
             };
+            user.Password = passwordHasher.HashPassword(user, "123");
             db.Add(user);
             db.SaveChanges();
             return user;
