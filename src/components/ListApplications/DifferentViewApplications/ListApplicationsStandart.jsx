@@ -7,8 +7,11 @@ import LoadingSpinner from '../../Loading/LoadingSpinner';
 import Search from './../Search/Search';
 import Aside from './../Aside/Aside';
 import Application from './../Application/Application';
+import PopupApplication from '../Popup/PopupApplilcation/PopupApplication';
 
-const ListApplicationsStandart = ({ handleClickButton }) => {
+const ListApplicationsStandart = () => {
+  const [isPopupVisible, setIsPopupVisible] = React.useState(false);
+  const [currentApplicationPopup, setCurrentApplicationPopup] = React.useState(null);
   const dispatch = useDispatch();
   const { isLoadingApplications, isLoadingDeputies, applications, currentUser } = useSelector(
     (state) => ({
@@ -29,6 +32,11 @@ const ListApplicationsStandart = ({ handleClickButton }) => {
     await api.get('/Application').then(({ data }) => {
       dispatch(setApplications(data));
     });
+  };
+
+  const handleClickButton = (application) => {
+    setIsPopupVisible(true);
+    setCurrentApplicationPopup(application);
   };
 
   const handleTextSearch = (textSearch) => {
@@ -106,6 +114,12 @@ const ListApplicationsStandart = ({ handleClickButton }) => {
             </div>
           </main>
         </div>
+      )}
+      {isPopupVisible && (
+        <PopupApplication
+          setIsPopupVisible={setIsPopupVisible}
+          application={currentApplicationPopup}
+        />
       )}
     </>
   );
