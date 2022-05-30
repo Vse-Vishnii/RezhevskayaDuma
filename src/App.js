@@ -8,7 +8,7 @@ import SubmissionApplication from "./components/SubmissionsApplications/Submissi
 import Gratitude from "./components/SubmissionsApplications/Gratitude/Gratitude";
 import Login from "./components/Login/Login";
 import { useDispatch } from "react-redux";
-import { setUser } from "./store/userSlice";
+import { isUserLoadedPage, setUser } from "./store/userSlice";
 
 function App() {
   const [applicationId, setApplicationId] = React.useState(null);
@@ -20,6 +20,7 @@ function App() {
       const foundUser = JSON.parse(loggedInUser);
       dispatch(setUser(foundUser));
     }
+    dispatch(isUserLoadedPage());
   }, []);
 
   return (
@@ -38,7 +39,7 @@ function App() {
           path="/gratitude"
           element={<Gratitude applicationId={applicationId} />}
         />
-        <Route path="/list_applications" element={<ListApplications />} />
+        <Route path="/list_applications" element={<ListApplications/>} />
       </Routes>
     </div>
   );

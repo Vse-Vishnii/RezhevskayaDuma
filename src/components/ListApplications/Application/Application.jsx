@@ -1,15 +1,19 @@
-import React from "react";
-import { GetNameStatus, getShortApplicationId } from "../UsefulMethods";
+import React from 'react';
+import { GetNameStatus, getShortApplicationId } from '../UsefulMethods';
+import ButtonApplication from './ButtonApplication/ButtonApplication';
+import { useSelector } from 'react-redux';
 
-const Application = ({ application, handleReadAnswer }) => {
+const Application = ({ application, handleClickButton, textButton }) => {
+  const currentUser = useSelector((state) => state.user.user);
+
   const getClassStatus = () => {
-    let classStatus = "status";
+    let classStatus = 'status';
     switch (application.status) {
       case 0:
-        classStatus += " status_process";
+        classStatus += ' status_process';
         break;
       case 2:
-        classStatus += " status_answered";
+        classStatus += ' status_answered';
         break;
     }
     return classStatus;
@@ -20,6 +24,8 @@ const Application = ({ application, handleReadAnswer }) => {
     return `${application.description.slice(0, 150).trim()}...`;
   };
 
+  const clickButton = () => handleClickButton(application);
+
   return (
     <div className="application">
       <div className="application_top">
@@ -28,15 +34,10 @@ const Application = ({ application, handleReadAnswer }) => {
       </div>
       <div className="title">{application.name}</div>
       <div className="message">{getShortMessage()}</div>
-      {application.status == 2 ? (
-        <button
-          className="button yellow"
-          onClick={() => handleReadAnswer(application)}
-        >
-          Прочитать ответ
-        </button>
+      {application.status != 0 || currentUser ? (
+        <ButtonApplication handleClickButton={clickButton} textButton={textButton} />
       ) : (
-        ""
+        ''
       )}
     </div>
   );

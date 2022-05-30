@@ -1,10 +1,10 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import api from "../../api/api";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser, clearUser } from "../../store/userSlice";
-import Popup from "./../ListApplications/Popup/Popup";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import api from '../../api/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, clearUser } from '../../store/userSlice';
+import Popup from './../ListApplications/Popup/Popup';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
   const handleLogout = () => {
@@ -28,16 +28,20 @@ const Login = () => {
   const onSubmit = async (data) => {
     const user = { username: data.email, password: data.password };
     try {
-      const response = await api({
-        method: "POST",
-        url: "/User/authenticate",
+      api({
+        method: 'POST',
+        url: '/User/authenticate',
         data: user,
+      }).then((data) => {
+        const responseFirst = data.data;
+        if (data.status == 200) {
+          api.get(`/User/${responseFirst.id}`).then(({ data }) => {
+            dispatch(setUser({ ...responseFirst, role: data.role }));
+            localStorage.setItem('user', JSON.stringify({ ...responseFirst, role: data.role }));
+            navigate('/list_applications');
+          });
+        }
       });
-      if (response.status == 200) {
-        dispatch(setUser(response.data));
-        localStorage.setItem("user", JSON.stringify(response.data));
-        navigate("/list_applications");
-      }
     } catch (error) {
       setIsPopupVisible(true);
     }
@@ -64,10 +68,8 @@ const Login = () => {
                 type="email"
                 name="email"
                 id="login_email"
-                {...register("email", { required: "Вы не ввели почту" })}
-                className={
-                  errors.email ? "login_input input_error" : "login_input"
-                }
+                {...register('email', { required: 'Вы не ввели почту' })}
+                className={errors.email ? 'login_input input_error' : 'login_input'}
               />
               <label className="login_password_text" for="login_password">
                 Пароль
@@ -76,10 +78,8 @@ const Login = () => {
                 type="password"
                 name="password"
                 id="login_password"
-                {...register("password", { required: "Вы не ввели пароль" })}
-                className={
-                  errors.password ? "login_input input_error" : "login_input"
-                }
+                {...register('password', { required: 'Вы не ввели пароль' })}
+                className={errors.password ? 'login_input input_error' : 'login_input'}
               />
               <div className="remember_forget_container">
                 <div className="div_remember_me">
@@ -87,8 +87,8 @@ const Login = () => {
                     type="checkbox"
                     name="remember_me"
                     id="remember_me"
-                    {...register("remember_me")}
-                    className={errors.remember_me ? "input_error" : ""}
+                    {...register('remember_me')}
+                    className={errors.remember_me ? 'input_error' : ''}
                   />
                   <label for="remember_me">Запомнить меня</label>
                 </div>
@@ -105,11 +105,9 @@ const Login = () => {
             </form>
           </div>
           {isPopupVisible ? (
-            <Popup setIsPopupVisible={setIsPopupVisible}>
-              Неправильный логин или пароль
-            </Popup>
+            <Popup setIsPopupVisible={setIsPopupVisible}>Неправильный логин или пароль</Popup>
           ) : (
-            ""
+            ''
           )}
         </>
       ) : (
