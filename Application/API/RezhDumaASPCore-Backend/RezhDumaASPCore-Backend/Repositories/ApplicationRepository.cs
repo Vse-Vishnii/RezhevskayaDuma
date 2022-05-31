@@ -44,7 +44,7 @@ namespace RezhDumaASPCore_Backend.Repositories
             return await db.Set<Application>()
                 .Where(app =>
                     (name != null && app.Name.ToLower().Contains(name.ToLower())) ||
-                    (id != null && app.Id.Contains(id)))
+                    (id != null && app.Id.ToLower().Contains(id.ToLower())))
                 .ToListAsync();
         }
 
