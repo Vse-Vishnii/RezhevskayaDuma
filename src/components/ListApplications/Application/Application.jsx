@@ -1,19 +1,19 @@
-import React from "react";
-import { GetNameStatus, getShortApplicationId } from "../UsefulMethods";
-import ButtonApplication from "./ButtonApplication/ButtonApplication";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { GetNameStatus, getShortApplicationId } from '../UsefulMethods';
+import ButtonApplication from './ButtonApplication/ButtonApplication';
+import { useSelector } from 'react-redux';
 
 const Application = ({ application, handleClickButton, textButton }) => {
   const currentUser = useSelector((state) => state.user.user);
 
   const getClassStatus = () => {
-    let classStatus = "status";
+    let classStatus = 'status';
     switch (application.status) {
       case 0:
-        classStatus += " status_process";
+        classStatus += ' status_process';
         break;
       case 2:
-        classStatus += " status_answered";
+        classStatus += ' status_answered';
         break;
     }
     return classStatus;
@@ -34,13 +34,11 @@ const Application = ({ application, handleClickButton, textButton }) => {
       </div>
       <div className="title">{application.name}</div>
       <div className="message">{getShortMessage()}</div>
-      {application.status != 0 || currentUser ? (
-        <ButtonApplication
-          handleClickButton={clickButton}
-          textButton={textButton}
-        />
+      {(application.status != 0 && currentUser.role != 1) ||
+      (currentUser && !(currentUser.role == 1 && application.status == 2)) ? (
+        <ButtonApplication handleClickButton={clickButton} textButton={textButton} />
       ) : (
-        ""
+        ''
       )}
     </div>
   );

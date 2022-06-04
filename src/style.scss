@@ -680,16 +680,14 @@ header {
       padding: 0;
     }
   }
-  .active_applications {
-    background-color: #007ac6;
-    color: #fff;
-  }
-  .made_applications {
-    background-color: #ffe78e;
+  .active_applications, .made_applications {
+    background-color: #fff;
+    border: 2px solid rgba(0, 0, 0, 0.3);
     color: #000;
   }
   .choiced_view_applications {
-    background-color: #000;
+    background-color: #007AC6;
+    border: 2px solid #007AC6;
     color: #fff;
   }
 }
@@ -705,23 +703,26 @@ header {
   }
 }
 
-.buttons_popup_deputy {
+.buttons_popup_deputy,
+.buttons_popup_operator {
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
   color: #fff;
   margin-top: 30px;
   .send_reply,
-  .return_operator {
+  .return_operator,
+  .accept_application,
+  .reject_application {
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
     padding: 20px 30px;
   }
-  .send_reply {
+  .send_reply, .accept_application {
     background-color: #007ac6;
   }
-  .return_operator {
+  .return_operator, .reject_application {
     background-color: #212121;
   }
 }

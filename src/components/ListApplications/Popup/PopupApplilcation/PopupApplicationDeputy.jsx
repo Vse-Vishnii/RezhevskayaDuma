@@ -1,16 +1,12 @@
-import React from "react";
-import api from "../../../../api/api";
-import { getFormatDate, getShortApplicationId } from "../../UsefulMethods";
-import Popup from "./../Popup";
+import React from 'react';
+import api from '../../../../api/api';
+import { getFormatDate, getShortApplicationId } from '../../UsefulMethods';
+import Popup from './../Popup';
 
 let date = new Date();
 
-const PopupApplicationDeputy = ({
-  application,
-  setIsPopupVisible,
-  changedStatusApplication,
-}) => {
-  const [answer, setAnswer] = React.useState("");
+const PopupApplicationDeputy = ({ application, setIsPopupVisible, changedStatusApplication }) => {
+  const [answer, setAnswer] = React.useState('');
 
   const sendReply = async () => {
     if (answer.trim().length == 0) return;
@@ -20,9 +16,7 @@ const PopupApplicationDeputy = ({
         answer: {
           ...application.answer,
           description: answer,
-          applicationId: application.id,
-          created: `${date.getFullYear()}-${date.getMonth() +
-            1}-${date.getDate()}`,
+          created: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
         },
         status: 2,
       });
@@ -51,9 +45,7 @@ const PopupApplicationDeputy = ({
       <p className="id">{`ID-${getShortApplicationId(application.id)}`}</p>
       <p className="title">{application.name}</p>
       <p className="message">{application.description}</p>
-      <p className="who_submitted">
-        Житель района, {getFormatDate(application)}
-      </p>
+      <p className="who_submitted">Житель района, {getFormatDate(application)}</p>
       <textarea
         type="text"
         placeholder="Напишите ваш ответ..."

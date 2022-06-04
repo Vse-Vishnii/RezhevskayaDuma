@@ -9,6 +9,7 @@ import Gratitude from "./components/SubmissionsApplications/Gratitude/Gratitude"
 import Login from "./components/Login/Login";
 import { useDispatch } from "react-redux";
 import { isUserLoadedPage, setUser } from "./store/userSlice";
+import api from "./api/api";
 
 function App() {
   const [applicationId, setApplicationId] = React.useState(null);
@@ -19,6 +20,7 @@ function App() {
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       dispatch(setUser(foundUser));
+      //api.post('/Authenticate', {token: 'ss'}).then(( data ) => console.log(data));
     }
     dispatch(isUserLoadedPage());
   }, []);

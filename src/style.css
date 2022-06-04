@@ -902,18 +902,15 @@ header .header .text .name_deputy {
   padding: 0;
 }
 
-.buttons_sort_applications_deputy .active_applications {
-  background-color: #007ac6;
-  color: #fff;
-}
-
-.buttons_sort_applications_deputy .made_applications {
-  background-color: #ffe78e;
+.buttons_sort_applications_deputy .active_applications, .buttons_sort_applications_deputy .made_applications {
+  background-color: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.3);
   color: #000;
 }
 
 .buttons_sort_applications_deputy .choiced_view_applications {
-  background-color: #000;
+  background-color: #007AC6;
+  border: 2px solid #007AC6;
   color: #fff;
 }
 
@@ -930,7 +927,8 @@ header .header .text .name_deputy {
   width: 24% !important;
 }
 
-.buttons_popup_deputy {
+.buttons_popup_deputy,
+.buttons_popup_operator {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -942,18 +940,28 @@ header .header .text .name_deputy {
 }
 
 .buttons_popup_deputy .send_reply,
-.buttons_popup_deputy .return_operator {
+.buttons_popup_deputy .return_operator,
+.buttons_popup_deputy .accept_application,
+.buttons_popup_deputy .reject_application,
+.buttons_popup_operator .send_reply,
+.buttons_popup_operator .return_operator,
+.buttons_popup_operator .accept_application,
+.buttons_popup_operator .reject_application {
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
   padding: 20px 30px;
 }
 
-.buttons_popup_deputy .send_reply {
+.buttons_popup_deputy .send_reply, .buttons_popup_deputy .accept_application,
+.buttons_popup_operator .send_reply,
+.buttons_popup_operator .accept_application {
   background-color: #007ac6;
 }
 
-.buttons_popup_deputy .return_operator {
+.buttons_popup_deputy .return_operator, .buttons_popup_deputy .reject_application,
+.buttons_popup_operator .return_operator,
+.buttons_popup_operator .reject_application {
   background-color: #212121;
 }
 

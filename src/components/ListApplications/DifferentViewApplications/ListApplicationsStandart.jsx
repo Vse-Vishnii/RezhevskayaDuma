@@ -1,41 +1,37 @@
-import React from "react";
-import api from "../../../api/api";
-import { useDispatch, useSelector } from "react-redux";
-import { setApplications } from "../../../store/applicationsSlice";
-import { setDeputies } from "../../../store/deputiesSlice";
-import LoadingSpinner from "../../Loading/LoadingSpinner";
-import Search from "./../Search/Search";
-import Aside from "./../Aside/Aside";
-import Application from "./../Application/Application";
-import PopupApplication from "../Popup/PopupApplilcation/PopupApplication";
-import PopupApplicationOperator from "../Popup/PopupApplilcation/PopupApplicationOperator";
+import React from 'react';
+import api from '../../../api/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setApplications } from '../../../store/applicationsSlice';
+import { setDeputies } from '../../../store/deputiesSlice';
+import LoadingSpinner from '../../Loading/LoadingSpinner';
+import Search from './../Search/Search';
+import Aside from './../Aside/Aside';
+import Application from './../Application/Application';
+import PopupApplication from '../Popup/PopupApplilcation/PopupApplication';
+import PopupApplicationOperator from '../Popup/PopupApplilcation/PopupApplicationOperator';
 
 const ListApplicationsStandart = () => {
   const [isPopupVisible, setIsPopupVisible] = React.useState(false);
-  const [currentApplicationPopup, setCurrentApplicationPopup] = React.useState(
-    null
-  );
+  const [currentApplicationPopup, setCurrentApplicationPopup] = React.useState(null);
   const dispatch = useDispatch();
-  const {
-    isLoadingApplications,
-    isLoadingDeputies,
-    applications,
-    currentUser,
-  } = useSelector((state) => ({
-    isLoadingApplications: state.applications.isLoadingApplications,
-    isLoadingDeputies: state.applications.isLoadingApplications,
-    applications: state.applications.applications,
-    currentUser: state.user.user,
-  }));
+  const { isLoadingApplications, isLoadingDeputies, applications, currentUser } = useSelector(
+    (state) => ({
+      isLoadingApplications: state.applications.isLoadingApplications,
+      isLoadingDeputies: state.applications.isLoadingApplications,
+      applications: state.applications.applications,
+      currentUser: state.user.user,
+    }),
+  );
+  const [handleClickFilterAside, setHandleClickFilterAside] = React.useState(null);
 
   const uploadDeputies = async () => {
-    await api.get("/User/deputies/filters").then(({ data }) => {
+    await api.get('/User/deputies/filters').then(({ data }) => {
       dispatch(setDeputies(data));
     });
   };
 
   const uploadApplications = async () => {
-    await api.get("/Application").then(({ data }) => {
+    await api.get('/Application').then(({ data }) => {
       dispatch(setApplications(data));
     });
   };
@@ -49,7 +45,7 @@ const ListApplicationsStandart = () => {
     if (textSearch) {
       try {
         api({
-          url: "/Application/filters",
+          url: '/Application/filters',
           params: {
             name: textSearch,
             id: textSearch,
@@ -71,11 +67,9 @@ const ListApplicationsStandart = () => {
   const handleFilterButton = (deputyId, status) => {
     if (deputyId && !isNaN(status)) {
       try {
-        api
-          .get(`/Application/deputy/${deputyId}?status=${status}`)
-          .then(({ data }) => {
-            dispatch(setApplications(data));
-          });
+        api.get(`/Application/deputy/${deputyId}?status=${status}`).then(({ data }) => {
+          dispatch(setApplications(data));
+        });
       } catch (error) {
         console.log(error);
       }
@@ -107,6 +101,8 @@ const ListApplicationsStandart = () => {
           <PopupApplicationOperator
             setIsPopupVisible={setIsPopupVisible}
             application={currentApplicationPopup}
+            handleFilterButton={handleFilterButton}
+            uploadApplications={uploadApplications}
           />
         );
       } else {
@@ -126,22 +122,19 @@ const ListApplicationsStandart = () => {
         <LoadingSpinner />
       ) : (
         <div className="container_list_applications">
-          <Aside handleFilterButton={handleFilterButton} />
+          <Aside
+            handleFilterButton={handleFilterButton}
+            setHandleClickFilterAside={setHandleClickFilterAside}
+          />
           <main>
-            <p className="text_search_application">
-              Найдите заявку в поисковой строке
-            </p>
+            <p className="text_search_application">Найдите заявку в поисковой строке</p>
             <Search handleTextSearch={handleTextSearch} />
             <div className="list_applications">
               {applications.map((application) => (
                 <Application
                   application={application}
                   handleClickButton={handleClickButton}
-                  textButton={
-                    currentUser && currentUser.role == 1
-                      ? "Открыть"
-                      : "Прочитать ответ"
-                  }
+                  textButton={currentUser && currentUser.role == 1 ? 'Открыть' : 'Прочитать ответ'}
                   key={application.id}
                 />
               ))}
