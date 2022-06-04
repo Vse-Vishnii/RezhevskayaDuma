@@ -4,10 +4,12 @@ import { getStringDeputy } from "./../UsefulMethods";
 import { useSelector } from "react-redux";
 
 const Aside = ({ handleFilterButton }) => {
-  const statuses = ["В процессе", "Назначен депутат", "Дан ответ"];
+  const statusesCitizen = ["В очереди", "Назначен депутат", "Дан ответ"];
+  const statusesOperator = ["Новые заявки", "Назначен депутат", "Дан ответ"];
   const [activeStatus, setActiveStatus] = React.useState(null);
   const [activeDeputy, setActiveDeputy] = React.useState(null);
   const deputies = useSelector((state) => state.deputies.deputies);
+  const currentUser = useSelector((state) => state.user.user);
 
   const handleClickFilter = () => {
     if (activeDeputy || activeStatus) {
@@ -20,19 +22,34 @@ const Aside = ({ handleFilterButton }) => {
     }
   };
 
+  const getStatusesLi = (array) => {
+    return array.map((item) => (
+      <li
+        className={getClassStatuesLi(item)}
+        key={item.name}
+        onClick={() => setActiveStatus(item == activeStatus ? null : item)}
+      >
+        {item}
+      </li>
+    ));
+  };
+
+  const getClassStatuesLi = (li) => {
+    let classLi = "";
+    if (activeStatus == li) classLi += "active";
+    if (li.toLowerCase() == "новые заявки") classLi += " new_applications";
+    return classLi;
+  };
+
   return (
     <aside>
       <p className="filter">Статус</p>
       <ul>
-        {statuses.map((item) => (
-          <li
-            className={activeStatus == item ? "active" : ""}
-            key={item.name}
-            onClick={() => setActiveStatus(item == activeStatus ? null : item)}
-          >
-            {item}
-          </li>
-        ))}
+        {getStatusesLi(
+          currentUser && currentUser.role == 1
+            ? statusesOperator
+            : statusesCitizen
+        )}
       </ul>
       <p className="filter filter_deputy">Депутат</p>
       <ul>

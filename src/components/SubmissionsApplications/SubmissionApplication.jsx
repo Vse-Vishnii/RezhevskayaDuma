@@ -60,13 +60,15 @@ const SubmissionApplication = ({ setApplicationId }) => {
 
   React.useEffect(() => {
     api
-      .get("/User/deputies/filters/", {
-        params: {
-          category: activeCategory ? activeCategory.id : "",
-          district: activeAreas.length != 0 ? activeAreas[0].id : "",
-        },
-      })
-      .then(({ data }) => setDeputies(data));
+      .get(
+        `/User/deputies/filters?categories=${
+          activeCategory.id
+        }&districts=${activeAreas.map((area) => area.id).join("&districts=")}`
+      )
+      .then(({ data }) => {
+        setDeputies(data);
+        console.log(activeAreas.map((activeArea) => activeArea.id));
+      });
   }, [numberStep]);
 
   return (

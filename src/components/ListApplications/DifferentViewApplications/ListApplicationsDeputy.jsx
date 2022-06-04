@@ -1,28 +1,32 @@
-import React from 'react';
-import Search from './../Search/Search';
-import Application from './../Application/Application';
-import { useDispatch, useSelector } from 'react-redux';
-import api from '../../../api/api';
-import { setApplications } from '../../../store/applicationsSlice';
-import { sortByTextApplications } from '../UsefulMethods';
-import PopupApplicationDeputy from './../Popup/PopupApplilcation/PopupApplicationDeputy';
-import PopupApplication from '../Popup/PopupApplilcation/PopupApplication';
+import React from "react";
+import Search from "./../Search/Search";
+import Application from "./../Application/Application";
+import { useDispatch, useSelector } from "react-redux";
+import api from "../../../api/api";
+import { setApplications } from "../../../store/applicationsSlice";
+import { sortByTextApplications } from "../UsefulMethods";
+import PopupApplicationDeputy from "./../Popup/PopupApplilcation/PopupApplicationDeputy";
+import PopupApplication from "../Popup/PopupApplilcation/PopupApplication";
 
 const ListApplicationsDeputy = () => {
   const [isPopupVisible, setIsPopupVisible] = React.useState(false);
-  const [currentApplicationPopup, setCurrentApplicationPopup] = React.useState(null);
-  const [statusApplications, setStatusApplications] = React.useState('active');
+  const [currentApplicationPopup, setCurrentApplicationPopup] = React.useState(
+    null
+  );
+  const [statusApplications, setStatusApplications] = React.useState("active");
   const [filteredApplications, setFilteredApplications] = React.useState([]);
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.user);
   const applications = useSelector((state) => state.applications.applications);
 
   const uploadApplications = async (status) => {
-    setStatusApplications(status == 1 ? 'active' : 'made');
-    await api.get(`/Application/deputy/${currentUser.id}?status=${status}`).then(({ data }) => {
-      dispatch(setApplications(data));
-      setFilteredApplications(data);
-    });
+    setStatusApplications(status == 1 ? "active" : "made");
+    await api
+      .get(`/Application/deputy/${currentUser.id}?status=${status}`)
+      .then(({ data }) => {
+        dispatch(setApplications(data));
+        setFilteredApplications(data);
+      });
   };
 
   React.useEffect(() => {
@@ -39,13 +43,11 @@ const ListApplicationsDeputy = () => {
   };
 
   const changedStatusApplication = () => {
-    uploadApplications(statusApplications == 'active' ? 1 : 2);
+    uploadApplications(statusApplications == "active" ? 1 : 2);
   };
 
-  console.log(currentApplicationPopup);
-
   const getNeedPopup = () => {
-    if (statusApplications == 'active') {
+    if (statusApplications == "active") {
       return (
         <PopupApplicationDeputy
           setIsPopupVisible={setIsPopupVisible}
@@ -69,20 +71,22 @@ const ListApplicationsDeputy = () => {
           <div className="buttons_sort_applications_deputy">
             <div
               className={
-                statusApplications == 'active'
-                  ? 'button active_applications choiced_view_applications'
-                  : 'button active_applications'
+                statusApplications == "active"
+                  ? "button active_applications choiced_view_applications"
+                  : "button active_applications"
               }
-              onClick={() => uploadApplications(1)}>
+              onClick={() => uploadApplications(1)}
+            >
               <p>Активные заявки</p>
             </div>
             <div
               className={
-                statusApplications == 'made'
-                  ? 'button made_applications choiced_view_applications'
-                  : 'button made_applications'
+                statusApplications == "made"
+                  ? "button made_applications choiced_view_applications"
+                  : "button made_applications"
               }
-              onClick={() => uploadApplications(2)}>
+              onClick={() => uploadApplications(2)}
+            >
               <p>Выполненные</p>
             </div>
           </div>
@@ -94,7 +98,9 @@ const ListApplicationsDeputy = () => {
                 application={application}
                 handleClickButton={handleClickButton}
                 statusApplications={statusApplications}
-                textButton={statusApplications == 'active' ? 'Ответить' : 'Открыть'}
+                textButton={
+                  statusApplications == "active" ? "Ответить" : "Открыть"
+                }
                 key={application.id}
               />
             ))}

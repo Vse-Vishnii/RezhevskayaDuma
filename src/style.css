@@ -657,7 +657,7 @@ header .header .text .name_deputy {
   font-weight: 500;
   font-size: 24px;
   line-height: 135%;
-  margin-bottom: 7px;
+  margin-bottom: 12px;
 }
 
 .popup_inner .who_submitted,
@@ -903,12 +903,12 @@ header .header .text .name_deputy {
 }
 
 .buttons_sort_applications_deputy .active_applications {
-  background-color: #007AC6;
+  background-color: #007ac6;
   color: #fff;
 }
 
 .buttons_sort_applications_deputy .made_applications {
-  background-color: #FFE78E;
+  background-color: #ffe78e;
   color: #000;
 }
 
@@ -941,7 +941,8 @@ header .header .text .name_deputy {
   margin-top: 30px;
 }
 
-.buttons_popup_deputy .send_reply, .buttons_popup_deputy .return_operator {
+.buttons_popup_deputy .send_reply,
+.buttons_popup_deputy .return_operator {
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
@@ -949,21 +950,98 @@ header .header .text .name_deputy {
 }
 
 .buttons_popup_deputy .send_reply {
-  background-color: #007AC6;
+  background-color: #007ac6;
 }
 
 .buttons_popup_deputy .return_operator {
   background-color: #212121;
 }
 
-.unuser_popup {
+.big_popup {
   max-width: 1000px;
 }
 
-.unuser_popup textarea {
+.big_popup p {
+  width: 880px;
+}
+
+.big_popup textarea {
   height: 190px;
   margin-top: 0;
   width: 880px;
   border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.new_applications {
+  color: #a90000;
+}
+
+.new_applications::before {
+  border-color: #a90000 !important;
+}
+
+.new_applications.active::before {
+  background-color: #a90000 !important;
+}
+
+.popup_inner .appoint_deputy {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 16px;
+  margin-top: -15px;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 135%;
+}
+
+.deputies {
+  width: 60%;
+}
+
+.deputies ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  row-gap: 15px;
+  -webkit-column-gap: 6%;
+          column-gap: 6%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.deputies ul li {
+  width: 47%;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 135%;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.deputies ul li::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border: 2px solid #c4c4c4;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.deputies ul li.active::before {
+  background-color: #007ac6;
+  border-color: #007ac6;
 }
 /*# sourceMappingURL=style.css.map */

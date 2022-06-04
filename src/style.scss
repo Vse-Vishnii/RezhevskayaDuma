@@ -495,7 +495,7 @@ header {
       font-weight: 500;
       font-size: 24px;
       line-height: 135%;
-      margin-bottom: 7px;
+      margin-bottom: 12px;
     }
     .who_submitted,
     .who_answered {
@@ -681,11 +681,11 @@ header {
     }
   }
   .active_applications {
-    background-color: #007AC6;
+    background-color: #007ac6;
     color: #fff;
   }
   .made_applications {
-    background-color: #FFE78E;
+    background-color: #ffe78e;
     color: #000;
   }
   .choiced_view_applications {
@@ -695,13 +695,13 @@ header {
 }
 
 .container_deputy_applications {
-  margin-top: 25px!important;
+  margin-top: 25px !important;
 }
 
 .deputy_applications {
-  column-gap: 1.3%!important;
+  column-gap: 1.3% !important;
   .application {
-    width: 24%!important;
+    width: 24% !important;
   }
 }
 
@@ -711,26 +711,94 @@ header {
   gap: 40px;
   color: #fff;
   margin-top: 30px;
-  .send_reply, .return_operator {
+  .send_reply,
+  .return_operator {
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
     padding: 20px 30px;
   }
   .send_reply {
-    background-color: #007AC6;
+    background-color: #007ac6;
   }
   .return_operator {
     background-color: #212121;
   }
 }
 
-.unuser_popup {
+.big_popup {
   max-width: 1000px;
+  p {
+    width: 880px;
+  }
   textarea {
     height: 190px;
     margin-top: 0;
     width: 880px;
     border: 2px solid rgba(0, 0, 0, 0.5);
+  }
+}
+
+// operator
+
+.new_applications {
+  color: #a90000;
+  &::before {
+    border-color: #a90000 !important;
+  }
+  &.active::before {
+    background-color: #a90000 !important;
+  }
+}
+
+.popup_inner {
+  .appoint_deputy {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 16px;
+    margin-top: -15px;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 135%;
+  }
+}
+
+.deputies {
+  width: 60%;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    row-gap: 15px;
+    column-gap: 6%;
+    flex-wrap: wrap;
+    li {
+      width: 47%;
+      margin: 0;
+      padding: 0;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 135%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &::before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        border: 2px solid #c4c4c4;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+      &.active {
+        &::before {
+          background-color: #007ac6;
+          border-color: #007ac6;
+        }
+      }
+    }
   }
 }

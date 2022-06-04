@@ -1,9 +1,14 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import api from '../../../api/api';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import api from "../../../api/api";
 
-const DataInput = ({ activeCategory, activeAreas, activeDeputy, setApplicationId }) => {
+const DataInput = ({
+  activeCategory,
+  activeAreas,
+  activeDeputy,
+  setApplicationId,
+}) => {
   const navigate = useNavigate();
 
   const {
@@ -11,13 +16,13 @@ const DataInput = ({ activeCategory, activeAreas, activeDeputy, setApplicationId
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    mode: 'onBlur',
+    mode: "onBlur",
   });
 
   const onSubmit = async (data) => {
     const user = getUser(data);
     postApplication(user, data.name, data.description);
-    navigate('/gratitude');
+    navigate("/gratitude");
   };
 
   const getUser = (data) => {
@@ -41,8 +46,8 @@ const DataInput = ({ activeCategory, activeAreas, activeDeputy, setApplicationId
 
     try {
       const response = await api({
-        method: 'POST',
-        url: '/Application/parameters',
+        method: "POST",
+        url: "/Application/parameters",
         params: {
           caterogyIds: [activeCategory.id],
           districtIds: activeAreas.map((area) => area.id),
@@ -66,34 +71,42 @@ const DataInput = ({ activeCategory, activeAreas, activeDeputy, setApplicationId
               <input
                 type="text"
                 name="surname"
-                placeholder={errors.surname ? errors.surname.message : 'Фамилия'}
-                {...register('surname', {
-                  required: 'Вы не ввели фамилию',
+                placeholder={
+                  errors.surname ? errors.surname.message : "Фамилия"
+                }
+                {...register("surname", {
+                  required: "Вы не ввели фамилию",
                 })}
-                className={errors.surname ? 'input_error' : ''}
+                className={errors.surname ? "input_error" : ""}
               />
               <input
                 type="text"
                 name="firstname"
-                placeholder={errors.firstname ? errors.firstname.message : 'Имя'}
-                {...register('firstname', { required: 'Вы не ввели имя' })}
-                className={errors.firstname ? 'input_error' : ''}
+                placeholder={
+                  errors.firstname ? errors.firstname.message : "Имя"
+                }
+                {...register("firstname", { required: "Вы не ввели имя" })}
+                className={errors.firstname ? "input_error" : ""}
               />
               <input
                 type="text"
                 name="patronymic"
-                placeholder={errors.patronymic ? errors.patronymic.message : 'Отчество'}
-                {...register('patronymic', {
-                  required: 'Вы не ввели отчество',
+                placeholder={
+                  errors.patronymic ? errors.patronymic.message : "Отчество"
+                }
+                {...register("patronymic", {
+                  required: "Вы не ввели отчество",
                 })}
-                className={errors.patronymic ? 'input_error' : ''}
+                className={errors.patronymic ? "input_error" : ""}
               />
               <input
                 type="email"
                 name="email"
-                placeholder={errors.email ? errors.email.message : 'Электронная почта'}
-                {...register('email', { required: 'Вы не ввели почту' })}
-                className={errors.email ? 'input_error' : ''}
+                placeholder={
+                  errors.email ? errors.email.message : "Электронная почта"
+                }
+                {...register("email", { required: "Вы не ввели почту" })}
+                className={errors.email ? "input_error" : ""}
               />
             </div>
             <div className="form_right">
@@ -101,19 +114,21 @@ const DataInput = ({ activeCategory, activeAreas, activeDeputy, setApplicationId
               <input
                 type="text"
                 name="name"
-                placeholder={errors.name ? errors.name.message : 'Тема вопроса'}
-                {...register('name', { required: 'Вы не ввели тему' })}
-                className={errors.name ? 'input_error' : ''}
+                placeholder={errors.name ? errors.name.message : "Тема вопроса"}
+                {...register("name", { required: "Вы не ввели тему" })}
+                className={errors.name ? "input_error" : ""}
               />
               <textarea
                 name="description"
                 placeholder={
-                  errors.description ? errors.description.message : 'Поделитесь, что вас беспокоит?'
+                  errors.description
+                    ? errors.description.message
+                    : "Поделитесь, что вас беспокоит?"
                 }
-                {...register('description', {
-                  required: 'Вы не ввели вопрос',
+                {...register("description", {
+                  required: "Вы не ввели вопрос",
                 })}
-                className={errors.description ? 'input_error' : ''}
+                className={errors.description ? "input_error" : ""}
               />
             </div>
             <div>
@@ -122,8 +137,10 @@ const DataInput = ({ activeCategory, activeAreas, activeDeputy, setApplicationId
                   type="checkbox"
                   name="agree"
                   id="agree"
-                  {...register('agree', { required: 'Вы не приняли соглашение' })}
-                  className={errors.agree ? 'input_error' : ''}
+                  {...register("agree", {
+                    required: "Вы не приняли соглашение",
+                  })}
+                  className={errors.agree ? "input_error" : ""}
                 />
                 <label for="agree">
                   <p>Я согласен на обработку персональных данных</p>

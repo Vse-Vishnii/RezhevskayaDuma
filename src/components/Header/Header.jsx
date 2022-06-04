@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const user = useSelector((state) => state.user.user);
@@ -22,10 +22,10 @@ const Header = () => {
           <p className="header_title">
             Официальный сайт подачи заявок Режевского городского округа
           </p>
-          {user && user.role == 2 ? (
+          {user && user.role != 0 ? (
             <p className="name_deputy">{`${user.firstName} ${user.lastName}`}</p>
           ) : (
-            ''
+            ""
           )}
         </div>
       </div>
