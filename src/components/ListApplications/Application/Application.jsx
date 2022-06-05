@@ -34,7 +34,7 @@ const Application = ({ application, handleClickButton, textButton }) => {
       </div>
       <div className="title">{application.name}</div>
       <div className="message">{getShortMessage()}</div>
-      {(application.status != 0 && currentUser.role != 1) ||
+      {(!currentUser && application.status == 2) ||
       (currentUser && !(currentUser.role == 1 && application.status == 2)) ? (
         <ButtonApplication handleClickButton={clickButton} textButton={textButton} />
       ) : (

@@ -3,10 +3,25 @@ import api from '../../../../api/api';
 import { getFormatDate, getShortApplicationId } from '../../UsefulMethods';
 import Popup from './../Popup';
 
-let date = new Date();
-
 const PopupApplicationDeputy = ({ application, setIsPopupVisible, changedStatusApplication }) => {
   const [answer, setAnswer] = React.useState('');
+
+  const getCurrentTime = () => {
+    const date = new Date();
+    const days = [date.getFullYear(), date.getMonth() + 1, date.getDate()]
+      .map(function(x) {
+        return x < 10 ? '0' + x : x;
+      })
+      .join('-');
+    const time = [date.getHours(), date.getMinutes(), date.getSeconds()]
+      .map(function(x) {
+        return x < 10 ? '0' + x : x;
+      })
+      .join(':');
+    return `${days}T${time}.${date.getMilliseconds()}`;
+  };
+
+  console.log(getCurrentTime());
 
   const sendReply = async () => {
     if (answer.trim().length == 0) return;
@@ -15,8 +30,10 @@ const PopupApplicationDeputy = ({ application, setIsPopupVisible, changedStatusA
         ...application,
         answer: {
           ...application.answer,
+          name: `Ответ по заявке ${getShortApplicationId(application.id)}`,
           description: answer,
-          created: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+          created: `${getCurrentTime()}`,
+          applicationId: application.id,
         },
         status: 2,
       });

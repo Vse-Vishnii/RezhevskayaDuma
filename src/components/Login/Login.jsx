@@ -10,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const [isPopupVisible, setIsPopupVisible] = React.useState();
+  const [isPopupVisible, setIsPopupVisible] = React.useState(false);
 
   const {
     register,
@@ -28,7 +28,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     const user = { username: data.email, password: data.password };
     try {
-      api({
+      await api({
         method: 'POST',
         url: '/User/authenticate',
         data: user,
@@ -37,7 +37,6 @@ const Login = () => {
         if (data.status == 200) {
           api.get(`/User/${responseFirst.id}`).then(({ data }) => {
             dispatch(setUser({ ...responseFirst, role: data.role }));
-            api.get('/authenticate', 'ss').then(({ data }) => console.log(data));
             localStorage.setItem('user', JSON.stringify({ ...responseFirst, role: data.role }));
             navigate('/list_applications');
           });

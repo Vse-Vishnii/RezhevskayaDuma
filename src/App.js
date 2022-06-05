@@ -20,7 +20,6 @@ function App() {
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       dispatch(setUser(foundUser));
-      //api.post('/Authenticate', {token: 'ss'}).then(( data ) => console.log(data));
     }
     dispatch(isUserLoadedPage());
   }, []);
