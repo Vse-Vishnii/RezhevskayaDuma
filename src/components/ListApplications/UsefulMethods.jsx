@@ -28,7 +28,8 @@ export const GetValueStatus = (status) => {
 };
 
 export const getStringDeputy = (deputy) => {
-  return `${deputy.surname && deputy.surname} 
+  if (!deputy) return;
+  return `${deputy.surname} 
   ${deputy.firstname && deputy.firstname[0]}. 
   ${deputy.patronymic && deputy.patronymic[0]}.`;
 };
