@@ -46,7 +46,7 @@ namespace RezhDumaASPCore_Backend.Controllers
             [FromQuery] string[] districtIds = null, string deputyId = null)
         {
             await repository.Add(entity, categoryIds, districtIds, deputyId);
-            //messageService.Send(entity.Applicant, entity.Deputy,  entity);
+            messageService.Send(entity.Applicant, entity.Deputy,  entity);
             return Ok(entity);
         }
 
