@@ -46,7 +46,12 @@ namespace RezhDumaASPCore_Backend.Controllers
             [FromQuery] string[] districtIds = null, string deputyId = null)
         {
             await repository.Add(entity, categoryIds, districtIds, deputyId);
-            messageService.Send(entity.Applicant, entity.Deputy,  entity);
+            messageService.Send(entity.Deputy, entity.Applicant,
+                new Message
+                {
+                    Name = $"Заявка {entity.Id}", Description = $"Ваша заявка №{entity.Id} принята. Ожидайте!"
+                });
+            
             return Ok(entity);
         }
 
