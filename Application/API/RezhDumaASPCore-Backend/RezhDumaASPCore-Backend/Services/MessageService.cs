@@ -11,10 +11,13 @@ namespace RezhDumaASPCore_Backend.Services
             this.emailService = emailService;
         }
 
-        public async void Send(User sender, User receiver, Message message)
+        public async void Send(User receiver, Message message, User sender= null)
         {
-            await emailService.SendEmailAsync(receiver.Email, message.Name, message.Description,
-                string.Format("{0} {1} {2}", sender.Surname, sender.Firstname, sender.Patronymic));
+            var senderStr = sender == null
+                ? "Режевская городская дума"
+                : string.Format("{0} {1} {2}", sender.Surname, sender.Firstname, sender.Patronymic);
+
+            await emailService.SendEmailAsync(receiver.Email, message.Name, message.Description,senderStr);
         }
     }
 }

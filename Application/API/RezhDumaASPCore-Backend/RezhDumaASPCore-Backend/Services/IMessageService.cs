@@ -4,6 +4,6 @@ namespace RezhDumaASPCore_Backend.Services
 {
     public interface IMessageService
     {
-        void Send(User sender, User receiver, Message message);
+        void Send(User receiver, Message message, User sender = null);
     }
 }

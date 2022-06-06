@@ -46,7 +46,7 @@ namespace RezhDumaASPCore_Backend.Controllers
             [FromQuery] string[] districtIds = null, string deputyId = null)
         {
             await repository.Add(entity, categoryIds, districtIds, deputyId);
-            messageService.Send(entity.Deputy, entity.Applicant,
+            messageService.Send(entity.Applicant,
                 new Message
                 {
                     Name = $"Заявка {entity.Id}", Description = $"Ваша заявка №{entity.Id} принята. Ожидайте!"
@@ -63,7 +63,11 @@ namespace RezhDumaASPCore_Backend.Controllers
             app.Status = accepted ? Status.InProcess : Status.Refused;
             await repository.Update(id, app);
             if (!accepted)
-                messageService.Send(app.Deputy, app.Applicant, null);
+                messageService.Send(app.Applicant, new Message
+                {
+                    Name = $"Заявка {app.Id}",
+                    Description = $"Ваша заявка №{app.Id} принята. Ожидайте!"
+                });
             return Ok(app);
         }
     }

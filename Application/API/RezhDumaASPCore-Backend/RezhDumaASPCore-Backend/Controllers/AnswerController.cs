@@ -22,7 +22,7 @@ namespace RezhDumaASPCore_Backend.Controllers
         public override async Task<ActionResult<Answer>> Post(Answer entity)
         {
             await repository.Add(entity);
-            messageService.Send(entity.Application.Deputy, entity.Application.Applicant, entity);
+            messageService.Send(entity.Application.Applicant, entity, entity.Application.Deputy);
             return Ok(entity);
         }
 
