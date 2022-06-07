@@ -47,8 +47,7 @@ const ListApplicationsStandart = () => {
         api({
           url: '/Application/filters',
           params: {
-            name: textSearch,
-            id: textSearch,
+            filter: textSearch,
           },
         }).then(({ data }) => dispatch(setApplications(data)));
       } catch (error) {
