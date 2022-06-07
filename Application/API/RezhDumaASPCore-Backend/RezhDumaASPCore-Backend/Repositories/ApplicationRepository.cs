@@ -39,12 +39,12 @@ namespace RezhDumaASPCore_Backend.Repositories
             return await base.Get(id);
         }
 
-        public async Task<ActionResult<IEnumerable<Application>>> Get(string id, string name)
+        public async Task<ActionResult<IEnumerable<Application>>> GetWithFilter(string filter)
         {
             return await db.Set<Application>()
                 .Where(app =>
-                    name != null && app.Name.ToLower().Contains(name.ToLower()) ||
-                    id != null && app.Id.ToLower().Contains(id.ToLower()))
+                    filter == null || app.Name.ToLower().Contains(filter.ToLower()) ||
+                                       app.Id.ToLower().Contains(filter.ToLower()))
                 .ToListAsync();
         }
 

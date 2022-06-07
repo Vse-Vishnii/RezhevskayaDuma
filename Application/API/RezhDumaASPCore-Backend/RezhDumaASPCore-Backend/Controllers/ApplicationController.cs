@@ -36,9 +36,9 @@ namespace RezhDumaASPCore_Backend.Controllers
         }
 
         [HttpGet("filters")]
-        public async Task<ActionResult<IEnumerable<Application>>> Get(string name = null, string id = null)
+        public async Task<ActionResult<IEnumerable<Application>>> Get(string filter = null)
         {
-            return await repository.Get(id, name);
+            return await repository.GetWithFilter(filter);
         }
 
         [HttpPost("parameters")]
